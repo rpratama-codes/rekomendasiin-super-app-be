@@ -19,15 +19,21 @@
 		"build": "rimraf ./dist && tsc",
 		"start": "node ./dist/index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "biome lint --write ./src"
+		"lint": "biome lint --write ./src",
+		"prepare": "husky",
+		"commit": "commit"
 	},
 	"dependencies": {
 		"express": "^5.1.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.7",
+		"@commitlint/cli": "^20.1.0",
+		"@commitlint/config-conventional": "^20.0.0",
+		"@commitlint/prompt-cli": "^20.1.0",
 		"@types/express": "^5.0.4",
 		"@types/node": "^24.9.1",
+		"husky": "^9.1.7",
 		"nodemon": "^3.1.10",
 		"rimraf": "^6.0.1",
 		"tsx": "^4.20.6",
