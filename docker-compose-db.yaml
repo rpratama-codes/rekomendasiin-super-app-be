@@ -1,0 +1,17 @@
+name: rekomendasiin-db
+
+services:
+
+  db:
+    image: postgres:16.10-alpine3.22
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: rekomendasiin-d3v
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
