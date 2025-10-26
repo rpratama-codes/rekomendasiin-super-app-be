@@ -42,6 +42,8 @@
 		"skipLibCheck": true,
 
 		// Own Config
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"noEmit": true,
+		"allowImportingTsExtensions": true
 	}
 }

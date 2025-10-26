@@ -12,3 +12,9 @@ app.get('/', (_req: Request, res: Response) => {
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
 });
+
+export const addition = (...num: number[]) => {
+	return num.reduce((acc, curr) => {
+		return acc + curr;
+	}, 0);
+};
