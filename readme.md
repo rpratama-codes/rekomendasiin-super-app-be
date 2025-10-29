@@ -34,6 +34,24 @@ Tech Specs :
 - [ ] REST APIs
 - [ ] Websocket
 - [ ] SMTP
+- [x] Bundler (Rollup)
+
+## Doc Setup Rollup
+
+<https://medium.com/@robinviktorsson/setting-up-a-modern-typescript-project-with-rollup-no-framework-e24a7564394c>
+
+## Building
+
+```shell
+pnpm build
+cd dist
+# because the repository using husky as git hook
+# so it may unset first the prepare script
+# read : https://joshtronic.com/2022/07/10/husky-command-not-found-with-npm-install-production/
+pnpm pkg set scripts.prepare=" "
+pnpm install --production
+pnpm dlx prisma@6.18.0 generate  
+```
 
 ## Footnotes  
 
