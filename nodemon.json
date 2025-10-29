@@ -4,7 +4,8 @@
 	],
 	"ext": "ts",
 	"ignore": [
-		"src/**/*.spec.ts"
+		"src/**/*.spec.ts",
+		"src/**/*.test.ts"
 	],
 	"exec": "tsc --noEmit && tsx ./src/index.ts"
 }
