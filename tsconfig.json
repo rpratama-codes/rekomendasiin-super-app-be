@@ -44,6 +44,7 @@
 		// Own Config
 		"esModuleInterop": true,
 		"noEmit": true,
+		"emitDeclarationOnly": true,
 		"allowImportingTsExtensions": true
 	}
 }
