@@ -1,20 +1,12 @@
-import type { Request, Response } from 'express';
 import express from 'express';
 import 'dotenv/config';
+import { entryPoint } from './service/misc/entry-point.ts';
 
 const app = express();
 const port = 3000;
 
-app.get('/', (_req: Request, res: Response) => {
-	res.send('Hello World!');
-});
+app.get('/', entryPoint);
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
 });
-
-export const addition = (...num: number[]) => {
-	return num.reduce((acc, curr) => {
-		return acc + curr;
-	}, 0);
-};
