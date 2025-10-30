@@ -33,18 +33,30 @@
 		"migrate-deploy": "prisma migrate deploy"
 	},
 	"dependencies": {
+		"@langchain/core": "^1.0.2",
+		"@langchain/google-genai": "^1.0.0",
 		"@prisma/client": "^6.18.0",
 		"dotenv": "^17.2.3",
-		"express": "^5.1.0"
+		"express": "^5.1.0",
+		"langchain": "^1.0.2",
+		"mongodb": "^6.20.0",
+		"mongoose": "^8.19.2",
+		"morgan": "^1.10.1",
+		"winston": "^3.18.3",
+		"zod": "^4.1.12"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.7",
 		"@commitlint/cli": "^20.1.0",
 		"@commitlint/config-conventional": "^20.0.0",
 		"@commitlint/prompt-cli": "^20.1.0",
+		"@rollup/plugin-commonjs": "^29.0.0",
+		"@rollup/plugin-json": "^6.1.0",
+		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@rollup/plugin-terser": "^0.4.4",
 		"@rollup/plugin-typescript": "^12.3.0",
 		"@types/express": "^5.0.4",
+		"@types/morgan": "^1.9.10",
 		"@types/node": "^24.9.1",
 		"@vitest/coverage-v8": "4.0.3",
 		"commitizen": "^4.3.1",
