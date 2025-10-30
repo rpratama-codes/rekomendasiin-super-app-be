@@ -43,14 +43,20 @@ Tech Specs :
 ## Building
 
 ```shell
+pnpm install
+pnpm dlx prisma@6.18.0 generate  
 pnpm build
-cd dist
+
+#
+# I think we doesn't need need step below anymore
+# Because we already bundling dependency into a single executable.
+#
 # because the repository using husky as git hook
 # so it may unset first the prepare script
 # read : https://joshtronic.com/2022/07/10/husky-command-not-found-with-npm-install-production/
+cd dist
 pnpm pkg set scripts.prepare=" "
 pnpm install --production
-pnpm dlx prisma@6.18.0 generate  
 ```
 
 ## Footnotes  
