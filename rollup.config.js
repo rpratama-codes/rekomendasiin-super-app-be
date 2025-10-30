@@ -22,13 +22,20 @@ export default {
 		typescript(),
 		commonjs(),
 		json(),
-		nodeResolve({preferBuiltins: true}),
+		nodeResolve({ preferBuiltins: true }),
 		terser(),
 		copy({
 			targets: [
 				{
 					src: [
+						/**
+						 * file bellow just a testing file.
+						 */
 						'./src/service/misc/entry-message.txt',
+						/**
+						 * It not nessesary to put files below,
+						 * But we leave it as is in case we want to do something else in the future.
+						 */
 						'./src/prisma/schema.prisma',
 						'package.json',
 						'pnpm-lock.yaml',
@@ -37,6 +44,5 @@ export default {
 				},
 			],
 		}),
-
 	],
 };

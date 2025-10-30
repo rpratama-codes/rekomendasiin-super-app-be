@@ -35,6 +35,8 @@ Tech Specs :
 - [ ] Websocket
 - [ ] SMTP
 - [x] Bundler (Rollup)
+- [x] Logger
+- [x] Containerize app
 
 ## Doc Setup Rollup
 
@@ -44,12 +46,12 @@ Tech Specs :
 
 ```shell
 pnpm install
-pnpm dlx prisma@6.18.0 generate  
+pnpm exec prisma generate  
 pnpm build
 
 #
-# I think we doesn't need need step below anymore
-# Because we already bundling dependency into a single executable.
+# We doesn't need need step below anymore
+# we already bundling the only needed dependency.
 #
 # because the repository using husky as git hook
 # so it may unset first the prepare script
