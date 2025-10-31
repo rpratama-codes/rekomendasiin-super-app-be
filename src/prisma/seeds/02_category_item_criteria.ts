@@ -50,6 +50,8 @@ async function main(): Promise<void> {
 
 			console.log('Seeding criteria table is successfuly');
 		});
+
+		await prisma.$disconnect();
 	} catch (error: unknown) {
 		if (error instanceof Error) {
 			console.log(error);

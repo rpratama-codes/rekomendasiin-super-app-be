@@ -7,7 +7,7 @@ import { logger } from './utils/logger/winston.ts';
 const app = express();
 app.use(loggerMiddleware);
 
-const port = 3000;
+const port = process.env.APP_PORT;
 
 app.get('/', entryPoint);
 

@@ -18,6 +18,8 @@ model User {
   last_name  String?
   email      String   @unique
   username   String   @unique
+  // just for note, 
+  // password can be null because passwordless feature
   password   String?
   picture    String?
   role       UserRole
@@ -74,3 +76,30 @@ model Criteria {
 
   @@map("criteria")
 }
+
+
+// Save for Next Sprint
+
+// model BenchmarkSource {
+//   id          String  @id @default(uuid(7))
+//   name        String
+//   description String?
+
+//   ItemSpecs ItemSpecs[]
+
+//   @@map("benchmark_source")
+// }
+
+// model ItemSpecs {
+//   id           String  @id @default(uuid(7))
+//   benchmark_id String
+//   item_id      String
+//   name         String
+//   value        Float
+//   description  String?
+
+//   item      Item            @relation(fields: [item_id], references: [id])
+//   benchmark BenchmarkSource @relation(fields: [benchmark_id], references: [id])
+
+//   @@map("item_specs")
+// }
