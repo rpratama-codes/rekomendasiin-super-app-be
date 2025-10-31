@@ -17,10 +17,60 @@ model User {
   first_name String?
   last_name  String?
   email      String   @unique
+  username   String   @unique
   password   String?
-  username   String?
+  picture    String?
   role       UserRole
 
   @@map("user")
 }
 
+model Category {
+  id            String     @id @default(uuid(7))
+  category_name String?
+  item          Item[]
+  Criteria      Criteria[]
+
+  @@map("category")
+}
+
+model Item {
+  id          String  @id @default(uuid(7))
+  category_id String?
+  item_name   String?
+  soc         Float?
+  ram         Float?
+  rom         Float?
+  camera      Float?
+  screen      Float?
+  nfc         Float?
+  network     Float?
+  battery     Float?
+  price       Float?
+  weight      Float?
+  picture     String?
+
+  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+
+  @@map("item")
+}
+
+model Criteria {
+  id            String  @id @default(uuid(7))
+  category_id   String?
+  criteria_name String
+  soc           Float   @default(0)
+  ram           Float   @default(0)
+  rom           Float   @default(0)
+  camera        Float   @default(0)
+  screen        Float   @default(0)
+  nfc           Float   @default(0)
+  network       Float   @default(0)
+  battery       Float   @default(0)
+  price         Float   @default(0)
+  weight        Float   @default(0)
+
+  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+
+  @@map("criteria")
+}
