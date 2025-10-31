@@ -23,14 +23,14 @@
 		"dev": "nodemon",
 		"build": "rimraf ./dist && rollup --config ./rollup.config.js --configPlugin typescript",
 		"start": "node ./dist/index.js",
-		"test": "vitest",
-		"coverage": "vitest run --coverage",
+		"test:unit": "vitest",
+		"test:coverage": "vitest run --coverage",
 		"lint": "biome check --write ./src",
 		"prepare": "husky",
 		"commit": "cz",
-		"generate-type": "prisma generate",
-		"migrate-dev": "prisma migrate dev",
-		"migrate-deploy": "prisma migrate deploy"
+		"prisma:generate": "prisma generate",
+		"prisma:migrate:dev": "prisma migrate dev",
+		"prisma:migrate:deploy": "prisma migrate deploy"
 	},
 	"dependencies": {
 		"@langchain/core": "^1.0.2",
