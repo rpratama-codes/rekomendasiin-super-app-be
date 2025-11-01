@@ -1,7 +1,19 @@
-import type { Category, Criteria, Item } from '@prisma/client';
+import type { Category, Criteria } from '@prisma/client';
+import type { Logger } from 'winston';
 import { ServiceBase } from '../../utils/base-class/index.ts';
+import type { DecisionSupportSystems } from '../suggesion/dss.service.ts';
 
 export class StoreFront extends ServiceBase {
+	private dss: DecisionSupportSystems;
+
+	constructor({
+		logger,
+		dss,
+	}: { logger: Logger; dss: DecisionSupportSystems }) {
+		super({ logger });
+		this.dss = dss;
+	}
+
 	public async listCategory(): Promise<Category[]> {
 		const category = await this.prisma.category.findMany();
 
@@ -30,7 +42,7 @@ export class StoreFront extends ServiceBase {
 			max: number;
 		};
 		criteria_id: string;
-	}): Promise<Item[] | undefined> {
+	}): Promise<Record<string, string | number | null>[]> {
 		const items = await this.prisma.item.findMany({
 			where: {
 				price: {
@@ -50,62 +62,6 @@ export class StoreFront extends ServiceBase {
 			throw new Error('Criteria Not Found, Please give correct criteria id.');
 		}
 
-		const criteriaSet = Object.entries(criteria).reduce((acc, [key, value]) => {
-			if (typeof value === 'number' && value !== 0) {
-				acc.add(key);
-			}
-
-			return acc;
-		}, new Set<string>());
-
-		const selectedItems = items.filter(
-			(item) =>
-				!Object.entries(item).some(
-					([key, value]) => criteriaSet.has(key) && value === null,
-				),
-		);
-
-		const costBenefitAggregator: { [key: string]: number } = {
-			price: Infinity,
-		};
-
-		criteriaSet.forEach((name) => {
-			if (name !== 'price') {
-				costBenefitAggregator[name] = -Infinity;
-			}
-		});
-
-		// 2. Iterate through the items ONCE to find the min price and max benefits.
-		for (const item of selectedItems) {
-			for (const name of criteriaSet) {
-				const value = item[name as keyof typeof item] as number;
-
-				const criteriaValue = costBenefitAggregator[name] as number;
-
-				// If it's a cost ('price'), we want the minimum value.
-				if (name === 'price') {
-					if (value < criteriaValue) {
-						costBenefitAggregator[name] = value;
-					}
-				}
-				// Otherwise, it's a benefit, and we want the maximum value.
-				else {
-					if (value > criteriaValue) {
-						costBenefitAggregator[name] = value;
-					}
-				}
-			}
-		}
-
-		// 3. Transform the aggregated results into the final desired format.
-		const constBenefit = Object.entries(costBenefitAggregator).map(
-			([name, value]) => ({
-				name,
-				value,
-				type: name === 'price' ? 'cost' : 'benefit',
-			}),
-		);
-
-		return [];
+		return this.dss.simpleAdditiveWeighting({ criteria, items });
 	}
 }
