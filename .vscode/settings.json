@@ -1,6 +1,3 @@
 {
-	"license.author": "Rizqi Pratama",
-	"[typescript]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	}
+	"license.author": "Rizqi Pratama"
 }

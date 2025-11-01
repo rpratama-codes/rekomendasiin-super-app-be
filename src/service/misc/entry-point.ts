@@ -8,9 +8,3 @@ export const entryPoint = async (_req: Request, res: Response) => {
 	const message = readFileSync(messagePath, { encoding: 'utf-8' });
 	res.send(message);
 };
-
-export const addition = (...num: number[]) => {
-	return num.reduce((acc, curr) => {
-		return acc + curr;
-	}, 0);
-};
