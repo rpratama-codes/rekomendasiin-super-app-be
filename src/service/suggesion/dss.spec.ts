@@ -13,7 +13,7 @@ describe('DSS Test', () => {
 	it('should return an array', async () => {
 		assert.isArray(
 			dss.simpleAdditiveWeighting({
-				criteria: {
+				criteriaValues: {
 					price: 0.5,
 					soc: 0.2,
 					ram: 0.125,
@@ -25,6 +25,14 @@ describe('DSS Test', () => {
 					screen: 0,
 					weight: 0,
 				},
+				criteriaNames: new Set([
+					'soc',
+					'ram',
+					'storage',
+					'battery',
+					'camera',
+					'price',
+				]),
 				items: testItems,
 			}),
 		);

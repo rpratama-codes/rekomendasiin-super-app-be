@@ -62,6 +62,19 @@ export class StoreFront extends ServiceBase {
 			throw new Error('Criteria Not Found, Please give correct criteria id.');
 		}
 
-		return this.dss.simpleAdditiveWeighting({ criteria, items });
+		const criteriaNames = this.dss.criteriaPicker(criteria);
+
+		const simpleAdditiveWeighting = this.dss.simpleAdditiveWeighting({
+			criteriaNames,
+			criteriaValues: criteria,
+			items,
+		});
+
+		const finalSaw = this.dss.sumTotalScore({
+			criteriaNames,
+			items: simpleAdditiveWeighting,
+		});
+
+		return finalSaw;
 	}
 }

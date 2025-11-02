@@ -1,28 +1,45 @@
 import type { Criteria, Item } from '@prisma/client';
 
+export type NormalizationItem = {
+	[x: string]: string | number | null;
+};
+
+export type CriteriaO = Omit<Criteria, 'id' | 'criteria_name' | 'category_id'>;
+
 export class DecisionSupportSystems {
+	public criteriaPicker(criteria: CriteriaO): Set<string> {
+		const criteriaNames = Object.entries(criteria).reduce(
+			(acc, [key, value]) => {
+				if (typeof value === 'number' && value !== 0) {
+					acc.add(key);
+				}
+
+				return acc;
+			},
+			new Set<string>(),
+		);
+
+		return criteriaNames;
+	}
+
 	public simpleAdditiveWeighting({
-		criteria,
+		criteriaNames,
+		criteriaValues,
 		items,
+		output = 'weighting',
 	}: {
-		criteria: Omit<Criteria, 'id' | 'criteria_name' | 'category_id'>;
+		criteriaNames: Set<string>;
+		criteriaValues: CriteriaO;
 		items: Item[];
-	}) {
+		output?: 'normalization' | 'weighting';
+	}): NormalizationItem[] {
 		/**
 		 * TODO: BREAK SAW METHOD INTO SMALLER PARTS!
 		 */
-		const criteriaSet = Object.entries(criteria).reduce((acc, [key, value]) => {
-			if (typeof value === 'number' && value !== 0) {
-				acc.add(key);
-			}
-
-			return acc;
-		}, new Set<string>());
-
 		const selectedItems = items.filter(
 			(item) =>
 				!Object.entries(item).some(
-					([key, value]) => criteriaSet.has(key) && value === null,
+					([key, value]) => criteriaNames.has(key) && value === null,
 				),
 		);
 
@@ -30,7 +47,7 @@ export class DecisionSupportSystems {
 			price: Infinity,
 		};
 
-		criteriaSet.forEach((name) => {
+		criteriaNames.forEach((name) => {
 			if (name !== 'price') {
 				costBenefitAggregator[name] = -Infinity;
 			}
@@ -38,7 +55,7 @@ export class DecisionSupportSystems {
 
 		// 2. Iterate through the items ONCE to find the min price and max benefits.
 		for (const item of selectedItems) {
-			for (const name of criteriaSet) {
+			for (const name of criteriaNames) {
 				const value = item[name as keyof typeof item] as number;
 
 				const criteriaValue = costBenefitAggregator[name] as number;
@@ -58,7 +75,6 @@ export class DecisionSupportSystems {
 			}
 		}
 
-		// 3. Transform the aggregated results into the final desired format.
 		const costBenefit = Object.entries(costBenefitAggregator).map(
 			([name, value]) => ({
 				name,
@@ -75,39 +91,53 @@ export class DecisionSupportSystems {
 				const otherValue = typeof value !== 'number';
 
 				if (specNotFound || otherValue) {
-					return {
-						[key]: value,
-					};
+					return [key, value];
 				}
 
-				let normalValue = value;
+				let weight = Number(criteriaValues[key as keyof typeof criteriaValues]);
+
+				if (output === 'normalization') {
+					weight = 1;
+				}
+
+				let normalValue: string | number | null = value;
 
 				if (isCostOrBenefit.type === 'cost') {
-					normalValue =
-						(isCostOrBenefit.value / normalValue) *
-						Number(criteria[key as keyof typeof criteria]);
+					normalValue = (isCostOrBenefit.value / normalValue) * weight;
 				} else {
-					normalValue =
-						(normalValue / isCostOrBenefit.value) *
-						Number(criteria[key as keyof typeof criteria]);
+					normalValue = (normalValue / isCostOrBenefit.value) * weight;
 				}
 
-				return {
-					[key]: normalValue,
-				};
+				return [key, normalValue];
 			});
 
-			const normalizationResult = normalizationSpecs.reduce(
-				(accumulator, currentObject) => {
-					// biome-ignore lint/performance/noAccumulatingSpread: <TODO : Change later!>
-					return { ...accumulator, ...currentObject };
-				},
-				{},
-			);
+			const normalizationResult = Object.fromEntries(normalizationSpecs);
 
 			return normalizationResult;
 		});
 
 		return normalizationItems;
+	}
+
+	public sumTotalScore({
+		criteriaNames,
+		items,
+	}: {
+		criteriaNames: Set<string>;
+		items: NormalizationItem[];
+	}): NormalizationItem[] {
+		return items.map((item) => {
+			const totalScore = Object.entries(item).reduce((acc, [key, value]) => {
+				if (criteriaNames.has(key) && typeof value === 'number') {
+					return acc + value;
+				}
+				return acc;
+			}, 0);
+
+			return {
+				...item,
+				totalScore,
+			};
+		});
 	}
 }
