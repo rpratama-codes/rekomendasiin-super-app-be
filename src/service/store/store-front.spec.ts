@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { logger } from '../../utils/logger/winston.ts';
-import { DecisionSupportSystems } from '../suggesion/dss.service.ts';
-import { StoreFront } from './store-front.service.ts';
+import { logger } from '../../utils/logger/winston.js';
+import { DecisionSupportSystems } from '../suggesion/dss.service.js';
+import { StoreFrontService } from './store-front.service.js';
 
 describe('Store front test', () => {
 	/**
@@ -9,7 +9,7 @@ describe('Store front test', () => {
 	 * TODO: Create Test!
 	 */
 
-	const storeFront = new StoreFront({
+	const storeFront = new StoreFrontService({
 		logger,
 		dss: new DecisionSupportSystems(),
 	});

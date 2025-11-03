@@ -34,7 +34,7 @@ export class ControllerBase extends BaseClass {
 		return response.status(payload.status).json(payload);
 	}
 
-	protected sendErrorResponse(
+	protected async sendErrorResponse(
 		response: Response,
 		payload: {
 			status: 400 | 401 | 402 | 403 | 404 | 429 | 500;

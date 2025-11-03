@@ -45,9 +45,9 @@
 
 		// Own Config
 		"esModuleInterop": true,
-		// "noEmit": false,
-		// "emitDeclarationOnly": false,
-		// "allowImportingTsExtensions": false,
+		// "noEmit": true,
+		// "emitDeclarationOnly": true,
+		// "allowImportingTsExtensions": true,
 		// "forceConsistentCasingInFileNames": true,
 	}
 }

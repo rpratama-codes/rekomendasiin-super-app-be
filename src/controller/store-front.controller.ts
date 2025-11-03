@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express';
-import { StoreFrontService } from '../service/store/store-front.service.ts';
-import { DecisionSupportSystems } from '../service/suggesion/dss.service.ts';
-import { ControllerBase } from '../utils/base-class/index.ts';
-import { logger } from '../utils/logger/winston.ts';
-import { storeFrontDto } from './store-front.dto.ts';
+import { StoreFrontService } from '../service/store/store-front.service.js';
+import { DecisionSupportSystems } from '../service/suggesion/dss.service.js';
+import { ControllerBase } from '../utils/base-class/index.js';
+import { logger } from '../utils/logger/winston.js';
+import { storeFrontDto } from './store-front.dto.js';
 
 export class StoreFrontController extends ControllerBase {
 	private storeFrontService: StoreFrontService;

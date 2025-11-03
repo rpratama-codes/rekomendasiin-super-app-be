@@ -1,7 +1,7 @@
 import type { Category, Criteria } from '@prisma/client';
 import type { Logger } from 'winston';
-import { ServiceBase } from '../../utils/base-class/index.ts';
-import type { DecisionSupportSystems } from '../suggesion/dss.service.ts';
+import { ServiceBase } from '../../utils/base-class/index.js';
+import type { DecisionSupportSystems } from '../suggesion/dss.service.js';
 
 export class StoreFrontService extends ServiceBase {
 	private dss: DecisionSupportSystems;
