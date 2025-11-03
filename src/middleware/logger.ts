@@ -1,5 +1,5 @@
 import morgan from 'morgan';
-import { logger } from '../utils/logger/winston.ts';
+import { logger } from '../utils/logger/winston.js';
 
 export const loggerMiddleware = morgan('combined', {
 	stream: {

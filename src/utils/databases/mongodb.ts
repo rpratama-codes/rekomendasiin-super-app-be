@@ -1,6 +1,6 @@
 // Using ES6 imports
 import mongoose from 'mongoose';
-import { logger } from '../logger/winston.ts';
+import { logger } from '../logger/winston.js';
 
 /**
  * I Am using `mongoose.createConnection` because i want to share MongoClient instance.
