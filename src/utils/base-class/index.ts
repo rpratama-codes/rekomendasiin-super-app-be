@@ -1,15 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 import type { Logger } from 'winston';
 
 export interface BaseClassParams {
 	logger: Logger;
 }
 
-export interface ControllerBaseParams extends BaseClassParams {
-	request: Request;
-	response: Response;
-}
+export interface ControllerBaseParams extends BaseClassParams {}
 
 export interface ServiceBaseParams extends BaseClassParams {}
 
@@ -22,13 +19,29 @@ export class BaseClass {
 }
 
 export class ControllerBase extends BaseClass {
-	protected request: Request;
-	protected response: Response;
-
-	constructor({ request, response, logger }: ControllerBaseParams) {
+	constructor({ logger }: ControllerBaseParams) {
 		super({ logger });
-		this.request = request;
-		this.response = response;
+	}
+
+	protected sendApiResponse(
+		response: Response,
+		payload: {
+			status: number;
+			message: string;
+			data: Record<string, unknown> | Record<string, unknown>[];
+		},
+	) {
+		return response.status(payload.status).json(payload);
+	}
+
+	protected sendErrorResponse(
+		response: Response,
+		payload: {
+			status: 400 | 401 | 402 | 403 | 404 | 429 | 500;
+			message: string;
+		},
+	) {
+		return response.status(payload.status).json(payload);
 	}
 }
 
