@@ -126,7 +126,7 @@ export class DecisionSupportSystems {
 		criteriaNames: Set<string>;
 		items: NormalizationItem[];
 	}): NormalizationItem[] {
-		return items.map((item) => {
+		const unsortScore = items.map((item) => {
 			const totalScore = Object.entries(item).reduce((acc, [key, value]) => {
 				if (criteriaNames.has(key) && typeof value === 'number') {
 					return acc + value;
@@ -139,5 +139,9 @@ export class DecisionSupportSystems {
 				totalScore,
 			};
 		});
+
+		const sortedScore = unsortScore.sort((a, b) => b.totalScore - a.totalScore);
+
+		return sortedScore;
 	}
 }
