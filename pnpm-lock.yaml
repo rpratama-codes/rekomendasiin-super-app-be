@@ -78,6 +78,9 @@ importers:
       '@types/express':
         specifier: ^5.0.4
         version: 5.0.4
+      '@types/express-serve-static-core':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@types/morgan':
         specifier: ^1.9.10
         version: 1.9.10
