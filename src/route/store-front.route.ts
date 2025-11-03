@@ -4,6 +4,8 @@ import { StoreFrontController } from '../controller/store-front.controller.js';
 const storeFrontRoute = express.Router();
 const storeFrontService = new StoreFrontController();
 
+storeFrontRoute.use(express.json());
+
 storeFrontRoute.get(
 	'/store-front/list-category',
 	async (req: Request, res: Response) =>
@@ -15,7 +17,8 @@ storeFrontRoute.get(
 	async (req: Request, res: Response) =>
 		await storeFrontService.listCriteriaClient(req, res),
 );
-storeFrontRoute.get(
+
+storeFrontRoute.post(
 	'/store-front/list-recomendation',
 	async (req: Request, res: Response) =>
 		await storeFrontService.listRecommendation(req, res),
