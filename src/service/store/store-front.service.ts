@@ -1,7 +1,7 @@
 import type { Category, Criteria } from '@prisma/client';
 import type { Logger } from 'winston';
-import { ServiceBase } from '../../utils/base-class/index.js';
-import type { DecisionSupportSystems } from '../suggesion/dss.service.js';
+import { ServiceBase } from '../../utils/base-class/index.ts';
+import type { DecisionSupportSystems } from '../suggesion/dss.service.ts';
 
 export class StoreFrontService extends ServiceBase {
 	private dss: DecisionSupportSystems;
@@ -59,7 +59,10 @@ export class StoreFrontService extends ServiceBase {
 		});
 
 		if (!criteria) {
-			throw new Error('Criteria Not Found, Please give correct criteria id.');
+			const errorMessage =
+				'Criteria Not Found, Please give correct criteria id.';
+			this.logger.error(errorMessage);
+			throw new Error(errorMessage);
 		}
 
 		const criteriaNames = this.dss.criteriaPicker(criteria);
