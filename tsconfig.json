@@ -1,7 +1,5 @@
 {
 	// Visit https://aka.ms/tsconfig to read more about this file
-	"include": ["src/**/*"],
-	"exclude": ["node_modules"],
 	"compilerOptions": {
 		// File Layout
 		"rootDir": "./src",
@@ -45,9 +43,6 @@
 
 		// Own Config
 		"esModuleInterop": true,
-		// "noEmit": true,
-		// "emitDeclarationOnly": true,
-		// "allowImportingTsExtensions": true,
-		// "forceConsistentCasingInFileNames": true,
+
 	}
 }
