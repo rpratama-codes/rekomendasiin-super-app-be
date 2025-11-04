@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { StoreFrontService } from '../service/store/store-front.service.js';
 import { DecisionSupportSystems } from '../service/suggesion/dss.service.js';
-import { ControllerBase } from '../utils/base-class/index.js';
+import { ControllerBase } from '../utils/base-class/base-class.js';
 import { logger } from '../utils/logger/winston.js';
 import { storeFrontDto } from './store-front.dto.js';
 
@@ -40,9 +40,7 @@ export class StoreFrontController extends ControllerBase {
 	}
 
 	public async listRecommendation(req: Request, res: Response) {
-		const { basePrice, criteria_id } = await storeFrontDto.parseAsync(
-			req.body,
-		);
+		const { basePrice, criteria_id } = await storeFrontDto.parseAsync(req.body);
 
 		const recommendation = await this.storeFrontService.listRecomendation({
 			basePrice,

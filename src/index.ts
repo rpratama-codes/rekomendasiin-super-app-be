@@ -1,6 +1,7 @@
 import express from 'express';
 import 'dotenv/config';
-import { errorHnadlerMiddleware } from './middleware/error-handler.js';
+
+import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { loggerMiddleware } from './middleware/logger.js';
 import { indexRoute } from './route/index.route.js';
 import { storeFrontRoute } from './route/store-front.route.js';
@@ -10,7 +11,7 @@ const app = express();
 app.use(loggerMiddleware);
 app.use(indexRoute);
 app.use(storeFrontRoute);
-app.use(errorHnadlerMiddleware);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.APP_PORT;
 

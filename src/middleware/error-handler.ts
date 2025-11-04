@@ -5,16 +5,16 @@ import type {
 	Request,
 	Response,
 } from 'express';
-import { ErrorConstructor } from '../utils/base-class/index.js';
+import { ErrorConstructor } from '../utils/base-class/error.js';
 import { logger } from '../utils/logger/winston.js';
 
-export const errorHnadlerMiddleware: ErrorRequestHandler = (
+export const errorHandlerMiddleware: ErrorRequestHandler = (
 	err: ErrorConstructor | Error | PrismaClientKnownRequestError,
 	_req: Request,
 	res: Response,
 	_next: NextFunction,
 ) => {
-	logger.error(err);
+	logger.error('Error Handler :', err);
 
 	if (err instanceof ErrorConstructor) {
 		return res.status(err.code).json({

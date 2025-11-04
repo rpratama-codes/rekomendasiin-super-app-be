@@ -5,6 +5,7 @@ import {
 	type HttpExceptionCode,
 	httpExceptions,
 } from '../misc/http-exceptions.js';
+import { ErrorConstructor } from './error.js';
 
 export interface BaseClassParams {
 	logger: Logger;
@@ -14,21 +15,6 @@ export interface ControllerBaseParams extends BaseClassParams {}
 
 export interface ServiceBaseParams extends BaseClassParams {}
 
-export type ErrorType = {
-	code: HttpExceptionCode;
-	message: string;
-	cause?: unknown;
-};
-
-export class ErrorConstructor extends Error {
-	public code: HttpExceptionCode;
-
-	constructor({ code, message, cause }: ErrorType) {
-		super(message, { cause });
-		this.code = code;
-	}
-}
-
 export class BaseClass {
 	protected logger: Logger;
 
@@ -37,8 +23,6 @@ export class BaseClass {
 	}
 
 	public errorSignal(code: HttpExceptionCode, message?: string) {
-		this.logger.error({ code, message });
-
 		const errorMessage = httpExceptions.find(
 			(exception) => exception.code === code,
 		);
