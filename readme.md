@@ -11,6 +11,10 @@ License : BSD.
 
 Project Code Name : "rekomendasiin-store-engine"  
 
+## Architecture
+
+![Architecture](./docs/rekomendasiin.drawio.png)
+
 Tech Specs :  
 
 - [ ] Auth  
