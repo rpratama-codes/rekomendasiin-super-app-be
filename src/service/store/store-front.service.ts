@@ -1,4 +1,4 @@
-import type { Category, Criteria } from '@prisma/client';
+import type { Category, Criteria, Item } from '@prisma/client';
 import type { Logger } from 'winston';
 import { ServiceBase } from '../../utils/base-class/index.js';
 import type { DecisionSupportSystems } from '../suggesion/dss.service.js';
@@ -42,7 +42,11 @@ export class StoreFrontService extends ServiceBase {
 			max: number;
 		};
 		criteria_id: string;
-	}): Promise<Record<string, string | number | null>[]> {
+	}): Promise<{
+		spec: Item[];
+		result: Record<string, string | number | null>[];
+		criteria: Criteria;
+	}> {
 		const items = await this.prisma.item.findMany({
 			where: {
 				price: {
@@ -59,10 +63,10 @@ export class StoreFrontService extends ServiceBase {
 		});
 
 		if (!criteria) {
-			const errorMessage =
-				'Criteria Not Found, Please give correct criteria id.';
-			this.logger.error(errorMessage);
-			throw new Error(errorMessage);
+			throw this.errorSignal(
+				400,
+				'Criteria Not Found, Please give correct criteria id.',
+			);
 		}
 
 		const criteriaNames = this.dss.criteriaPicker(criteria);
@@ -78,6 +82,6 @@ export class StoreFrontService extends ServiceBase {
 			items: simpleAdditiveWeighting,
 		});
 
-		return finalSaw;
+		return { result: finalSaw, spec: items, criteria };
 	}
 }

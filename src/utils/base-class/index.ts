@@ -1,6 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import type { Response } from 'express';
 import type { Logger } from 'winston';
+import {
+	type HttpExceptionCode,
+	httpExceptions,
+} from '../misc/http-exceptions.js';
 
 export interface BaseClassParams {
 	logger: Logger;
@@ -10,11 +14,46 @@ export interface ControllerBaseParams extends BaseClassParams {}
 
 export interface ServiceBaseParams extends BaseClassParams {}
 
+export type ErrorType = {
+	code: HttpExceptionCode;
+	message: string;
+	cause?: unknown;
+};
+
+export class ErrorConstructor extends Error {
+	public code: HttpExceptionCode;
+
+	constructor({ code, message, cause }: ErrorType) {
+		super(message, { cause });
+		this.code = code;
+	}
+}
+
 export class BaseClass {
 	protected logger: Logger;
 
 	constructor({ logger }: BaseClassParams) {
 		this.logger = logger;
+	}
+
+	public errorSignal(code: HttpExceptionCode, message?: string) {
+		this.logger.error({ code, message });
+
+		const errorMessage = httpExceptions.find(
+			(exception) => exception.code === code,
+		);
+
+		if (!errorMessage) {
+			return new ErrorConstructor({
+				code: 500,
+				message: 'Internal Server Error',
+			});
+		}
+
+		return new ErrorConstructor({
+			code: errorMessage.code,
+			message: message ?? errorMessage.message,
+		});
 	}
 }
 
@@ -28,7 +67,7 @@ export class ControllerBase extends BaseClass {
 		payload: {
 			status: number;
 			message: string;
-			data: Record<string, unknown> | Record<string, unknown>[];
+			data?: Record<string, unknown> | Record<string, unknown>[];
 		},
 	) {
 		return response.status(payload.status).json(payload);
@@ -37,7 +76,7 @@ export class ControllerBase extends BaseClass {
 	protected async sendErrorResponse(
 		response: Response,
 		payload: {
-			status: 400 | 401 | 402 | 403 | 404 | 429 | 500;
+			status: HttpExceptionCode;
 			message: string;
 		},
 	) {

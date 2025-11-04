@@ -20,72 +20,39 @@ export class StoreFrontController extends ControllerBase {
 	}
 
 	public async listCriteriaClient(_req: Request, res: Response) {
-		try {
-			const criterias = await this.storeFrontService.listCriteriaClient();
+		const criterias = await this.storeFrontService.listCriteriaClient();
 
-			return this.sendApiResponse(res, {
-				status: 200,
-				message: 'ok',
-				data: criterias,
-			});
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				this.logger.error(error);
-			}
-
-			this.sendErrorResponse(res, {
-				status: 500,
-				message: 'internal server error',
-			});
-		}
+		return this.sendApiResponse(res, {
+			status: 200,
+			message: 'ok',
+			data: criterias,
+		});
 	}
 
 	public async listCategory(_req: Request, res: Response) {
-		try {
-			const category = await this.storeFrontService.listCategory();
+		const category = await this.storeFrontService.listCategory();
 
-			return this.sendApiResponse(res, {
-				status: 200,
-				message: 'ok',
-				data: category,
-			});
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				this.logger.error(error);
-			}
-
-			this.sendErrorResponse(res, {
-				status: 500,
-				message: 'internal server error',
-			});
-		}
+		return this.sendApiResponse(res, {
+			status: 200,
+			message: 'ok',
+			data: category,
+		});
 	}
 
 	public async listRecommendation(req: Request, res: Response) {
-		try {
-			const { basePrice, criteria_id } = await storeFrontDto.parseAsync(
-				req.body,
-			);
+		const { basePrice, criteria_id } = await storeFrontDto.parseAsync(
+			req.body,
+		);
 
-			const recommendation = await this.storeFrontService.listRecomendation({
-				basePrice,
-				criteria_id,
-			});
+		const recommendation = await this.storeFrontService.listRecomendation({
+			basePrice,
+			criteria_id,
+		});
 
-			return this.sendApiResponse(res, {
-				status: 200,
-				message: 'ok',
-				data: recommendation,
-			});
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				this.logger.error(error);
-			}
-
-			this.sendErrorResponse(res, {
-				status: 500,
-				message: 'internal server error',
-			});
-		}
+		return this.sendApiResponse(res, {
+			status: 200,
+			message: 'ok',
+			data: recommendation,
+		});
 	}
 }
