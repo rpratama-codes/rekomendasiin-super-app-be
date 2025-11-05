@@ -46,6 +46,7 @@ export class StoreFrontService extends ServiceBase {
 		spec: Item[];
 		result: Record<string, string | number | null>[];
 		criteria: Criteria;
+		comparable_criteria: string[];
 	}> {
 		const items = await this.prisma.item.findMany({
 			where: {
@@ -82,6 +83,11 @@ export class StoreFrontService extends ServiceBase {
 			items: simpleAdditiveWeighting,
 		});
 
-		return { result: finalSaw, spec: items, criteria };
+		return {
+			result: finalSaw,
+			spec: items,
+			criteria,
+			comparable_criteria: Array.from(criteriaNames),
+		};
 	}
 }

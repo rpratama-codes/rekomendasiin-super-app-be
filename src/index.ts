@@ -8,12 +8,12 @@ import { storeFrontRoute } from './route/store-front.route.js';
 import { logger } from './utils/logger/winston.js';
 
 const app = express();
+const port = process.env.APP_PORT;
+
 app.use(loggerMiddleware);
 app.use(indexRoute);
 app.use(storeFrontRoute);
 app.use(errorHandlerMiddleware);
-
-const port = process.env.APP_PORT;
 
 app.listen(port, () => {
 	logger.info(`Example app listening on port ${port}`);
