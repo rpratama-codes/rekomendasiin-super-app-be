@@ -4,8 +4,6 @@ import { StoreFrontController } from '../controller/store-front.controller.js';
 const storeFrontRoute = express.Router();
 const storeFrontService = new StoreFrontController();
 
-storeFrontRoute.use(express.json());
-
 storeFrontRoute.get(
 	'/store-front/list-category',
 	async (req: Request, res: Response) =>
