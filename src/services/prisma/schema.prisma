@@ -16,8 +16,8 @@ model User {
   id         String   @id @default(uuid(7))
   first_name String?
   last_name  String?
-  email      String   @unique
-  username   String   @unique
+  email      String   @unique @db.Citext
+  username   String   @unique @db.Citext
   // just for note, 
   // password can be null because passwordless feature
   verified   Boolean  @default(false)
