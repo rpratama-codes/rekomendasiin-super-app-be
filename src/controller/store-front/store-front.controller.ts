@@ -1,18 +1,16 @@
 import type { Request, Response } from 'express';
-import { StoreFrontService } from '../service/store/store-front.service.js';
-import { DecisionSupportSystems } from '../service/suggesion/dss.service.js';
-import { ControllerBase } from '../utils/base-class/base-class.js';
-import { logger } from '../utils/logger/winston.js';
-import { storeFrontDto } from './store-front.dto.js';
+import { storeFrontDto } from '../../services/store/store-front.dto.js';
+import { StoreFrontService } from '../../services/store/store-front.service.js';
+import { DecisionSupportSystems } from '../../services/suggesion/dss.service.js';
+import { ControllerBase } from '../../utils/base-class/controller.class.js';
+import { logger } from '../../utils/logger/winston.js';
 
 export class StoreFrontController extends ControllerBase {
 	private storeFrontService: StoreFrontService;
 
 	constructor() {
 		super({ logger });
-
 		const dss = new DecisionSupportSystems();
-
 		this.storeFrontService = new StoreFrontService({
 			logger,
 			dss,
