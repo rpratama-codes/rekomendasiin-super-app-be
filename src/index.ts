@@ -2,9 +2,9 @@ import express from 'express';
 import 'dotenv/config';
 import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { loggerMiddleware } from './middleware/logger.js';
-import { authRouteV1 } from './route/auth-v1.route.js';
-import { indexRoute } from './route/index.route.js';
-import { storeFrontRoute } from './route/store-front.route.js';
+import { authRouteV1 } from './routes/auth-v1.route.js';
+import { indexRoute } from './routes/index.route.js';
+import { storeFrontRoute } from './routes/store-front.route.js';
 import { logger } from './utils/logger/winston.js';
 
 const app = express();

@@ -1,6 +1,6 @@
 import { assert, describe, it } from 'vitest';
-import { DecisionSupportSystems } from '../suggesion/dss.service.js';
 import { testItems } from './dss.mock.js';
+import { DecisionSupportSystems } from './dss.service.js';
 
 describe('DSS Test', () => {
 	const dss = new DecisionSupportSystems();
