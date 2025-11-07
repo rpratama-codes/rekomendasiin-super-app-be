@@ -20,6 +20,7 @@ model User {
   username   String   @unique
   // just for note, 
   // password can be null because passwordless feature
+  verified   Boolean  @default(false)
   password   String?
   picture    String?
   role       UserRole
@@ -77,6 +78,20 @@ model Criteria {
   @@map("criteria")
 }
 
+// 
+// Write for future.
+// 
+enum SavedRecommendationVisibility {
+  private
+  public
+  limited
+}
+
+model SavedRecommendation {
+  id         String                        @id @default(uuid(7))
+  user_id    String?
+  visibility SavedRecommendationVisibility @default(public)
+}
 
 // Save for Next Sprint
 
