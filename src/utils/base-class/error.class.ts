@@ -1,13 +1,13 @@
-import type { HttpExceptionCode } from '../misc/http-exceptions.js';
+import type { HttpExceptionStatusCode } from '../misc/http-exceptions.js';
 
 export type ErrorType = {
-	code: HttpExceptionCode;
+	code: HttpExceptionStatusCode;
 	message: string;
 	cause?: unknown;
 };
 
 export class ErrorConstructor extends Error {
-	public code: HttpExceptionCode;
+	public code: HttpExceptionStatusCode;
 
 	constructor({ code, message, cause }: ErrorType) {
 		super(message, { cause });
