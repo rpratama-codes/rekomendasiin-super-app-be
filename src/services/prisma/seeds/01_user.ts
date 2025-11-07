@@ -15,6 +15,7 @@ async function main(): Promise<void> {
 				password: 'admin',
 				role: 'system_user',
 				picture: null,
+				verified: true,
 			},
 			{
 				id: '019a385b-af6a-7f3b-9807-1e624354124f',
@@ -25,6 +26,7 @@ async function main(): Promise<void> {
 				password: 'user',
 				role: 'user',
 				picture: null,
+				verified: true,
 			},
 		];
 
