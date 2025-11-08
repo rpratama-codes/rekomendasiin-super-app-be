@@ -1,8 +1,13 @@
-import type { Response } from "express";
-import type { HttpExceptionStatusCode, HttpSuccessfulStatusCode } from "../misc/http-exceptions.js";
-import { BaseClass, type BaseClassParams } from "./base.class.js";
+import type { Response } from 'express';
+import type {
+	HttpExceptionStatusCode,
+	HttpSuccessfulStatusCode,
+} from '../misc/http-exceptions.js';
+import { BaseClass, type BaseClassParams } from './base.class.js';
 
-export interface ControllerBaseParams extends BaseClassParams { }
+export interface ControllerBaseParams extends BaseClassParams {}
+
+export type ResponseData = Record<string, unknown> | Record<string, unknown>[];
 
 export class ControllerBase extends BaseClass {
 	constructor({ logger }: ControllerBaseParams) {
@@ -26,7 +31,7 @@ export class ControllerBase extends BaseClass {
 		payload: {
 			status: HttpSuccessfulStatusCode;
 			message?: string;
-			data?: Record<string, unknown> | Record<string, unknown>[];
+			data?: ResponseData;
 		},
 	) {
 		const defaultMessage = this.generateMessage(payload.status);
@@ -41,6 +46,7 @@ export class ControllerBase extends BaseClass {
 		payload: {
 			status: HttpExceptionStatusCode;
 			message?: string;
+			data?: ResponseData;
 		},
 	) {
 		const defaultMessage = this.generateMessage(payload.status);

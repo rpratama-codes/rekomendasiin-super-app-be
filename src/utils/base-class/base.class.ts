@@ -5,9 +5,6 @@ import {
 } from '../misc/http-exceptions.js';
 import { ErrorConstructor } from './error.class.js';
 
-export * from './controller.class.js'
-export * from './service.class.js'
-
 export interface BaseClassParams {
 	logger: Logger;
 }
