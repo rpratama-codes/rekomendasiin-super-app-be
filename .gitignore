@@ -23,3 +23,4 @@ dist
 # Vitest coverage reports
 coverage/
 .vitest-cache/
+.react-email
