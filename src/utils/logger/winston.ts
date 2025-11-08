@@ -1,4 +1,4 @@
-import winston from 'winston';
+import winston, { format } from 'winston';
 
 /**
  * Here is to setup logger
@@ -7,6 +7,6 @@ import winston from 'winston';
  */
 
 export const logger = winston.createLogger({
-	format: winston.format.json(),
+	format: format.combine(format.timestamp(), format.json()),
 	transports: [new winston.transports.Console()],
 });
