@@ -1,11 +1,12 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import type {
 	ErrorRequestHandler,
 	NextFunction,
 	Request,
 	Response,
 } from 'express';
-import { ErrorConstructor } from '../utils/base-class/error.js';
+import { ZodError } from 'zod';
+import { ErrorConstructor } from '../utils/base-class/error.class.js';
 import { logger } from '../utils/logger/winston.js';
 
 export const errorHandlerMiddleware: ErrorRequestHandler = (
@@ -30,6 +31,14 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
 		return res.status(500).json({
 			code: 500,
 			message: 'Internal Server Error',
+		});
+	}
+
+	if (err instanceof ZodError) {
+		return res.status(422).json({
+			code: 422,
+			message: 'Unprocessable Content',
+			data: JSON.parse(err.message),
 		});
 	}
 
