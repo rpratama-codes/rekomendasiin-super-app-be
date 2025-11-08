@@ -1,4 +1,4 @@
-import type { Category, Criteria, Item } from '@prisma/client';
+import type { Category, Criteria, Item } from '../generated/client.js';
 import { PrismaService } from '../prisma.service.js';
 
 async function main(): Promise<void> {

@@ -4,10 +4,13 @@ datasource db {
 }
 
 generator client {
-  provider     = "prisma-client-js"
-	// Soon in prisma v7 output will be required.
-  // output = "../../../generated/prisma"
-  engineType   = "client"
+  // Prisma New Generator
+  provider               = "prisma-client"
+  output                 = "generated"
+  engineType             = "client"
+  moduleFormat           = "esm"
+  importFileExtension    = "ts"
+  generatedFileExtension = "ts"
 }
 
 enum UserRole {

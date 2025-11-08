@@ -1,5 +1,5 @@
-import type { User } from '@prisma/client';
 import argon2 from 'argon2';
+import type { User } from '../generated/client.js';
 import { PrismaService } from '../prisma.service.js';
 
 async function main(): Promise<void> {

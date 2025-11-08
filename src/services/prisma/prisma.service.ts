@@ -1,16 +1,27 @@
+import { writeFileSync } from 'node:fs';
+import { URL } from 'node:url';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '@prisma/client';
+import type { PoolConfig } from 'pg';
+import { PrismaClient } from './generated/client.js';
 
 export class PrismaService extends PrismaClient {
 	constructor() {
-		/**
-		 * Improvement :
-		 * It can use to config pg ssl here!
-		 */
-		const adapter = new PrismaPg({
-			connectionString: process.env.DATABASE_URL,
-		});
+		if (!process.env.DATABASE_URL) {
+			throw new Error('Please set "DATABASE_URL" !');
+		}
 
+		let connectionString = process.env.DATABASE_URL;
+
+		if (process.env.DATABASE_SSL) {
+			writeFileSync('ca.pem', process.env.DATABASE_SSL);
+
+			const dbUrl = new URL(process.env.DATABASE_URL);
+			dbUrl.searchParams.append('sslrootcert', 'ca.pem');
+			connectionString = dbUrl.toString();
+		}
+
+		const config = { connectionString } satisfies PoolConfig;
+		const adapter = new PrismaPg(config);
 		super({ adapter });
 	}
 }
