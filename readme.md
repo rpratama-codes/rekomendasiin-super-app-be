@@ -20,27 +20,34 @@ Tech Specs :
 - [ ] Auth  
   - [ ] Google Auth (OAuth2)
   - [ ] Firebase Auth (Phone Number)
-  - [ ] Basic Auth
+  - [ ] Basic Auth 🏗️
   - [ ] Magic Link (Concept)
-  - [ ] OTP
+  - [ ] OTP 🏗️
 - [x] Prisma ORM (Concept)
 - [ ] Event (Async Service)
 - [ ] Payment Module (Payment Gateway Integration)
 - [ ] Product (App Feature) - In Progress 🏗️
 - [ ] LLM Invocation (AI) - In Progress 🏗️
 - [ ] RBAC/ABAC (Owner, Billing, Admin, User)
-- [ ] Security Best Practice
+- [ ] Security Best Practice 🏗️
 - [ ] Unit Test - In Progress 🏗️
 - [ ] E2E Test
 - [ ] Swagger API Documentation
 - [ ] Semi Micro Service (Concept)
 - [ ] GRPC
-- [ ] REST APIs
+- [ ] REST APIs 🏗️
 - [ ] Websocket
-- [ ] SMTP
+- [x] SMTP
 - [x] Bundler (Rollup)
 - [x] Logger
 - [x] Containerize app
+- [x] Email Template
+- [ ] DevEx
+  - [x] React Email (Email Tooling)
+  - [x] Docker (Containerization)
+  - [x] Bruno API Client
+  - [x] Resend (SMTP Server)
+  - [x] Prisma (Database ORM)
 
 ## Doc Setup Rollup
 
