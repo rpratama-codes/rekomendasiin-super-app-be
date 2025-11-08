@@ -1,13 +1,9 @@
-import {
-	type Category,
-	type Criteria,
-	type Item,
-	PrismaClient,
-} from '@prisma/client';
+import type { Category, Criteria, Item } from '@prisma/client';
+import { PrismaService } from '../prisma.service.js';
 
 async function main(): Promise<void> {
 	try {
-		const prisma = new PrismaClient();
+		const prisma = new PrismaService();
 
 		await prisma.$transaction(async (tx) => {
 			for (const category of categories) {

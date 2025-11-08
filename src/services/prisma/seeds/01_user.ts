@@ -1,9 +1,10 @@
-import { PrismaClient, type User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import argon2 from 'argon2';
+import { PrismaService } from '../prisma.service.js';
 
 async function main(): Promise<void> {
 	try {
-		const prisma = new PrismaClient();
+		const prisma = new PrismaService();
 
 		const users: User[] = [
 			{
