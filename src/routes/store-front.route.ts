@@ -1,5 +1,5 @@
 import express, { type Request, type Response } from 'express';
-import { StoreFrontController } from '../controller/store-front.controller.js';
+import { StoreFrontController } from '../controller/store-front/store-front.controller.js';
 
 const storeFrontRoute = express.Router();
 const storeFrontService = new StoreFrontController();
