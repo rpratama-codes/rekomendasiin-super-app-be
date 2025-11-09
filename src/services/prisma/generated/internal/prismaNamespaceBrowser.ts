@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.ts'
-export type * from './prismaNamespace.ts'
+export type * from '../models.js'
+export type * from './prismaNamespace.js'
 
 export const Decimal = runtime.Decimal
 
@@ -49,11 +49,12 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
-  Category: 'Category',
-  Item: 'Item',
-  Criteria: 'Criteria',
-  SavedRecommendation: 'SavedRecommendation'
+  Users: 'Users',
+  Categories: 'Categories',
+  Items: 'Items',
+  Criterias: 'Criterias',
+  SavedRecommendations: 'SavedRecommendations',
+  OneTimeTokenSecrets: 'OneTimeTokenSecrets'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,7 +73,7 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
+export const UsersScalarFieldEnum = {
   id: 'id',
   first_name: 'first_name',
   last_name: 'last_name',
@@ -81,21 +82,25 @@ export const UserScalarFieldEnum = {
   verified: 'verified',
   password: 'password',
   picture: 'picture',
-  role: 'role'
+  role: 'role',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
 
 
-export const CategoryScalarFieldEnum = {
+export const CategoriesScalarFieldEnum = {
   id: 'id',
-  category_name: 'category_name'
+  category_name: 'category_name',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
-export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
 
 
-export const ItemScalarFieldEnum = {
+export const ItemsScalarFieldEnum = {
   id: 'id',
   category_id: 'category_id',
   item_name: 'item_name',
@@ -109,13 +114,15 @@ export const ItemScalarFieldEnum = {
   battery: 'battery',
   price: 'price',
   weight: 'weight',
-  picture: 'picture'
+  picture: 'picture',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
-export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
+export type ItemsScalarFieldEnum = (typeof ItemsScalarFieldEnum)[keyof typeof ItemsScalarFieldEnum]
 
 
-export const CriteriaScalarFieldEnum = {
+export const CriteriasScalarFieldEnum = {
   id: 'id',
   category_id: 'category_id',
   criteria_name: 'criteria_name',
@@ -128,19 +135,39 @@ export const CriteriaScalarFieldEnum = {
   network: 'network',
   battery: 'battery',
   price: 'price',
-  weight: 'weight'
+  weight: 'weight',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
-export type CriteriaScalarFieldEnum = (typeof CriteriaScalarFieldEnum)[keyof typeof CriteriaScalarFieldEnum]
+export type CriteriasScalarFieldEnum = (typeof CriteriasScalarFieldEnum)[keyof typeof CriteriasScalarFieldEnum]
 
 
-export const SavedRecommendationScalarFieldEnum = {
+export const SavedRecommendationsScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  visibility: 'visibility'
+  visibility: 'visibility',
+  results: 'results',
+  version: 'version',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
-export type SavedRecommendationScalarFieldEnum = (typeof SavedRecommendationScalarFieldEnum)[keyof typeof SavedRecommendationScalarFieldEnum]
+export type SavedRecommendationsScalarFieldEnum = (typeof SavedRecommendationsScalarFieldEnum)[keyof typeof SavedRecommendationsScalarFieldEnum]
+
+
+export const OneTimeTokenSecretsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  secret: 'secret',
+  algorithm: 'algorithm',
+  time_used: 'time_used',
+  expired_at: 'expired_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type OneTimeTokenSecretsScalarFieldEnum = (typeof OneTimeTokenSecretsScalarFieldEnum)[keyof typeof OneTimeTokenSecretsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -149,6 +176,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -165,4 +199,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

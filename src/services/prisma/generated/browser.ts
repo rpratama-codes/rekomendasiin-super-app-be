@@ -13,32 +13,37 @@
  * 🟢 You can import this file directly.
  */
 
-import * as Prisma from './internal/prismaNamespaceBrowser.ts'
+import * as Prisma from './internal/prismaNamespaceBrowser.js'
 export { Prisma }
-export * as $Enums from './enums.ts'
-export * from './enums.ts';
+export * as $Enums from './enums.js'
+export * from './enums.js';
 /**
- * Model User
+ * Model Users
  * 
  */
-export type User = Prisma.UserModel
+export type Users = Prisma.UsersModel
 /**
- * Model Category
+ * Model Categories
  * 
  */
-export type Category = Prisma.CategoryModel
+export type Categories = Prisma.CategoriesModel
 /**
- * Model Item
+ * Model Items
  * 
  */
-export type Item = Prisma.ItemModel
+export type Items = Prisma.ItemsModel
 /**
- * Model Criteria
+ * Model Criterias
  * 
  */
-export type Criteria = Prisma.CriteriaModel
+export type Criterias = Prisma.CriteriasModel
 /**
- * Model SavedRecommendation
+ * Model SavedRecommendations
  * 
  */
-export type SavedRecommendation = Prisma.SavedRecommendationModel
+export type SavedRecommendations = Prisma.SavedRecommendationsModel
+/**
+ * Model OneTimeTokenSecrets
+ * 
+ */
+export type OneTimeTokenSecrets = Prisma.OneTimeTokenSecretsModel

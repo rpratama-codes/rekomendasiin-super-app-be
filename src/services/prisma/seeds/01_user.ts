@@ -1,12 +1,15 @@
 import argon2 from 'argon2';
-import type { User } from '../generated/client.js';
+import type { Users } from '../generated/client.js';
 import { PrismaService } from '../prisma.service.js';
 
-async function main(): Promise<void> {
+export async function seedUser(): Promise<void> {
 	try {
 		const prisma = new PrismaService();
 
-		const users: User[] = [
+		const created_at = new Date();
+		const updated_at = new Date();
+
+		const users: Users[] = [
 			{
 				id: '019a3855-1ec1-7206-90a2-7a0d163d91d5',
 				first_name: 'admin',
@@ -17,6 +20,8 @@ async function main(): Promise<void> {
 				role: 'system_user',
 				picture: null,
 				verified: true,
+				created_at,
+				updated_at,
 			},
 			{
 				id: '019a385b-af6a-7f3b-9807-1e624354124f',
@@ -28,6 +33,8 @@ async function main(): Promise<void> {
 				role: 'user',
 				picture: null,
 				verified: true,
+				created_at,
+				updated_at,
 			},
 		];
 
@@ -39,7 +46,7 @@ async function main(): Promise<void> {
 					password = await argon2.hash(user.password as string);
 				}
 
-				await tx.user.upsert({
+				await tx.users.upsert({
 					create: { ...user, password },
 					update: { ...user, password },
 					where: {
@@ -49,6 +56,8 @@ async function main(): Promise<void> {
 			}
 		});
 
+		console.log('Seeding users table is successfuly');
+
 		await prisma.$disconnect();
 	} catch (error: unknown) {
 		if (error instanceof Error) {
@@ -56,5 +65,3 @@ async function main(): Promise<void> {
 		}
 	}
 }
-
-main();

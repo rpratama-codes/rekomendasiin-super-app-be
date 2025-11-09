@@ -16,12 +16,12 @@ import { fileURLToPath } from 'node:url'
 globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
 
 import * as runtime from "@prisma/client/runtime/client"
-import * as $Enums from "./enums.ts"
-import * as $Class from "./internal/class.ts"
-import * as Prisma from "./internal/prismaNamespace.ts"
+import * as $Enums from "./enums.js"
+import * as $Class from "./internal/class.js"
+import * as Prisma from "./internal/prismaNamespace.js"
 
-export * as $Enums from './enums.ts'
-export * from "./enums.ts"
+export * as $Enums from './enums.js'
+export * from "./enums.js"
 /**
  * ## Prisma Client
  * 
@@ -30,7 +30,7 @@ export * from "./enums.ts"
  * ```
  * const prisma = new PrismaClient()
  * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * const users = await prisma.users.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -42,27 +42,32 @@ export { Prisma }
 
 
 /**
- * Model User
+ * Model Users
  * 
  */
-export type User = Prisma.UserModel
+export type Users = Prisma.UsersModel
 /**
- * Model Category
+ * Model Categories
  * 
  */
-export type Category = Prisma.CategoryModel
+export type Categories = Prisma.CategoriesModel
 /**
- * Model Item
+ * Model Items
  * 
  */
-export type Item = Prisma.ItemModel
+export type Items = Prisma.ItemsModel
 /**
- * Model Criteria
+ * Model Criterias
  * 
  */
-export type Criteria = Prisma.CriteriaModel
+export type Criterias = Prisma.CriteriasModel
 /**
- * Model SavedRecommendation
+ * Model SavedRecommendations
  * 
  */
-export type SavedRecommendation = Prisma.SavedRecommendationModel
+export type SavedRecommendations = Prisma.SavedRecommendationsModel
+/**
+ * Model OneTimeTokenSecrets
+ * 
+ */
+export type OneTimeTokenSecrets = Prisma.OneTimeTokenSecretsModel

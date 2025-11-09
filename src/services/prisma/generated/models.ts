@@ -8,9 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.ts'
-export type * from './models/Category.ts'
-export type * from './models/Item.ts'
-export type * from './models/Criteria.ts'
-export type * from './models/SavedRecommendation.ts'
-export type * from './commonInputTypes.ts'
+export type * from './models/Users.js'
+export type * from './models/Categories.js'
+export type * from './models/Items.js'
+export type * from './models/Criterias.js'
+export type * from './models/SavedRecommendations.js'
+export type * from './models/OneTimeTokenSecrets.js'
+export type * from './commonInputTypes.js'

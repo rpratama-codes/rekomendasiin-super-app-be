@@ -9,12 +9,12 @@
 * 🟢 You can import this file directly.
 */
 
-export const UserRole = {
+export const UserRoles = {
   system_user: 'system_user',
   user: 'user'
 } as const
 
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+export type UserRoles = (typeof UserRoles)[keyof typeof UserRoles]
 
 
 export const SavedRecommendationVisibility = {

@@ -9,41 +9,47 @@ generator client {
   output                 = "generated"
   engineType             = "client"
   moduleFormat           = "esm"
-  importFileExtension    = "ts"
+  importFileExtension    = "js"
   generatedFileExtension = "ts"
 }
 
-enum UserRole {
+enum UserRoles {
   system_user
   user
 }
 
-model User {
-  id         String   @id @default(uuid(7))
+model Users {
+  id         String    @id @default(uuid(7))
   first_name String?
   last_name  String?
-  email      String   @unique @db.Citext
-  username   String   @unique @db.Citext
+  email      String    @unique @db.Citext
+  username   String    @unique @db.Citext
   // just for note, 
   // password can be null because passwordless feature
-  verified   Boolean  @default(false)
+  verified   Boolean   @default(false)
   password   String?
   picture    String?
-  role       UserRole
+  role       UserRoles
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("user")
 }
 
-model Category {
-  id            String     @id @default(uuid(7))
+model Categories {
+  id            String      @id @default(uuid(7))
   category_name String?
-  item          Item[]
-  Criteria      Criteria[]
+  item          Items[]
+  Criteria      Criterias[]
 
-  @@map("category")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("categories")
 }
 
-model Item {
+model Items {
   id          String  @id @default(uuid(7))
   category_id String?
   item_name   String?
@@ -59,12 +65,15 @@ model Item {
   weight      Float?
   picture     String?
 
-  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  @@map("item")
+  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+
+  @@map("items")
 }
 
-model Criteria {
+model Criterias {
   id            String  @id @default(uuid(7))
   category_id   String?
   criteria_name String
@@ -79,9 +88,12 @@ model Criteria {
   price         Float   @default(0)
   weight        Float   @default(0)
 
-  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  @@map("criteria")
+  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+
+  @@map("criterias")
 }
 
 // 
@@ -93,10 +105,32 @@ enum SavedRecommendationVisibility {
   limited
 }
 
-model SavedRecommendation {
+model SavedRecommendations {
   id         String                        @id @default(uuid(7))
   user_id    String?
   visibility SavedRecommendationVisibility @default(public)
+  results    Json                          @db.JsonB
+  // versioning for result
+  version    Int                           @default(1)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("saved_recommendations")
+}
+
+model OneTimeTokenSecrets {
+  id         String   @id @default(uuid(7))
+  user_id    String
+  secret     String
+  algorithm  String
+  time_used  Int      @default(0)
+  expired_at DateTime
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("one_time_token_secrets")
 }
 
 // Save for Next Sprint

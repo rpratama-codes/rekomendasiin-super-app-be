@@ -12,7 +12,7 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "./prismaNamespace.ts"
+import type * as Prisma from "./prismaNamespace.js"
 
 
 const config: runtime.GetPrismaClientConfig = {
@@ -27,9 +27,9 @@ const config: runtime.GetPrismaClientConfig = {
       "fromEnvVar": null
     },
     "config": {
-      "generatedFileExtension": "ts",
-      "importFileExtension": "ts",
+      "importFileExtension": "js",
       "moduleFormat": "esm",
+      "generatedFileExtension": "ts",
       "engineType": "client"
     },
     "binaryTargets": [
@@ -59,8 +59,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n  // Prisma New Generator\n  provider               = \"prisma-client\"\n  output                 = \"generated\"\n  engineType             = \"client\"\n  moduleFormat           = \"esm\"\n  importFileExtension    = \"ts\"\n  generatedFileExtension = \"ts\"\n}\n\nenum UserRole {\n  system_user\n  user\n}\n\nmodel User {\n  id         String   @id @default(uuid(7))\n  first_name String?\n  last_name  String?\n  email      String   @unique @db.Citext\n  username   String   @unique @db.Citext\n  // just for note, \n  // password can be null because passwordless feature\n  verified   Boolean  @default(false)\n  password   String?\n  picture    String?\n  role       UserRole\n\n  @@map(\"user\")\n}\n\nmodel Category {\n  id            String     @id @default(uuid(7))\n  category_name String?\n  item          Item[]\n  Criteria      Criteria[]\n\n  @@map(\"category\")\n}\n\nmodel Item {\n  id          String  @id @default(uuid(7))\n  category_id String?\n  item_name   String?\n  soc         Float?\n  ram         Float?\n  rom         Float?\n  camera      Float?\n  screen      Float?\n  nfc         Float?\n  network     Float?\n  battery     Float?\n  price       Float?\n  weight      Float?\n  picture     String?\n\n  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"item\")\n}\n\nmodel Criteria {\n  id            String  @id @default(uuid(7))\n  category_id   String?\n  criteria_name String\n  soc           Float   @default(0)\n  ram           Float   @default(0)\n  rom           Float   @default(0)\n  camera        Float   @default(0)\n  screen        Float   @default(0)\n  nfc           Float   @default(0)\n  network       Float   @default(0)\n  battery       Float   @default(0)\n  price         Float   @default(0)\n  weight        Float   @default(0)\n\n  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"criteria\")\n}\n\n// \n// Write for future.\n// \nenum SavedRecommendationVisibility {\n  private\n  public\n  limited\n}\n\nmodel SavedRecommendation {\n  id         String                        @id @default(uuid(7))\n  user_id    String?\n  visibility SavedRecommendationVisibility @default(public)\n}\n\n// Save for Next Sprint\n\n// model BenchmarkSource {\n//   id          String  @id @default(uuid(7))\n//   name        String\n//   description String?\n\n//   ItemSpecs ItemSpecs[]\n\n//   @@map(\"benchmark_source\")\n// }\n\n// model ItemSpecs {\n//   id           String  @id @default(uuid(7))\n//   benchmark_id String\n//   item_id      String\n//   name         String\n//   value        Float\n//   description  String?\n\n//   item      Item            @relation(fields: [item_id], references: [id])\n//   benchmark BenchmarkSource @relation(fields: [benchmark_id], references: [id])\n\n//   @@map(\"item_specs\")\n// }\n",
-  "inlineSchemaHash": "befd30af4510b93cdc4b0ddfeee54b0e43cbfbe5654bac7e1eef64ec3aad683a",
+  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n  // Prisma New Generator\n  provider               = \"prisma-client\"\n  output                 = \"generated\"\n  engineType             = \"client\"\n  moduleFormat           = \"esm\"\n  importFileExtension    = \"js\"\n  generatedFileExtension = \"ts\"\n}\n\nenum UserRoles {\n  system_user\n  user\n}\n\nmodel Users {\n  id         String    @id @default(uuid(7))\n  first_name String?\n  last_name  String?\n  email      String    @unique @db.Citext\n  username   String    @unique @db.Citext\n  // just for note, \n  // password can be null because passwordless feature\n  verified   Boolean   @default(false)\n  password   String?\n  picture    String?\n  role       UserRoles\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  @@map(\"user\")\n}\n\nmodel Categories {\n  id            String      @id @default(uuid(7))\n  category_name String?\n  item          Items[]\n  Criteria      Criterias[]\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  @@map(\"categories\")\n}\n\nmodel Items {\n  id          String  @id @default(uuid(7))\n  category_id String?\n  item_name   String?\n  soc         Float?\n  ram         Float?\n  rom         Float?\n  camera      Float?\n  screen      Float?\n  nfc         Float?\n  network     Float?\n  battery     Float?\n  price       Float?\n  weight      Float?\n  picture     String?\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"items\")\n}\n\nmodel Criterias {\n  id            String  @id @default(uuid(7))\n  category_id   String?\n  criteria_name String\n  soc           Float   @default(0)\n  ram           Float   @default(0)\n  rom           Float   @default(0)\n  camera        Float   @default(0)\n  screen        Float   @default(0)\n  nfc           Float   @default(0)\n  network       Float   @default(0)\n  battery       Float   @default(0)\n  price         Float   @default(0)\n  weight        Float   @default(0)\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"criterias\")\n}\n\n// \n// Write for future.\n// \nenum SavedRecommendationVisibility {\n  private\n  public\n  limited\n}\n\nmodel SavedRecommendations {\n  id         String                        @id @default(uuid(7))\n  user_id    String?\n  visibility SavedRecommendationVisibility @default(public)\n  results    Json                          @db.JsonB\n  // versioning for result\n  version    Int                           @default(1)\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  @@map(\"saved_recommendations\")\n}\n\nmodel OneTimeTokenSecrets {\n  id         String   @id @default(uuid(7))\n  user_id    String\n  secret     String\n  algorithm  String\n  time_used  Int      @default(0)\n  expired_at DateTime\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  @@map(\"one_time_token_secrets\")\n}\n\n// Save for Next Sprint\n\n// model BenchmarkSource {\n//   id          String  @id @default(uuid(7))\n//   name        String\n//   description String?\n\n//   ItemSpecs ItemSpecs[]\n\n//   @@map(\"benchmark_source\")\n// }\n\n// model ItemSpecs {\n//   id           String  @id @default(uuid(7))\n//   benchmark_id String\n//   item_id      String\n//   name         String\n//   value        Float\n//   description  String?\n\n//   item      Item            @relation(fields: [item_id], references: [id])\n//   benchmark BenchmarkSource @relation(fields: [benchmark_id], references: [id])\n\n//   @@map(\"item_specs\")\n// }\n",
+  "inlineSchemaHash": "b215d9d3e2bb96a86d1ad10b260396b456f0e26f20616d0d0ab759e014188c82",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
@@ -70,7 +70,7 @@ const config: runtime.GetPrismaClientConfig = {
   "dirname": ""
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"first_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"last_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"picture\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"}],\"dbName\":\"user\"},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item\",\"kind\":\"object\",\"type\":\"Item\",\"relationName\":\"CategoryToItem\"},{\"name\":\"Criteria\",\"kind\":\"object\",\"type\":\"Criteria\",\"relationName\":\"CategoryToCriteria\"}],\"dbName\":\"category\"},\"Item\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"soc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ram\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"rom\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"camera\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"screen\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"nfc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"network\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"battery\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"weight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"picture\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToItem\"}],\"dbName\":\"item\"},\"Criteria\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"criteria_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"soc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ram\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"rom\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"camera\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"screen\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"nfc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"network\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"battery\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"weight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToCriteria\"}],\"dbName\":\"criteria\"},\"SavedRecommendation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"visibility\",\"kind\":\"enum\",\"type\":\"SavedRecommendationVisibility\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Users\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"first_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"last_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"picture\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRoles\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"user\"},\"Categories\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item\",\"kind\":\"object\",\"type\":\"Items\",\"relationName\":\"CategoriesToItems\"},{\"name\":\"Criteria\",\"kind\":\"object\",\"type\":\"Criterias\",\"relationName\":\"CategoriesToCriterias\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"categories\"},\"Items\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"soc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ram\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"rom\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"camera\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"screen\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"nfc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"network\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"battery\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"weight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"picture\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Categories\",\"relationName\":\"CategoriesToItems\"}],\"dbName\":\"items\"},\"Criterias\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"criteria_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"soc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ram\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"rom\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"camera\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"screen\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"nfc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"network\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"battery\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"weight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Categories\",\"relationName\":\"CategoriesToCriterias\"}],\"dbName\":\"criterias\"},\"SavedRecommendations\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"visibility\",\"kind\":\"enum\",\"type\":\"SavedRecommendationVisibility\"},{\"name\":\"results\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"saved_recommendations\"},\"OneTimeTokenSecrets\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"secret\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"algorithm\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"time_used\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"expired_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"one_time_token_secrets\"}},\"enums\":{},\"types\":{}}")
 config.engineWasm = undefined
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
@@ -103,7 +103,7 @@ export interface PrismaClientConstructor {
    * ```
    * const prisma = new PrismaClient()
    * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * const users = await prisma.users.findMany()
    * ```
    * 
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -125,7 +125,7 @@ export interface PrismaClientConstructor {
  * ```
  * const prisma = new PrismaClient()
  * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * const users = await prisma.users.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -220,54 +220,64 @@ export interface PrismaClient<
   }>>
 
       /**
-   * `prisma.user`: Exposes CRUD operations for the **User** model.
+   * `prisma.users`: Exposes CRUD operations for the **Users** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Users
-    * const users = await prisma.user.findMany()
+    * const users = await prisma.users.findMany()
     * ```
     */
-  get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+  get users(): Prisma.UsersDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.category`: Exposes CRUD operations for the **Category** model.
+   * `prisma.categories`: Exposes CRUD operations for the **Categories** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Categories
-    * const categories = await prisma.category.findMany()
+    * const categories = await prisma.categories.findMany()
     * ```
     */
-  get category(): Prisma.CategoryDelegate<ExtArgs, { omit: OmitOpts }>;
+  get categories(): Prisma.CategoriesDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.item`: Exposes CRUD operations for the **Item** model.
+   * `prisma.items`: Exposes CRUD operations for the **Items** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Items
-    * const items = await prisma.item.findMany()
+    * const items = await prisma.items.findMany()
     * ```
     */
-  get item(): Prisma.ItemDelegate<ExtArgs, { omit: OmitOpts }>;
+  get items(): Prisma.ItemsDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.criteria`: Exposes CRUD operations for the **Criteria** model.
+   * `prisma.criterias`: Exposes CRUD operations for the **Criterias** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Criteria
-    * const criteria = await prisma.criteria.findMany()
+    * // Fetch zero or more Criterias
+    * const criterias = await prisma.criterias.findMany()
     * ```
     */
-  get criteria(): Prisma.CriteriaDelegate<ExtArgs, { omit: OmitOpts }>;
+  get criterias(): Prisma.CriteriasDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.savedRecommendation`: Exposes CRUD operations for the **SavedRecommendation** model.
+   * `prisma.savedRecommendations`: Exposes CRUD operations for the **SavedRecommendations** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more SavedRecommendations
-    * const savedRecommendations = await prisma.savedRecommendation.findMany()
+    * const savedRecommendations = await prisma.savedRecommendations.findMany()
     * ```
     */
-  get savedRecommendation(): Prisma.SavedRecommendationDelegate<ExtArgs, { omit: OmitOpts }>;
+  get savedRecommendations(): Prisma.SavedRecommendationsDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.oneTimeTokenSecrets`: Exposes CRUD operations for the **OneTimeTokenSecrets** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OneTimeTokenSecrets
+    * const oneTimeTokenSecrets = await prisma.oneTimeTokenSecrets.findMany()
+    * ```
+    */
+  get oneTimeTokenSecrets(): Prisma.OneTimeTokenSecretsDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(dirname: string): PrismaClientConstructor {

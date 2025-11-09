@@ -1,13 +1,13 @@
-import type { Category, Criteria, Item } from '../generated/client.js';
+import type { Categories, Criterias, Items } from '../generated/client.js';
 import { PrismaService } from '../prisma.service.js';
 
-async function main(): Promise<void> {
+export async function seedCategoriesCriteriasItems(): Promise<void> {
 	try {
 		const prisma = new PrismaService();
 
 		await prisma.$transaction(async (tx) => {
 			for (const category of categories) {
-				await tx.category.upsert({
+				await tx.categories.upsert({
 					create: category,
 					update: category,
 					where: {
@@ -16,12 +16,12 @@ async function main(): Promise<void> {
 				});
 			}
 
-			console.log('Seeding category table is successfuly');
+			console.log('Seeding categories table is successfuly');
 		});
 
 		await prisma.$transaction(async (tx) => {
 			for (const item of items) {
-				await tx.item.upsert({
+				await tx.items.upsert({
 					create: item,
 					update: item,
 					where: {
@@ -30,12 +30,12 @@ async function main(): Promise<void> {
 				});
 			}
 
-			console.log('Seeding item table is successfuly');
+			console.log('Seeding items table is successfuly');
 		});
 
 		await prisma.$transaction(async (tx) => {
 			for (const criteria of criterias) {
-				await tx.criteria.upsert({
+				await tx.criterias.upsert({
 					create: criteria,
 					update: criteria,
 					where: {
@@ -44,7 +44,7 @@ async function main(): Promise<void> {
 				});
 			}
 
-			console.log('Seeding criteria table is successfuly');
+			console.log('Seeding criterias table is successfuly');
 		});
 
 		await prisma.$disconnect();
@@ -55,36 +55,49 @@ async function main(): Promise<void> {
 	}
 }
 
-main();
+const created_at = new Date();
+const updated_at = new Date();
 
-export const categories: Category[] = [
+export const categories: Categories[] = [
 	{
 		id: '019a3863-4698-75e7-972d-b89624be233a',
 		category_name: 'handphone',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3863-4698-7c1a-a3f6-72a8a7d8677c',
 		category_name: 'laptop',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3863-4698-79d5-ad31-6dffe2fbac68',
 		category_name: 'kamera',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3863-4698-7799-a389-57adfcc1d25c',
 		category_name: 'sepeda',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3863-4698-7b00-873b-17da307500fa',
 		category_name: 'motor',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3863-4698-7a05-8c04-2e82d016d104',
 		category_name: 'mobil',
+		created_at,
+		updated_at,
 	},
 ];
 
-export const criterias: Criteria[] = [
+export const criterias: Criterias[] = [
 	{
 		id: '019a386c-7104-7ceb-bf2d-d68fb168c9da',
 		category_id: '019a3863-4698-75e7-972d-b89624be233a',
@@ -99,6 +112,8 @@ export const criterias: Criteria[] = [
 		nfc: 0,
 		screen: 0,
 		weight: 0,
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a386c-7104-7e8f-9e1c-81aa8e202d80',
@@ -114,10 +129,12 @@ export const criterias: Criteria[] = [
 		nfc: 0,
 		screen: 0,
 		weight: 0,
+		created_at,
+		updated_at,
 	},
 ];
 
-export const items: Item[] = [
+export const items: Items[] = [
 	{
 		id: '019a3866-3882-72c6-96d9-018abbdddb1b',
 		category_id: '019a3863-4698-75e7-972d-b89624be233a',
@@ -133,6 +150,8 @@ export const items: Item[] = [
 		price: 4499000,
 		weight: 500,
 		picture: 'realme-8-pro-ofic-3.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7974-a66f-f61ffd0b387f',
@@ -149,6 +168,8 @@ export const items: Item[] = [
 		price: 4200000,
 		weight: 500,
 		picture: 'vivo-v20-2.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7e48-9396-bc4404ca4c13',
@@ -165,6 +186,8 @@ export const items: Item[] = [
 		price: 4000000,
 		weight: 500,
 		picture: 'realme-7-pro-11.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7fe7-a7d8-3505b355aac8',
@@ -181,6 +204,8 @@ export const items: Item[] = [
 		price: 4200000,
 		weight: 500,
 		picture: 'oppo-reno-5-4g-.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7be1-a5dd-d8783a734386',
@@ -197,6 +222,8 @@ export const items: Item[] = [
 		price: 4399000,
 		weight: 500,
 		picture: 'gsmarena_001.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7b0c-991c-eb1920c728e4',
@@ -213,6 +240,8 @@ export const items: Item[] = [
 		price: 3100000,
 		weight: 500,
 		picture: 'samsung-galaxy-m30-sm-m305f-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7166-829e-3b9a6ddc663d',
@@ -229,6 +258,8 @@ export const items: Item[] = [
 		price: 2600000,
 		weight: 500,
 		picture: 'samsung-galaxy-a21s-0.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7567-9f10-910df2a3050e',
@@ -245,6 +276,8 @@ export const items: Item[] = [
 		price: 2800000,
 		weight: 500,
 		picture: 'samsung-galaxy-m31-sm-m315f-red.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-78cc-9450-58377efce995',
@@ -261,6 +294,8 @@ export const items: Item[] = [
 		price: 5300000,
 		weight: 500,
 		picture: 'samsung-galaxy-s9-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-794f-a500-1b222259d5ab',
@@ -277,6 +312,8 @@ export const items: Item[] = [
 		price: 9400000,
 		weight: 500,
 		picture: 'samsung-galaxy-s10-plus-2-ceramic.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-78bf-819b-4b5747bee149',
@@ -293,6 +330,8 @@ export const items: Item[] = [
 		price: 7100000,
 		weight: 500,
 		picture: 'samsung-galaxy-s10-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7500-b5f6-bd255a37577b',
@@ -309,6 +348,8 @@ export const items: Item[] = [
 		price: 9200000,
 		weight: 500,
 		picture: 'samsung-galaxy-s20-11.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7d83-af9e-39baea59eff0',
@@ -325,6 +366,8 @@ export const items: Item[] = [
 		price: 8300000,
 		weight: 500,
 		picture: 'samsung-galaxy-s20-2.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7254-a3e5-70ed09207fb4',
@@ -341,6 +384,8 @@ export const items: Item[] = [
 		price: 1400000,
 		weight: 500,
 		picture: 'realme-c11-2.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7319-8d20-96a6771227f8',
@@ -357,6 +402,8 @@ export const items: Item[] = [
 		price: 1300000,
 		weight: 500,
 		picture: 'xiaomi-redmi-note-9-pro-global-01.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7202-a357-8a514a052474',
@@ -373,6 +420,8 @@ export const items: Item[] = [
 		price: 1500000,
 		weight: 500,
 		picture: 'gsmarena_002.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-74f1-9f35-7efe46b1f5f4',
@@ -389,6 +438,8 @@ export const items: Item[] = [
 		price: 1700000,
 		weight: 500,
 		picture: 'realme-c15-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-758d-9cf7-c375574f271a',
@@ -405,6 +456,8 @@ export const items: Item[] = [
 		price: 1600000,
 		weight: 500,
 		picture: 'xiaomi-redmi-9c-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7226-b895-8e99ac254cea',
@@ -421,6 +474,8 @@ export const items: Item[] = [
 		price: 1800000,
 		weight: 500,
 		picture: 'realme-narzo-30a-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-70b6-b841-f81052b0285f',
@@ -437,6 +492,8 @@ export const items: Item[] = [
 		price: 1700000,
 		weight: 500,
 		picture: 'xiaomi-poco-m3-31.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7fe1-aea2-49fc0e4b231d',
@@ -453,6 +510,8 @@ export const items: Item[] = [
 		price: 3500000,
 		weight: 500,
 		picture: 'realme-8-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7690-8c39-ae1f3a48c5ca',
@@ -469,6 +528,8 @@ export const items: Item[] = [
 		price: 1600000,
 		weight: 500,
 		picture: 'vivo-y15-01.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7ba4-903c-cb399ad42dd5',
@@ -485,6 +546,8 @@ export const items: Item[] = [
 		price: 2100000,
 		weight: 500,
 		picture: 'xiaomi-redmi-note-7-2.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7506-ade4-4aa595c95020',
@@ -501,6 +564,8 @@ export const items: Item[] = [
 		price: 3200000,
 		weight: 500,
 		picture: 'xiaomi-mi-a2-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-703c-b69f-8345fdba8083',
@@ -517,6 +582,8 @@ export const items: Item[] = [
 		price: 2800000,
 		weight: 500,
 		picture: 'realme-7i-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7ad6-b654-5b97866712c5',
@@ -533,6 +600,8 @@ export const items: Item[] = [
 		price: 1800000,
 		weight: 500,
 		picture: 'xiaomi-redmi-9-power-0.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7e15-bc01-2885ba4e1a8f',
@@ -549,6 +618,8 @@ export const items: Item[] = [
 		price: 16900000,
 		weight: 500,
 		picture: 'xiaomi-mi11-ultra-5g-k1-11.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-78e4-b49d-a6fabd881683',
@@ -565,6 +636,8 @@ export const items: Item[] = [
 		price: 1700000,
 		weight: 500,
 		picture: 'gsmarena_003.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7009-9023-630bf3bd3518',
@@ -581,6 +654,8 @@ export const items: Item[] = [
 		price: 2100000,
 		weight: 500,
 		picture: 'xiaomi-poco-m3-3.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-75dc-98e1-352e969f11e0',
@@ -597,6 +672,8 @@ export const items: Item[] = [
 		price: 2300000,
 		weight: 500,
 		picture: 'xiaomi-redmi-note-8-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-73d1-9f42-22abb3b1e3d6',
@@ -613,6 +690,8 @@ export const items: Item[] = [
 		price: 2100000,
 		weight: 500,
 		picture: 'realme-5i-3.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-778e-9d3d-7e194f950d51',
@@ -629,6 +708,8 @@ export const items: Item[] = [
 		price: 2300000,
 		weight: 500,
 		picture: 'xiaomi-redmi-note10-11.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7adf-b2e9-040a826bf5b9',
@@ -645,6 +726,8 @@ export const items: Item[] = [
 		price: 3300000,
 		weight: 500,
 		picture: 'realme-6-pro-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-72c6-b699-a87e125f22ee',
@@ -661,6 +744,8 @@ export const items: Item[] = [
 		price: 2800000,
 		weight: 500,
 		picture: 'xiaomi-redmi-note-9-pro-global-0.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-79a9-b6cf-a4c1d9336547',
@@ -677,6 +762,8 @@ export const items: Item[] = [
 		price: 3600000,
 		weight: 500,
 		picture: 'oppo-reno4-2.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7a60-a830-6c2fca30f82d',
@@ -693,6 +780,8 @@ export const items: Item[] = [
 		price: 5600000,
 		weight: 500,
 		picture: 'oppo-reno4-pro-2.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7124-9bf7-95952865fe37',
@@ -709,6 +798,8 @@ export const items: Item[] = [
 		price: 3800000,
 		weight: 500,
 		picture: 'realme-7-pro-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-76bd-be7a-6dc444ba33fd',
@@ -725,6 +816,8 @@ export const items: Item[] = [
 		price: 4300000,
 		weight: 500,
 		picture: 'oppo-reno5-5g-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7468-8af3-2c7ffabb0af7',
@@ -741,6 +834,8 @@ export const items: Item[] = [
 		price: 3800000,
 		weight: 500,
 		picture: 'vivo-v20-1.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-76d9-9200-dd8fb7f96cf2',
@@ -757,5 +852,7 @@ export const items: Item[] = [
 		price: 3700000,
 		weight: 500,
 		picture: 'xiaomi-mi-11-lite-4g-11.jpg',
+		created_at,
+		updated_at,
 	},
 ];
