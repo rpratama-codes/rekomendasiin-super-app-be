@@ -1,3 +1,6 @@
+const created_at = new Date();
+const updated_at = new Date();
+
 export const testItems = [
 	{
 		id: '019a3866-3882-72c6-96d9-018abbdddb1b',
@@ -14,6 +17,8 @@ export const testItems = [
 		price: 4499000,
 		weight: 500,
 		picture: 'realme-8-pro-ofic-3.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7974-a66f-f61ffd0b387f',
@@ -30,6 +35,8 @@ export const testItems = [
 		price: 4200000,
 		weight: 500,
 		picture: 'vivo-v20-2.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7e48-9396-bc4404ca4c13',
@@ -46,6 +53,8 @@ export const testItems = [
 		price: 4000000,
 		weight: 500,
 		picture: 'realme-7-pro-11.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7fe7-a7d8-3505b355aac8',
@@ -62,6 +71,8 @@ export const testItems = [
 		price: 4200000,
 		weight: 500,
 		picture: 'oppo-reno-5-4g-.jpg',
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a3866-3882-7be1-a5dd-d8783a734386',
@@ -78,6 +89,8 @@ export const testItems = [
 		price: 4399000,
 		weight: 500,
 		picture: 'gsmarena_001.jpg',
+		created_at,
+		updated_at,
 	},
 ];
 
@@ -96,6 +109,8 @@ export const testCriterias = [
 		nfc: 0,
 		screen: 0,
 		weight: 0,
+		created_at,
+		updated_at,
 	},
 	{
 		id: '019a386c-7104-7e8f-9e1c-81aa8e202d80',
@@ -111,5 +126,7 @@ export const testCriterias = [
 		nfc: 0,
 		screen: 0,
 		weight: 0,
+		created_at,
+		updated_at,
 	},
 ];

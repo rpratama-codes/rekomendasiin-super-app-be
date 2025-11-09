@@ -1,6 +1,10 @@
-import type { Category, Criteria, Item } from '@prisma/client';
 import type { Logger } from 'winston';
 import { ServiceBase } from '../../utils/base-class/service.class.js';
+import type {
+	Categories,
+	Criterias,
+	Items,
+} from '../prisma/generated/client.js';
 import type { DecisionSupportSystems } from '../suggesion/dss.service.js';
 
 export class StoreFrontService extends ServiceBase {
@@ -14,16 +18,16 @@ export class StoreFrontService extends ServiceBase {
 		this.dss = dss;
 	}
 
-	public async listCategory(): Promise<Category[]> {
-		const category = await this.prisma.category.findMany();
+	public async listCategory(): Promise<Categories[]> {
+		const category = await this.prisma.categories.findMany();
 
 		return category;
 	}
 
 	public async listCriteriaClient(): Promise<
-		Pick<Criteria, 'id' | 'criteria_name'>[]
+		Pick<Criterias, 'id' | 'criteria_name'>[]
 	> {
-		const criteria = await this.prisma.criteria.findMany({
+		const criteria = await this.prisma.criterias.findMany({
 			select: {
 				id: true,
 				criteria_name: true,
@@ -43,12 +47,12 @@ export class StoreFrontService extends ServiceBase {
 		};
 		criteria_id: string;
 	}): Promise<{
-		spec: Item[];
+		spec: Items[];
 		result: Record<string, string | number | null>[];
-		criteria: Criteria;
+		criteria: Criterias;
 		comparable_criteria: string[];
 	}> {
-		const items = await this.prisma.item.findMany({
+		const items = await this.prisma.items.findMany({
 			where: {
 				price: {
 					gte: basePrice.min,
@@ -57,7 +61,7 @@ export class StoreFrontService extends ServiceBase {
 			},
 		});
 
-		const criteria = await this.prisma.criteria.findFirst({
+		const criteria = await this.prisma.criterias.findFirst({
 			where: {
 				id: criteria_id,
 			},

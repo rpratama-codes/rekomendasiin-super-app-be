@@ -1,10 +1,13 @@
-import type { Criteria, Item } from '@prisma/client';
+import type { Criterias, Items } from '../prisma/generated/client.js';
 
 export type NormalizationItem = {
 	[x: string]: string | number | null;
 };
 
-export type CriteriaO = Omit<Criteria, 'id' | 'criteria_name' | 'category_id'>;
+export type CriteriaO = Omit<
+	Criterias,
+	'id' | 'criteria_name' | 'category_id' | 'created_at' | 'updated_at'
+>;
 
 export class DecisionSupportSystems {
 	public criteriaPicker(criteria: CriteriaO): Set<string> {
@@ -30,7 +33,7 @@ export class DecisionSupportSystems {
 	}: {
 		criteriaNames: Set<string>;
 		criteriaValues: CriteriaO;
-		items: Item[];
+		items: Items[];
 		output?: 'normalization' | 'weighting';
 	}): NormalizationItem[] {
 		/**
@@ -100,7 +103,7 @@ export class DecisionSupportSystems {
 					weight = 1;
 				}
 
-				let normalValue: string | number | null = value;
+				let normalValue: string | number | null | Date = value;
 
 				if (isCostOrBenefit.type === 'cost') {
 					normalValue = (isCostOrBenefit.value / normalValue) * weight;
