@@ -1,7 +1,6 @@
 /** biome-ignore-all lint/correctness/noUnusedImports: <.> */
 /** biome-ignore-all lint/correctness/noUnusedPrivateClassMembers: <.> */
 
-import { type User, UserRole } from '@prisma/client';
 import argon2 from 'argon2';
 import * as jose from 'jose';
 import * as OTPAuth from 'otpauth';
@@ -9,6 +8,8 @@ import {
 	ServiceBase,
 	type ServiceBaseParams,
 } from '../../utils/base-class/service.class.js';
+import type { Users } from '../prisma/generated/client.js';
+import { UserRoles } from '../prisma/generated/enums.js';
 import type { CreateUserDto, JwtPayload } from './auth-v1.dto.js';
 
 export class AuthV1Service extends ServiceBase {
@@ -18,7 +19,7 @@ export class AuthV1Service extends ServiceBase {
 		first_name,
 		last_name,
 	}: CreateUserDto) {
-		const currentUser = await this.prisma.user.findFirst({ where: { email } });
+		const currentUser = await this.prisma.users.findFirst({ where: { email } });
 
 		if (currentUser) {
 			throw this.errorSignal(409, 'User already registered!');
@@ -26,12 +27,12 @@ export class AuthV1Service extends ServiceBase {
 
 		const [userName, _domain] = email.toLowerCase().split('@');
 
-		const createUser = await this.prisma.user.create({
+		const createUser = await this.prisma.users.create({
 			data: {
 				first_name: first_name as string | null,
 				last_name: last_name as string | null,
 				email,
-				role: UserRole.user,
+				role: UserRoles.user,
 				username: `${userName}+${Date.now()}`,
 				password: await argon2.hash(password),
 			},
@@ -44,7 +45,7 @@ export class AuthV1Service extends ServiceBase {
 	}
 
 	public async signJWT(
-		user: Pick<User, 'id' | 'role'>,
+		user: Pick<Users, 'id' | 'role'>,
 		type: 'access' | 'refresh',
 	) {
 		const secret = new TextEncoder().encode(
@@ -82,14 +83,15 @@ export class AuthV1Service extends ServiceBase {
 		);
 	}
 
-	public async generateTOTP({ previousSecret }: { previousSecret?: string }) {
-		/**
-		 * This function to generate and regenerate Register or Login OTP.
-		 *
-		 * Note : 	if in the future the algoritm want to change,
-		 * 			please make a middleware or migration scheme.
-		 */
+	/**
+	 * This function to generate and regenerate Register or Login OTP.
+	 *
+	 * Note : 	if in the future the algoritm want to change,
+	 * 			please make a middleware or migration scheme.
+	 */
+	public async generateTOTP(payload?: { previousSecret?: string }) {
 		const secret = new OTPAuth.Secret().hex;
+		const expired_at = new Date(Date.now() + 15 * 60 * 1000);
 
 		const totp = new OTPAuth.TOTP({
 			issuer: 'Rekomendasiin',
@@ -97,14 +99,27 @@ export class AuthV1Service extends ServiceBase {
 			algorithm: 'SHA1',
 			digits: 6,
 			period: 15 * 60,
-			secret: OTPAuth.Secret.fromHex(previousSecret ?? secret),
+			secret: OTPAuth.Secret.fromHex(payload?.previousSecret ?? secret),
 		});
-
-		this.logger.debug('Totp : ', totp);
 
 		return {
 			otp: totp.generate(),
-			secret: totp.secret,
+			algorithm: totp.algorithm,
+			secret,
+			expired_at,
 		};
+	}
+
+	public async storeTOTP(payload: {
+		user_id: string;
+		algorithm: string;
+		secret: string;
+		expired_at: Date;
+	}): Promise<void> {
+		await this.prisma.oneTimeTokenSecrets.create({
+			data: {
+				...payload,
+			},
+		});
 	}
 }
