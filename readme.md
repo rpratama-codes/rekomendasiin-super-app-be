@@ -53,25 +53,29 @@ Tech Specs :
 
 <https://medium.com/@robinviktorsson/setting-up-a-modern-typescript-project-with-rollup-no-framework-e24a7564394c>
 
-## Building
+## Building  
+
+Command below just a basic guidline, 
+but the build it can be depens on the environment.
+Please do it yourself.
 
 ```shell
 pnpm install
-pnpm exec prisma generate  
+pnpm exec prisma generate
 pnpm build
-
-#
-# We doesn't need need step below anymore
-# we already bundling the only needed dependency.
-#
 # because the repository using husky as git hook
 # so it may unset first the prepare script
 # read : https://joshtronic.com/2022/07/10/husky-command-not-found-with-npm-install-production/
 cd dist
 pnpm pkg set scripts.prepare=" "
-pnpm install --production
+pnpm install --production --shamefully-hoist
+pnpm dlx prisma@6.18.0 generate
+# Run the app with command below :
+node index.js
 ```
 
 ## Footnotes  
+
+Stateless Backend
 
 Readable Codes!, Maintainable Codes!, Future Proof!.
