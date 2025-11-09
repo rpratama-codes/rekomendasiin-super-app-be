@@ -42,12 +42,26 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3000:3000"
-    env_file:
-      - .env
+      - "4000:4000"
     depends_on:
       - postgres
       - mongo
+      - smtp
+    # This is for development only!
+    # I need network host because issue of smtp4dev can't hit from another container.
+    network_mode: host
+    env_file:
+      - .env.docker
+    environment:
+      - NODE_ENV=development
+      - APP_PORT=4000
+      - SMTP_EMAIL=user@localhost
+      - SMTP_HOST=localhost
+      - SMTP_PORT=2525
+      - SMTP_USER=user
+      - SMTP_PASS=pass
+      - MONGO_URI=mongodb://user:pass@localhost:27017/rekomendasiin?authSource=admin
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@localhost/postgres
 
 volumes:
   postgres-data:

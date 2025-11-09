@@ -1,5 +1,9 @@
 dist
+coverage
 node_modules
 .git
 .husky
 .vscode
+.react-email
+.env*
+ca.pem

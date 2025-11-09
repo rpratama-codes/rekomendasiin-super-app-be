@@ -14,13 +14,12 @@ node_modules/
 # Logs and other temporary files
 node_modules
 dist
+coverage/
+ca.pem
 *.log
 .DS_Store
-.env
-.env.*
-!.env.example
-
-# Vitest coverage reports
-coverage/
 .vitest-cache/
 .react-email
+.env
+.env*
+!.env.example

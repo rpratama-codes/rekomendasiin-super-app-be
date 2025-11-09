@@ -7,26 +7,48 @@ export default defineConfig({
 		 * Still find out to include prisma and argon2 into bundle.
 		 */
 		noExternal: true,
-		external: ["@prisma/client", "@prisma/adapter-pg", "argon2"],
+		external: ["pg", "argon2"],
 	},
 	build: {
+		// I think i shoud use feature below in the future.
+		// minify: true,
+		// sourcemap: true,
 		outDir: "./dist",
 		ssr: "./src/index.ts",
 	},
 	plugins: [
 		viteStaticCopy({
+			// Ignore missing file
+			silent: true,
 			targets: [
 				{
 					src: "package.json",
-					dest: "",
+					dest: "./",
+					transform: {
+						handler: (file, name) => {
+							/**
+							 * TODO : Create Transform function to include external dependency only!
+							 */
+
+							return file;
+						},
+					},
 				},
 				{
 					src: "pnpm-lock.yaml",
-					dest: "",
+					dest: "./",
 				},
 				{
 					src: "src/services/prisma/schema.prisma",
+					dest: "./",
+				},
+				{
+					src: "ca.pem",
 					dest: "",
+				},
+				{
+					src: ".env",
+					dest: "./",
 				},
 			],
 		}),
