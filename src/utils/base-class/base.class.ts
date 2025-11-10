@@ -1,18 +1,17 @@
 import type { Logger } from 'winston';
+import { logger } from '../logger/winston.js';
 import {
 	type HttpExceptionStatusCode,
 	httpExceptions,
 } from '../misc/http-exceptions.js';
 import { ErrorConstructor } from './error.class.js';
 
-export interface BaseClassParams {
-	logger: Logger;
-}
+// export interface BaseClassParams {}
 
 export class BaseClass {
 	protected logger: Logger;
 
-	constructor({ logger }: BaseClassParams) {
+	constructor() {
 		this.logger = logger;
 	}
 

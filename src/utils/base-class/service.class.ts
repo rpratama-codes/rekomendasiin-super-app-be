@@ -1,13 +1,11 @@
 import { PrismaService } from '../../services/prisma/prisma.service.js';
-import { BaseClass, type BaseClassParams } from './base.class.js';
-
-export interface ServiceBaseParams extends BaseClassParams {}
+import { BaseClass } from './base.class.js';
 
 export class ServiceBase extends BaseClass {
 	protected prisma: PrismaService;
 
-	constructor({ logger }: ServiceBaseParams) {
-		super({ logger });
+	constructor() {
+		super();
 		this.prisma = new PrismaService();
 	}
 }

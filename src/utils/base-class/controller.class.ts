@@ -3,17 +3,11 @@ import type {
 	HttpExceptionStatusCode,
 	HttpSuccessfulStatusCode,
 } from '../misc/http-exceptions.js';
-import { BaseClass, type BaseClassParams } from './base.class.js';
-
-export interface ControllerBaseParams extends BaseClassParams {}
+import { BaseClass } from './base.class.js';
 
 export type ResponseData = Record<string, unknown> | Record<string, unknown>[];
 
 export class ControllerBase extends BaseClass {
-	constructor({ logger }: ControllerBaseParams) {
-		super({ logger });
-	}
-
 	private generateMessage(
 		code: HttpSuccessfulStatusCode | HttpExceptionStatusCode,
 		message?: string,
