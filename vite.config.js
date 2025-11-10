@@ -11,7 +11,7 @@ export default defineConfig({
 	},
 	build: {
 		// I think i shoud use feature below in the future.
-		// minify: true,
+		minify: true,
 		// sourcemap: true,
 		outDir: "./dist",
 		ssr: "./src/index.ts",
