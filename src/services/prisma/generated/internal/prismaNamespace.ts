@@ -985,7 +985,7 @@ export const OneTimeTokenSecretsScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   secret: 'secret',
-  algorithm: 'algorithm',
+  config: 'config',
   time_used: 'time_used',
   expired_at: 'expired_at',
   created_at: 'created_at',

@@ -123,7 +123,7 @@ model OneTimeTokenSecrets {
   id         String   @id @default(uuid(7))
   user_id    String
   secret     String
-  algorithm  String
+  config     Json     @db.JsonB
   time_used  Int      @default(0)
   expired_at DateTime
 

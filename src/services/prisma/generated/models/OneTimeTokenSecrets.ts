@@ -38,7 +38,6 @@ export type OneTimeTokenSecretsMinAggregateOutputType = {
   id: string | null
   user_id: string | null
   secret: string | null
-  algorithm: string | null
   time_used: number | null
   expired_at: Date | null
   created_at: Date | null
@@ -49,7 +48,6 @@ export type OneTimeTokenSecretsMaxAggregateOutputType = {
   id: string | null
   user_id: string | null
   secret: string | null
-  algorithm: string | null
   time_used: number | null
   expired_at: Date | null
   created_at: Date | null
@@ -60,7 +58,7 @@ export type OneTimeTokenSecretsCountAggregateOutputType = {
   id: number
   user_id: number
   secret: number
-  algorithm: number
+  config: number
   time_used: number
   expired_at: number
   created_at: number
@@ -81,7 +79,6 @@ export type OneTimeTokenSecretsMinAggregateInputType = {
   id?: true
   user_id?: true
   secret?: true
-  algorithm?: true
   time_used?: true
   expired_at?: true
   created_at?: true
@@ -92,7 +89,6 @@ export type OneTimeTokenSecretsMaxAggregateInputType = {
   id?: true
   user_id?: true
   secret?: true
-  algorithm?: true
   time_used?: true
   expired_at?: true
   created_at?: true
@@ -103,7 +99,7 @@ export type OneTimeTokenSecretsCountAggregateInputType = {
   id?: true
   user_id?: true
   secret?: true
-  algorithm?: true
+  config?: true
   time_used?: true
   expired_at?: true
   created_at?: true
@@ -201,7 +197,7 @@ export type OneTimeTokenSecretsGroupByOutputType = {
   id: string
   user_id: string
   secret: string
-  algorithm: string
+  config: runtime.JsonValue
   time_used: number
   expired_at: Date
   created_at: Date
@@ -235,7 +231,7 @@ export type OneTimeTokenSecretsWhereInput = {
   id?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
   user_id?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
   secret?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
-  algorithm?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
+  config?: Prisma.JsonFilter<"OneTimeTokenSecrets">
   time_used?: Prisma.IntFilter<"OneTimeTokenSecrets"> | number
   expired_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
   created_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
@@ -246,7 +242,7 @@ export type OneTimeTokenSecretsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   secret?: Prisma.SortOrder
-  algorithm?: Prisma.SortOrder
+  config?: Prisma.SortOrder
   time_used?: Prisma.SortOrder
   expired_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -260,7 +256,7 @@ export type OneTimeTokenSecretsWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.OneTimeTokenSecretsWhereInput | Prisma.OneTimeTokenSecretsWhereInput[]
   user_id?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
   secret?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
-  algorithm?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
+  config?: Prisma.JsonFilter<"OneTimeTokenSecrets">
   time_used?: Prisma.IntFilter<"OneTimeTokenSecrets"> | number
   expired_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
   created_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
@@ -271,7 +267,7 @@ export type OneTimeTokenSecretsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   secret?: Prisma.SortOrder
-  algorithm?: Prisma.SortOrder
+  config?: Prisma.SortOrder
   time_used?: Prisma.SortOrder
   expired_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -290,7 +286,7 @@ export type OneTimeTokenSecretsScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"OneTimeTokenSecrets"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"OneTimeTokenSecrets"> | string
   secret?: Prisma.StringWithAggregatesFilter<"OneTimeTokenSecrets"> | string
-  algorithm?: Prisma.StringWithAggregatesFilter<"OneTimeTokenSecrets"> | string
+  config?: Prisma.JsonWithAggregatesFilter<"OneTimeTokenSecrets">
   time_used?: Prisma.IntWithAggregatesFilter<"OneTimeTokenSecrets"> | number
   expired_at?: Prisma.DateTimeWithAggregatesFilter<"OneTimeTokenSecrets"> | Date | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"OneTimeTokenSecrets"> | Date | string
@@ -301,7 +297,7 @@ export type OneTimeTokenSecretsCreateInput = {
   id?: string
   user_id: string
   secret: string
-  algorithm: string
+  config: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: number
   expired_at: Date | string
   created_at?: Date | string
@@ -312,7 +308,7 @@ export type OneTimeTokenSecretsUncheckedCreateInput = {
   id?: string
   user_id: string
   secret: string
-  algorithm: string
+  config: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: number
   expired_at: Date | string
   created_at?: Date | string
@@ -323,7 +319,7 @@ export type OneTimeTokenSecretsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   secret?: Prisma.StringFieldUpdateOperationsInput | string
-  algorithm?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: Prisma.IntFieldUpdateOperationsInput | number
   expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -334,7 +330,7 @@ export type OneTimeTokenSecretsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   secret?: Prisma.StringFieldUpdateOperationsInput | string
-  algorithm?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: Prisma.IntFieldUpdateOperationsInput | number
   expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -345,7 +341,7 @@ export type OneTimeTokenSecretsCreateManyInput = {
   id?: string
   user_id: string
   secret: string
-  algorithm: string
+  config: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: number
   expired_at: Date | string
   created_at?: Date | string
@@ -356,7 +352,7 @@ export type OneTimeTokenSecretsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   secret?: Prisma.StringFieldUpdateOperationsInput | string
-  algorithm?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: Prisma.IntFieldUpdateOperationsInput | number
   expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -367,7 +363,7 @@ export type OneTimeTokenSecretsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   secret?: Prisma.StringFieldUpdateOperationsInput | string
-  algorithm?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: Prisma.IntFieldUpdateOperationsInput | number
   expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -378,7 +374,7 @@ export type OneTimeTokenSecretsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   secret?: Prisma.SortOrder
-  algorithm?: Prisma.SortOrder
+  config?: Prisma.SortOrder
   time_used?: Prisma.SortOrder
   expired_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -393,7 +389,6 @@ export type OneTimeTokenSecretsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   secret?: Prisma.SortOrder
-  algorithm?: Prisma.SortOrder
   time_used?: Prisma.SortOrder
   expired_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -404,7 +399,6 @@ export type OneTimeTokenSecretsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   secret?: Prisma.SortOrder
-  algorithm?: Prisma.SortOrder
   time_used?: Prisma.SortOrder
   expired_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -421,7 +415,7 @@ export type OneTimeTokenSecretsSelect<ExtArgs extends runtime.Types.Extensions.I
   id?: boolean
   user_id?: boolean
   secret?: boolean
-  algorithm?: boolean
+  config?: boolean
   time_used?: boolean
   expired_at?: boolean
   created_at?: boolean
@@ -432,7 +426,7 @@ export type OneTimeTokenSecretsSelectCreateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   user_id?: boolean
   secret?: boolean
-  algorithm?: boolean
+  config?: boolean
   time_used?: boolean
   expired_at?: boolean
   created_at?: boolean
@@ -443,7 +437,7 @@ export type OneTimeTokenSecretsSelectUpdateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   user_id?: boolean
   secret?: boolean
-  algorithm?: boolean
+  config?: boolean
   time_used?: boolean
   expired_at?: boolean
   created_at?: boolean
@@ -454,14 +448,14 @@ export type OneTimeTokenSecretsSelectScalar = {
   id?: boolean
   user_id?: boolean
   secret?: boolean
-  algorithm?: boolean
+  config?: boolean
   time_used?: boolean
   expired_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type OneTimeTokenSecretsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "secret" | "algorithm" | "time_used" | "expired_at" | "created_at" | "updated_at", ExtArgs["result"]["oneTimeTokenSecrets"]>
+export type OneTimeTokenSecretsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "secret" | "config" | "time_used" | "expired_at" | "created_at" | "updated_at", ExtArgs["result"]["oneTimeTokenSecrets"]>
 
 export type $OneTimeTokenSecretsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "OneTimeTokenSecrets"
@@ -470,7 +464,7 @@ export type $OneTimeTokenSecretsPayload<ExtArgs extends runtime.Types.Extensions
     id: string
     user_id: string
     secret: string
-    algorithm: string
+    config: runtime.JsonValue
     time_used: number
     expired_at: Date
     created_at: Date
@@ -901,7 +895,7 @@ export interface OneTimeTokenSecretsFieldRefs {
   readonly id: Prisma.FieldRef<"OneTimeTokenSecrets", 'String'>
   readonly user_id: Prisma.FieldRef<"OneTimeTokenSecrets", 'String'>
   readonly secret: Prisma.FieldRef<"OneTimeTokenSecrets", 'String'>
-  readonly algorithm: Prisma.FieldRef<"OneTimeTokenSecrets", 'String'>
+  readonly config: Prisma.FieldRef<"OneTimeTokenSecrets", 'Json'>
   readonly time_used: Prisma.FieldRef<"OneTimeTokenSecrets", 'Int'>
   readonly expired_at: Prisma.FieldRef<"OneTimeTokenSecrets", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"OneTimeTokenSecrets", 'DateTime'>
