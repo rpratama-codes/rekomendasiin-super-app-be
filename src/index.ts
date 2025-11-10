@@ -4,7 +4,7 @@ import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { loggerMiddleware } from './middleware/logger.js';
 import { authRouteV1 } from './routes/auth/auth-v1.route.js';
 import { indexRoute } from './routes/index.route.js';
-import { storeFrontRoute } from './routes/store-front.route.js';
+import { storeFrontRoute } from './routes/store-front/store-front.route.js';
 import { logger } from './utils/logger/winston.js';
 
 const app = express();
