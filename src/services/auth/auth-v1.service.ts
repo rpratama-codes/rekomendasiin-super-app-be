@@ -3,11 +3,7 @@
 
 import argon2 from 'argon2';
 import * as jose from 'jose';
-import * as OTPAuth from 'otpauth';
-import {
-	ServiceBase,
-	type ServiceBaseParams,
-} from '../../utils/base-class/service.class.js';
+import { ServiceBase } from '../../utils/base-class/service.class.js';
 import type { Users } from '../prisma/generated/client.js';
 import { UserRoles } from '../prisma/generated/enums.js';
 import type { CreateUserDto, JwtPayload } from './auth-v1.dto.js';
@@ -81,45 +77,5 @@ export class AuthV1Service extends ServiceBase {
 			{ id: oldRefreshToken.payload.sub, role: oldRefreshToken.payload.role },
 			'refresh',
 		);
-	}
-
-	/**
-	 * This function to generate and regenerate Register or Login OTP.
-	 *
-	 * Note : 	if in the future the algoritm want to change,
-	 * 			please make a middleware or migration scheme.
-	 */
-	public async generateTOTP(payload?: { previousSecret?: string }) {
-		const secret = new OTPAuth.Secret().hex;
-		const expired_at = new Date(Date.now() + 15 * 60 * 1000);
-
-		const totp = new OTPAuth.TOTP({
-			issuer: 'Rekomendasiin',
-			label: 'UserOTP',
-			algorithm: 'SHA1',
-			digits: 6,
-			period: 15 * 60,
-			secret: OTPAuth.Secret.fromHex(payload?.previousSecret ?? secret),
-		});
-
-		return {
-			otp: totp.generate(),
-			algorithm: totp.algorithm,
-			secret,
-			expired_at,
-		};
-	}
-
-	public async storeTOTP(payload: {
-		user_id: string;
-		algorithm: string;
-		secret: string;
-		expired_at: Date;
-	}): Promise<void> {
-		await this.prisma.oneTimeTokenSecrets.create({
-			data: {
-				...payload,
-			},
-		});
 	}
 }
