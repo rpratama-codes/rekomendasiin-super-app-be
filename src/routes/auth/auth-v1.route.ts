@@ -2,12 +2,13 @@ import express, { type Request, type Response } from 'express';
 import { AuthV1Controller } from '../../controller/auth/auth-v1.controller.js';
 import { AuthV1Service } from '../../services/auth/auth-v1.service.js';
 import { MailService } from '../../services/mail/mail.service.js';
-import { logger } from '../../utils/logger/winston.js';
+import { OtpService } from '../../services/otp/otp.service.js';
 
+const otpService = new OtpService();
 const mailService = new MailService();
-const authV1Service = new AuthV1Service({ logger });
+const authV1Service = new AuthV1Service();
 const authV1Controller = new AuthV1Controller({
-	logger,
+	otpService,
 	mailService,
 	authV1Service,
 });

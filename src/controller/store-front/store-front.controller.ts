@@ -1,20 +1,14 @@
 import type { Request, Response } from 'express';
 import { storeFrontDto } from '../../services/store/store-front.dto.js';
-import { StoreFrontService } from '../../services/store/store-front.service.js';
-import { DecisionSupportSystems } from '../../services/suggesion/dss.service.js';
+import type { StoreFrontService } from '../../services/store/store-front.service.js';
 import { ControllerBase } from '../../utils/base-class/controller.class.js';
-import { logger } from '../../utils/logger/winston.js';
 
 export class StoreFrontController extends ControllerBase {
 	private storeFrontService: StoreFrontService;
 
-	constructor() {
-		super({ logger });
-		const dss = new DecisionSupportSystems();
-		this.storeFrontService = new StoreFrontService({
-			logger,
-			dss,
-		});
+	constructor({ storeFrontService }: { storeFrontService: StoreFrontService }) {
+		super();
+		this.storeFrontService = storeFrontService;
 	}
 
 	public async listCriteriaClient(_req: Request, res: Response) {

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { logger } from '../../utils/logger/winston.js';
+
 import { DecisionSupportSystems } from '../suggesion/dss.service.js';
 import { StoreFrontService } from './store-front.service.js';
+import 'dotenv/config';
 
 describe('Store front test', () => {
 	/**
@@ -10,7 +11,6 @@ describe('Store front test', () => {
 	 */
 
 	const storeFront = new StoreFrontService({
-		logger,
 		dss: new DecisionSupportSystems(),
 	});
 

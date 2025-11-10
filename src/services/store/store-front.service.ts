@@ -1,4 +1,3 @@
-import type { Logger } from 'winston';
 import { ServiceBase } from '../../utils/base-class/service.class.js';
 import type {
 	Categories,
@@ -10,11 +9,8 @@ import type { DecisionSupportSystems } from '../suggesion/dss.service.js';
 export class StoreFrontService extends ServiceBase {
 	private dss: DecisionSupportSystems;
 
-	constructor({
-		logger,
-		dss,
-	}: { logger: Logger; dss: DecisionSupportSystems }) {
-		super({ logger });
+	constructor({ dss }: { dss: DecisionSupportSystems }) {
+		super();
 		this.dss = dss;
 	}
 
