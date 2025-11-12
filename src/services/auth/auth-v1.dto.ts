@@ -16,3 +16,10 @@ export const jwtPayload = z.object({
 });
 
 export type JwtPayload = z.infer<typeof jwtPayload>;
+
+export const verifyOtpDto = z.object({
+	email: z.email(),
+	token: z.string(),
+});
+
+export type VerifyPayloadDto = z.infer<typeof verifyOtpDto>;

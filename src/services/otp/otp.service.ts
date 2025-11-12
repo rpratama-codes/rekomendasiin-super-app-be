@@ -61,6 +61,17 @@ export class OtpService extends ServiceBase {
 		});
 	}
 
+	public async retriveTOTP(user_id: string) {
+		return await this.prisma.oneTimeTokenSecrets.findFirst({
+			where: {
+				user_id,
+				expired_at: {
+					lt: new Date(),
+				},
+			},
+		});
+	}
+
 	public verifyTOTP(token: string, secret: string, config: ConfigOTP) {
 		const totp = new OTPAuth.TOTP({
 			...config,
@@ -68,5 +79,29 @@ export class OtpService extends ServiceBase {
 		});
 
 		return totp.validate({ token });
+	}
+
+	public async invalidateTOTP(token_id: string): Promise<void> {
+		await this.prisma.oneTimeTokenSecrets.update({
+			where: {
+				id: token_id,
+			},
+			data: {
+				expired_at: new Date(),
+			},
+		});
+	}
+
+	public async appendTimeUsed(token_id: string): Promise<void> {
+		await this.prisma.oneTimeTokenSecrets.update({
+			where: {
+				id: token_id,
+			},
+			data: {
+				time_used: {
+					increment: 1,
+				},
+			},
+		});
 	}
 }
