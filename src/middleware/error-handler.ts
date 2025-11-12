@@ -15,7 +15,14 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
 	res: Response,
 	_next: NextFunction,
 ) => {
-	logger.error('Error Handler :', err);
+	logger.error('-', err);
+
+	if (err instanceof SyntaxError) {
+		return res.status(400).json({
+			code: 400,
+			message: err.message,
+		});
+	}
 
 	if (err instanceof ErrorConstructor) {
 		return res.status(err.code).json({

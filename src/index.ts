@@ -1,37 +1,53 @@
-import express from 'express';
+import os from 'node:os';
+import express, {
+	type NextFunction,
+	type Request,
+	type Response,
+} from 'express';
 import 'dotenv/config';
+import helmet from 'helmet';
 import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { loggerMiddleware } from './middleware/logger.js';
 import { authRouteV1 } from './routes/auth/auth-v1.route.js';
-import { indexRoute } from './routes/index.route.js';
 import { storeFrontRoute } from './routes/store-front/store-front.route.js';
+import { HappyApp, HappyRouter } from './utils/base-class/happy-router.js';
 import { logger } from './utils/logger/winston.js';
 
 const app = express();
-const router = express.Router();
-const port = process.env.APP_PORT;
-
-/**
- * Config for auth.js to allow read the X-Forwarded-*` headers
- */
-app.set('trust proxy', true);
-
-/**
- * THE ORDER IS MATTER!!!
- */
-
-app.use(router);
-app.use(express.json());
-app.use(loggerMiddleware);
-app.use('/api', router);
-app.use(errorHandlerMiddleware);
-
-router.use(indexRoute);
-router.use(storeFrontRoute);
-router.use(authRouteV1);
-
-app.listen(port, () => {
-	logger.info(`Example app listening on port ${port}`);
+const router = express.Router({
+	mergeParams: true,
+	caseSensitive: true,
+	strict: true,
 });
 
-export default app;
+const happyRouter = new HappyRouter({
+	prefix: '/api',
+	expressRouter: router,
+	middlewares: [storeFrontRoute, authRouteV1],
+});
+
+const happyApp = new HappyApp({
+	expressApplication: app,
+	configs: { 'trust proxy': true },
+	middlewares: [
+		helmet(),
+		express.json(),
+		loggerMiddleware,
+		happyRouter.compass(),
+	],
+	errorHandlers: [errorHandlerMiddleware],
+	routes: [
+		{
+			path: '/',
+			handlers: [
+				(_req: Request, res: Response, _nx: NextFunction) =>
+					res.status(200).json({ code: 200, message: 'ok' }),
+			],
+		},
+	],
+});
+
+happyApp.sail(Number(process.env.APP_PORT), () => {
+	const hostname = os.hostname();
+	logger.info(`App listening on http://${hostname}:${process.env.APP_PORT}`);
+});
