@@ -6,15 +6,10 @@ import * as jose from 'jose';
 import { ServiceBase } from '../../utils/base-class/service.class.js';
 import type { Users } from '../prisma/generated/client.js';
 import { UserRoles } from '../prisma/generated/enums.js';
-import type { CreateUserDto, JwtPayload } from './auth-v1.dto.js';
+import type { JwtPayload, SignInDto, SignUpDto } from './auth-v1.dto.js';
 
 export class AuthV1Service extends ServiceBase {
-	public async createUser({
-		email,
-		password,
-		first_name,
-		last_name,
-	}: CreateUserDto) {
+	public async signUp({ email, password, first_name, last_name }: SignUpDto) {
 		const currentUser = await this.prisma.users.findFirst({ where: { email } });
 
 		if (currentUser) {
@@ -59,6 +54,48 @@ export class AuthV1Service extends ServiceBase {
 		return jwt;
 	}
 
+	public checkUser(user: Partial<Users> | null): Users & { password: string } {
+		if (!user) {
+			throw this.errorSignal(404, 'User not registered.');
+		}
+
+		if (!user.verified) {
+			throw this.errorSignal(403, 'Please verify your email!');
+		}
+
+		if (!user.password) {
+			throw this.errorSignal(403, 'Please login using another provider!');
+		}
+
+		return user as Users & { password: string };
+	}
+
+	public async signIn(payload: SignInDto) {
+		const getUser = await this.prisma.users.findFirst({
+			where: {
+				email: payload.email,
+			},
+		});
+
+		const user = this.checkUser(getUser);
+
+		const [verify, access_token, refresh_token] = await Promise.all([
+			argon2.verify(user.password, payload.password),
+			this.signJWT({ id: user.id, role: user.role }, 'access'),
+			this.signJWT({ id: user.id, role: user.role }, 'refresh'),
+		]);
+
+		if (!verify) {
+			throw this.errorSignal(401, 'Please check your login credential!.');
+		}
+
+		return {
+			user: { ...user, password: undefined },
+			access_token,
+			refresh_token,
+		};
+	}
+
 	public async refresh(refreshToken: string) {
 		const secret = new TextEncoder().encode(process.env.APP_SECRET_REFRESH);
 
@@ -66,16 +103,10 @@ export class AuthV1Service extends ServiceBase {
 
 		try {
 			oldRefreshToken = await jose.jwtVerify<JwtPayload>(refreshToken, secret);
-		} catch (error: unknown) {
-			if (error instanceof jose.errors.JWTInvalid) {
-				this.errorSignal(401, 'Please login again!.');
-			}
-			throw error;
+		} catch (_error: unknown) {
+			throw this.errorSignal(401, 'Please login again!.');
 		}
 
-		return await this.signJWT(
-			{ id: oldRefreshToken.payload.sub, role: oldRefreshToken.payload.role },
-			'refresh',
-		);
+		return oldRefreshToken;
 	}
 }

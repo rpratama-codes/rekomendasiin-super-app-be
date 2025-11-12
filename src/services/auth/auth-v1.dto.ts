@@ -1,13 +1,26 @@
 import z from 'zod';
 
-export const createUserDto = z.object({
+export const signUpDto = z.object({
 	first_name: z.string().nullable().optional(),
 	last_name: z.string().nullable().optional(),
-	email: z.email().nonempty(),
+	email: z
+		.email()
+		.nonempty()
+		.transform((email) => email.toLowerCase()),
 	password: z.string().min(8, 'Password must has minimum 8 character!'),
 });
 
-export type CreateUserDto = z.infer<typeof createUserDto>;
+export type SignUpDto = z.infer<typeof signUpDto>;
+
+export const signInDto = z.object({
+	email: z
+		.email()
+		.nonempty()
+		.transform((email) => email.toLowerCase()),
+	password: z.string().min(8, 'Password must has minimum 8 character!'),
+});
+
+export type SignInDto = z.infer<typeof signInDto>;
 
 export const jwtPayload = z.object({
 	role: z.enum(['user', 'system_user']),
@@ -23,3 +36,9 @@ export const verifyOtpDto = z.object({
 });
 
 export type VerifyPayloadDto = z.infer<typeof verifyOtpDto>;
+
+export const refreshTokenDto = z.object({
+	token: z.string(),
+});
+
+export type RefreshTokenDto = z.infer<typeof refreshTokenDto>;

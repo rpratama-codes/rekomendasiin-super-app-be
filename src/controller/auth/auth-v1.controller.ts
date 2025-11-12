@@ -1,7 +1,9 @@
 import { render } from '@react-email/components';
 import type { Request, Response } from 'express';
 import {
-	createUserDto,
+	refreshTokenDto,
+	signInDto,
+	signUpDto,
 	verifyOtpDto,
 } from '../../services/auth/auth-v1.dto.js';
 import type { AuthV1Service } from '../../services/auth/auth-v1.service.js';
@@ -21,9 +23,9 @@ export class AuthV1Controller extends ControllerBase {
 		super();
 	}
 
-	public async createUser(req: Request, res: Response) {
-		const dto = await createUserDto.parseAsync(req.body);
-		const create = await this.authV1Service.createUser(dto);
+	public async signUp(req: Request, res: Response) {
+		const dto = await signUpDto.parseAsync(req.body);
+		const create = await this.authV1Service.signUp(dto);
 		const otp = await this.otpService.generateTOTP();
 
 		const emailHtml = await render(
@@ -52,10 +54,14 @@ export class AuthV1Controller extends ControllerBase {
 			throw this.errorSignal(404, 'User not registered.');
 		}
 
+		if (user.verified) {
+			throw this.errorSignal(403, 'User already verified.');
+		}
+
 		const config = await this.otpService.retriveTOTP(user.id);
 
 		if (!config) {
-			throw this.errorSignal(404, 'User not registered.');
+			throw this.errorSignal(500);
 		}
 
 		const check = this.otpService.verifyTOTP(
@@ -67,6 +73,11 @@ export class AuthV1Controller extends ControllerBase {
 		if (!check) {
 			throw this.errorSignal(400, 'Wrong OTP!.');
 		}
+
+		await Promise.all([
+			this.otpService.invalidateTOTP(config.id),
+			this.userService.markUserAsActive(user.id),
+		]);
 
 		const token = Array.from<'access' | 'refresh'>(['access', 'refresh']).map(
 			async (tokenType) =>
@@ -82,6 +93,46 @@ export class AuthV1Controller extends ControllerBase {
 			status: 200,
 			data: {
 				user,
+				access_token,
+				refresh_token,
+			},
+		});
+	}
+
+	public async signIn(req: Request, res: Response) {
+		const dto = await signInDto.parseAsync(req.body);
+		const { user, access_token, refresh_token } =
+			await this.authV1Service.signIn(dto);
+
+		return this.sendApiResponse(res, {
+			status: 200,
+			data: {
+				user,
+				access_token,
+				refresh_token,
+			},
+		});
+	}
+
+	public async refreshToken(req: Request, res: Response) {
+		const dto = await refreshTokenDto.parseAsync(req.body);
+
+		const oldRefreshToken = await this.authV1Service.refresh(dto.token);
+
+		const [access_token, refresh_token] = await Promise.all([
+			this.authV1Service.signJWT(
+				{ id: oldRefreshToken.payload.sub, role: oldRefreshToken.payload.role },
+				'access',
+			),
+			this.authV1Service.signJWT(
+				{ id: oldRefreshToken.payload.sub, role: oldRefreshToken.payload.role },
+				'refresh',
+			),
+		]);
+
+		return this.sendApiResponse(res, {
+			status: 200,
+			data: {
 				access_token,
 				refresh_token,
 			},

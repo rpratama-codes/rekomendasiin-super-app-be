@@ -28,7 +28,7 @@ const happyRouter = new HappyRouter({
 			method: 'post',
 			handlers: [
 				async (req: Request, res: Response) =>
-					await authV1Controller.createUser(req, res),
+					await authV1Controller.signUp(req, res),
 			],
 		},
 		{
@@ -37,6 +37,22 @@ const happyRouter = new HappyRouter({
 			handlers: [
 				async (req: Request, res: Response) =>
 					await authV1Controller.verifyOTP(req, res),
+			],
+		},
+		{
+			path: '/refresh',
+			method: 'post',
+			handlers: [
+				async (req: Request, res: Response) =>
+					await authV1Controller.refreshToken(req, res),
+			],
+		},
+		{
+			path: '/sign-in',
+			method: 'post',
+			handlers: [
+				async (req: Request, res: Response) =>
+					await authV1Controller.signIn(req, res),
 			],
 		},
 	],

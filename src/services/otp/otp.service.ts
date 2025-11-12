@@ -50,14 +50,13 @@ export class OtpService extends ServiceBase {
 		user_id: string,
 		payload: GeneratedOTP,
 	): Promise<void> {
-		const data = {
-			...payload,
-			user_id,
-			token: undefined,
-		};
-
 		await this.prisma.oneTimeTokenSecrets.create({
-			data,
+			data: {
+				config: payload.config,
+				expired_at: payload.expired_at,
+				secret: payload.secret,
+				user_id,
+			},
 		});
 	}
 
@@ -66,19 +65,33 @@ export class OtpService extends ServiceBase {
 			where: {
 				user_id,
 				expired_at: {
-					lt: new Date(),
+					gte: new Date(),
 				},
 			},
 		});
 	}
 
-	public verifyTOTP(token: string, secret: string, config: ConfigOTP) {
+	/**
+	 *
+	 * @param token
+	 * @param secret
+	 * @param config
+	 * @returns boolean
+	 */
+	public verifyTOTP(token: string, secret: string, config: ConfigOTP): boolean {
 		const totp = new OTPAuth.TOTP({
 			...config,
 			secret: OTPAuth.Secret.fromHex(secret),
 		});
 
-		return totp.validate({ token });
+		const verify = totp.validate({ token });
+		let isValid = false;
+
+		if (verify === 0) {
+			isValid = true;
+		}
+
+		return isValid;
 	}
 
 	public async invalidateTOTP(token_id: string): Promise<void> {
