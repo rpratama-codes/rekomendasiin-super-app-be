@@ -236,6 +236,7 @@ export type OneTimeTokenSecretsWhereInput = {
   expired_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
   created_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
+  user?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
 }
 
 export type OneTimeTokenSecretsOrderByWithRelationInput = {
@@ -247,6 +248,7 @@ export type OneTimeTokenSecretsOrderByWithRelationInput = {
   expired_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  user?: Prisma.UsersOrderByWithRelationInput
 }
 
 export type OneTimeTokenSecretsWhereUniqueInput = Prisma.AtLeast<{
@@ -261,6 +263,7 @@ export type OneTimeTokenSecretsWhereUniqueInput = Prisma.AtLeast<{
   expired_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
   created_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
+  user?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
 }, "id">
 
 export type OneTimeTokenSecretsOrderByWithAggregationInput = {
@@ -295,13 +298,13 @@ export type OneTimeTokenSecretsScalarWhereWithAggregatesInput = {
 
 export type OneTimeTokenSecretsCreateInput = {
   id?: string
-  user_id: string
   secret: string
   config: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: number
   expired_at: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  user?: Prisma.UsersCreateNestedOneWithoutOneTimeTokenSecretsInput
 }
 
 export type OneTimeTokenSecretsUncheckedCreateInput = {
@@ -317,13 +320,13 @@ export type OneTimeTokenSecretsUncheckedCreateInput = {
 
 export type OneTimeTokenSecretsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
   secret?: Prisma.StringFieldUpdateOperationsInput | string
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: Prisma.IntFieldUpdateOperationsInput | number
   expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UsersUpdateOneWithoutOneTimeTokenSecretsNestedInput
 }
 
 export type OneTimeTokenSecretsUncheckedUpdateInput = {
@@ -350,7 +353,6 @@ export type OneTimeTokenSecretsCreateManyInput = {
 
 export type OneTimeTokenSecretsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
   secret?: Prisma.StringFieldUpdateOperationsInput | string
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   time_used?: Prisma.IntFieldUpdateOperationsInput | number
@@ -368,6 +370,16 @@ export type OneTimeTokenSecretsUncheckedUpdateManyInput = {
   expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OneTimeTokenSecretsListRelationFilter = {
+  every?: Prisma.OneTimeTokenSecretsWhereInput
+  some?: Prisma.OneTimeTokenSecretsWhereInput
+  none?: Prisma.OneTimeTokenSecretsWhereInput
+}
+
+export type OneTimeTokenSecretsOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type OneTimeTokenSecretsCountOrderByAggregateInput = {
@@ -409,6 +421,148 @@ export type OneTimeTokenSecretsSumOrderByAggregateInput = {
   time_used?: Prisma.SortOrder
 }
 
+export type OneTimeTokenSecretsCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.OneTimeTokenSecretsCreateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput> | Prisma.OneTimeTokenSecretsCreateWithoutUserInput[] | Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput | Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.OneTimeTokenSecretsCreateManyUserInputEnvelope
+  connect?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+}
+
+export type OneTimeTokenSecretsUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.OneTimeTokenSecretsCreateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput> | Prisma.OneTimeTokenSecretsCreateWithoutUserInput[] | Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput | Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.OneTimeTokenSecretsCreateManyUserInputEnvelope
+  connect?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+}
+
+export type OneTimeTokenSecretsUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.OneTimeTokenSecretsCreateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput> | Prisma.OneTimeTokenSecretsCreateWithoutUserInput[] | Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput | Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.OneTimeTokenSecretsUpsertWithWhereUniqueWithoutUserInput | Prisma.OneTimeTokenSecretsUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.OneTimeTokenSecretsCreateManyUserInputEnvelope
+  set?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  disconnect?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  delete?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  connect?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  update?: Prisma.OneTimeTokenSecretsUpdateWithWhereUniqueWithoutUserInput | Prisma.OneTimeTokenSecretsUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.OneTimeTokenSecretsUpdateManyWithWhereWithoutUserInput | Prisma.OneTimeTokenSecretsUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.OneTimeTokenSecretsScalarWhereInput | Prisma.OneTimeTokenSecretsScalarWhereInput[]
+}
+
+export type OneTimeTokenSecretsUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.OneTimeTokenSecretsCreateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput> | Prisma.OneTimeTokenSecretsCreateWithoutUserInput[] | Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput | Prisma.OneTimeTokenSecretsCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.OneTimeTokenSecretsUpsertWithWhereUniqueWithoutUserInput | Prisma.OneTimeTokenSecretsUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.OneTimeTokenSecretsCreateManyUserInputEnvelope
+  set?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  disconnect?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  delete?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  connect?: Prisma.OneTimeTokenSecretsWhereUniqueInput | Prisma.OneTimeTokenSecretsWhereUniqueInput[]
+  update?: Prisma.OneTimeTokenSecretsUpdateWithWhereUniqueWithoutUserInput | Prisma.OneTimeTokenSecretsUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.OneTimeTokenSecretsUpdateManyWithWhereWithoutUserInput | Prisma.OneTimeTokenSecretsUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.OneTimeTokenSecretsScalarWhereInput | Prisma.OneTimeTokenSecretsScalarWhereInput[]
+}
+
+export type OneTimeTokenSecretsCreateWithoutUserInput = {
+  id?: string
+  secret: string
+  config: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  time_used?: number
+  expired_at: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type OneTimeTokenSecretsUncheckedCreateWithoutUserInput = {
+  id?: string
+  secret: string
+  config: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  time_used?: number
+  expired_at: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type OneTimeTokenSecretsCreateOrConnectWithoutUserInput = {
+  where: Prisma.OneTimeTokenSecretsWhereUniqueInput
+  create: Prisma.XOR<Prisma.OneTimeTokenSecretsCreateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput>
+}
+
+export type OneTimeTokenSecretsCreateManyUserInputEnvelope = {
+  data: Prisma.OneTimeTokenSecretsCreateManyUserInput | Prisma.OneTimeTokenSecretsCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type OneTimeTokenSecretsUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.OneTimeTokenSecretsWhereUniqueInput
+  update: Prisma.XOR<Prisma.OneTimeTokenSecretsUpdateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.OneTimeTokenSecretsCreateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedCreateWithoutUserInput>
+}
+
+export type OneTimeTokenSecretsUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.OneTimeTokenSecretsWhereUniqueInput
+  data: Prisma.XOR<Prisma.OneTimeTokenSecretsUpdateWithoutUserInput, Prisma.OneTimeTokenSecretsUncheckedUpdateWithoutUserInput>
+}
+
+export type OneTimeTokenSecretsUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.OneTimeTokenSecretsScalarWhereInput
+  data: Prisma.XOR<Prisma.OneTimeTokenSecretsUpdateManyMutationInput, Prisma.OneTimeTokenSecretsUncheckedUpdateManyWithoutUserInput>
+}
+
+export type OneTimeTokenSecretsScalarWhereInput = {
+  AND?: Prisma.OneTimeTokenSecretsScalarWhereInput | Prisma.OneTimeTokenSecretsScalarWhereInput[]
+  OR?: Prisma.OneTimeTokenSecretsScalarWhereInput[]
+  NOT?: Prisma.OneTimeTokenSecretsScalarWhereInput | Prisma.OneTimeTokenSecretsScalarWhereInput[]
+  id?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
+  user_id?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
+  secret?: Prisma.StringFilter<"OneTimeTokenSecrets"> | string
+  config?: Prisma.JsonFilter<"OneTimeTokenSecrets">
+  time_used?: Prisma.IntFilter<"OneTimeTokenSecrets"> | number
+  expired_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
+  created_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"OneTimeTokenSecrets"> | Date | string
+}
+
+export type OneTimeTokenSecretsCreateManyUserInput = {
+  id?: string
+  secret: string
+  config: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  time_used?: number
+  expired_at: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type OneTimeTokenSecretsUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  secret?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  time_used?: Prisma.IntFieldUpdateOperationsInput | number
+  expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OneTimeTokenSecretsUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  secret?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  time_used?: Prisma.IntFieldUpdateOperationsInput | number
+  expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OneTimeTokenSecretsUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  secret?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  time_used?: Prisma.IntFieldUpdateOperationsInput | number
+  expired_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type OneTimeTokenSecretsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -420,6 +574,7 @@ export type OneTimeTokenSecretsSelect<ExtArgs extends runtime.Types.Extensions.I
   expired_at?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user?: boolean | Prisma.OneTimeTokenSecrets$userArgs<ExtArgs>
 }, ExtArgs["result"]["oneTimeTokenSecrets"]>
 
 export type OneTimeTokenSecretsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -431,6 +586,7 @@ export type OneTimeTokenSecretsSelectCreateManyAndReturn<ExtArgs extends runtime
   expired_at?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user?: boolean | Prisma.OneTimeTokenSecrets$userArgs<ExtArgs>
 }, ExtArgs["result"]["oneTimeTokenSecrets"]>
 
 export type OneTimeTokenSecretsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -442,6 +598,7 @@ export type OneTimeTokenSecretsSelectUpdateManyAndReturn<ExtArgs extends runtime
   expired_at?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user?: boolean | Prisma.OneTimeTokenSecrets$userArgs<ExtArgs>
 }, ExtArgs["result"]["oneTimeTokenSecrets"]>
 
 export type OneTimeTokenSecretsSelectScalar = {
@@ -456,10 +613,21 @@ export type OneTimeTokenSecretsSelectScalar = {
 }
 
 export type OneTimeTokenSecretsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "secret" | "config" | "time_used" | "expired_at" | "created_at" | "updated_at", ExtArgs["result"]["oneTimeTokenSecrets"]>
+export type OneTimeTokenSecretsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.OneTimeTokenSecrets$userArgs<ExtArgs>
+}
+export type OneTimeTokenSecretsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.OneTimeTokenSecrets$userArgs<ExtArgs>
+}
+export type OneTimeTokenSecretsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.OneTimeTokenSecrets$userArgs<ExtArgs>
+}
 
 export type $OneTimeTokenSecretsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "OneTimeTokenSecrets"
-  objects: {}
+  objects: {
+    user: Prisma.$UsersPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     user_id: string
@@ -863,6 +1031,7 @@ readonly fields: OneTimeTokenSecretsFieldRefs;
  */
 export interface Prisma__OneTimeTokenSecretsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.OneTimeTokenSecrets$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OneTimeTokenSecrets$userArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -917,6 +1086,10 @@ export type OneTimeTokenSecretsFindUniqueArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
+  /**
    * Filter, which OneTimeTokenSecrets to fetch.
    */
   where: Prisma.OneTimeTokenSecretsWhereUniqueInput
@@ -935,6 +1108,10 @@ export type OneTimeTokenSecretsFindUniqueOrThrowArgs<ExtArgs extends runtime.Typ
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
+  /**
    * Filter, which OneTimeTokenSecrets to fetch.
    */
   where: Prisma.OneTimeTokenSecretsWhereUniqueInput
@@ -952,6 +1129,10 @@ export type OneTimeTokenSecretsFindFirstArgs<ExtArgs extends runtime.Types.Exten
    * Omit specific fields from the OneTimeTokenSecrets
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
   /**
    * Filter, which OneTimeTokenSecrets to fetch.
    */
@@ -1001,6 +1182,10 @@ export type OneTimeTokenSecretsFindFirstOrThrowArgs<ExtArgs extends runtime.Type
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
+  /**
    * Filter, which OneTimeTokenSecrets to fetch.
    */
   where?: Prisma.OneTimeTokenSecretsWhereInput
@@ -1049,6 +1234,10 @@ export type OneTimeTokenSecretsFindManyArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
+  /**
    * Filter, which OneTimeTokenSecrets to fetch.
    */
   where?: Prisma.OneTimeTokenSecretsWhereInput
@@ -1092,6 +1281,10 @@ export type OneTimeTokenSecretsCreateArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
+  /**
    * The data needed to create a OneTimeTokenSecrets.
    */
   data: Prisma.XOR<Prisma.OneTimeTokenSecretsCreateInput, Prisma.OneTimeTokenSecretsUncheckedCreateInput>
@@ -1125,6 +1318,10 @@ export type OneTimeTokenSecretsCreateManyAndReturnArgs<ExtArgs extends runtime.T
    */
   data: Prisma.OneTimeTokenSecretsCreateManyInput | Prisma.OneTimeTokenSecretsCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1139,6 +1336,10 @@ export type OneTimeTokenSecretsUpdateArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the OneTimeTokenSecrets
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
   /**
    * The data needed to update a OneTimeTokenSecrets.
    */
@@ -1191,6 +1392,10 @@ export type OneTimeTokenSecretsUpdateManyAndReturnArgs<ExtArgs extends runtime.T
    * Limit how many OneTimeTokenSecrets to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1205,6 +1410,10 @@ export type OneTimeTokenSecretsUpsertArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the OneTimeTokenSecrets
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
   /**
    * The filter to search for the OneTimeTokenSecrets to update in case it exists.
    */
@@ -1232,6 +1441,10 @@ export type OneTimeTokenSecretsDeleteArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
+  /**
    * Filter which OneTimeTokenSecrets to delete.
    */
   where: Prisma.OneTimeTokenSecretsWhereUniqueInput
@@ -1252,6 +1465,25 @@ export type OneTimeTokenSecretsDeleteManyArgs<ExtArgs extends runtime.Types.Exte
 }
 
 /**
+ * OneTimeTokenSecrets.user
+ */
+export type OneTimeTokenSecrets$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Users
+   */
+  select?: Prisma.UsersSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Users
+   */
+  omit?: Prisma.UsersOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsersInclude<ExtArgs> | null
+  where?: Prisma.UsersWhereInput
+}
+
+/**
  * OneTimeTokenSecrets without action
  */
 export type OneTimeTokenSecretsDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1263,4 +1495,8 @@ export type OneTimeTokenSecretsDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Omit specific fields from the OneTimeTokenSecrets
    */
   omit?: Prisma.OneTimeTokenSecretsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OneTimeTokenSecretsInclude<ExtArgs> | null
 }

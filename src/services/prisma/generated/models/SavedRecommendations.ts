@@ -228,6 +228,7 @@ export type SavedRecommendationsWhereInput = {
   version?: Prisma.IntFilter<"SavedRecommendations"> | number
   created_at?: Prisma.DateTimeFilter<"SavedRecommendations"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"SavedRecommendations"> | Date | string
+  user?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
 }
 
 export type SavedRecommendationsOrderByWithRelationInput = {
@@ -238,6 +239,7 @@ export type SavedRecommendationsOrderByWithRelationInput = {
   version?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  user?: Prisma.UsersOrderByWithRelationInput
 }
 
 export type SavedRecommendationsWhereUniqueInput = Prisma.AtLeast<{
@@ -251,6 +253,7 @@ export type SavedRecommendationsWhereUniqueInput = Prisma.AtLeast<{
   version?: Prisma.IntFilter<"SavedRecommendations"> | number
   created_at?: Prisma.DateTimeFilter<"SavedRecommendations"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"SavedRecommendations"> | Date | string
+  user?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
 }, "id">
 
 export type SavedRecommendationsOrderByWithAggregationInput = {
@@ -283,12 +286,12 @@ export type SavedRecommendationsScalarWhereWithAggregatesInput = {
 
 export type SavedRecommendationsCreateInput = {
   id?: string
-  user_id?: string | null
   visibility?: $Enums.SavedRecommendationVisibility
   results: Prisma.JsonNullValueInput | runtime.InputJsonValue
   version?: number
   created_at?: Date | string
   updated_at?: Date | string
+  user?: Prisma.UsersCreateNestedOneWithoutSavedRecommendationsInput
 }
 
 export type SavedRecommendationsUncheckedCreateInput = {
@@ -303,12 +306,12 @@ export type SavedRecommendationsUncheckedCreateInput = {
 
 export type SavedRecommendationsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumSavedRecommendationVisibilityFieldUpdateOperationsInput | $Enums.SavedRecommendationVisibility
   results?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   version?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UsersUpdateOneWithoutSavedRecommendationsNestedInput
 }
 
 export type SavedRecommendationsUncheckedUpdateInput = {
@@ -333,7 +336,6 @@ export type SavedRecommendationsCreateManyInput = {
 
 export type SavedRecommendationsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumSavedRecommendationVisibilityFieldUpdateOperationsInput | $Enums.SavedRecommendationVisibility
   results?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   version?: Prisma.IntFieldUpdateOperationsInput | number
@@ -349,6 +351,16 @@ export type SavedRecommendationsUncheckedUpdateManyInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SavedRecommendationsListRelationFilter = {
+  every?: Prisma.SavedRecommendationsWhereInput
+  some?: Prisma.SavedRecommendationsWhereInput
+  none?: Prisma.SavedRecommendationsWhereInput
+}
+
+export type SavedRecommendationsOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type SavedRecommendationsCountOrderByAggregateInput = {
@@ -387,6 +399,48 @@ export type SavedRecommendationsSumOrderByAggregateInput = {
   version?: Prisma.SortOrder
 }
 
+export type SavedRecommendationsCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SavedRecommendationsCreateWithoutUserInput, Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput> | Prisma.SavedRecommendationsCreateWithoutUserInput[] | Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput | Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SavedRecommendationsCreateManyUserInputEnvelope
+  connect?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+}
+
+export type SavedRecommendationsUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SavedRecommendationsCreateWithoutUserInput, Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput> | Prisma.SavedRecommendationsCreateWithoutUserInput[] | Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput | Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SavedRecommendationsCreateManyUserInputEnvelope
+  connect?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+}
+
+export type SavedRecommendationsUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SavedRecommendationsCreateWithoutUserInput, Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput> | Prisma.SavedRecommendationsCreateWithoutUserInput[] | Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput | Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SavedRecommendationsUpsertWithWhereUniqueWithoutUserInput | Prisma.SavedRecommendationsUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SavedRecommendationsCreateManyUserInputEnvelope
+  set?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  disconnect?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  delete?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  connect?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  update?: Prisma.SavedRecommendationsUpdateWithWhereUniqueWithoutUserInput | Prisma.SavedRecommendationsUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SavedRecommendationsUpdateManyWithWhereWithoutUserInput | Prisma.SavedRecommendationsUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SavedRecommendationsScalarWhereInput | Prisma.SavedRecommendationsScalarWhereInput[]
+}
+
+export type SavedRecommendationsUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SavedRecommendationsCreateWithoutUserInput, Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput> | Prisma.SavedRecommendationsCreateWithoutUserInput[] | Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput | Prisma.SavedRecommendationsCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SavedRecommendationsUpsertWithWhereUniqueWithoutUserInput | Prisma.SavedRecommendationsUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SavedRecommendationsCreateManyUserInputEnvelope
+  set?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  disconnect?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  delete?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  connect?: Prisma.SavedRecommendationsWhereUniqueInput | Prisma.SavedRecommendationsWhereUniqueInput[]
+  update?: Prisma.SavedRecommendationsUpdateWithWhereUniqueWithoutUserInput | Prisma.SavedRecommendationsUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SavedRecommendationsUpdateManyWithWhereWithoutUserInput | Prisma.SavedRecommendationsUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SavedRecommendationsScalarWhereInput | Prisma.SavedRecommendationsScalarWhereInput[]
+}
+
 export type EnumSavedRecommendationVisibilityFieldUpdateOperationsInput = {
   set?: $Enums.SavedRecommendationVisibility
 }
@@ -399,6 +453,99 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type SavedRecommendationsCreateWithoutUserInput = {
+  id?: string
+  visibility?: $Enums.SavedRecommendationVisibility
+  results: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type SavedRecommendationsUncheckedCreateWithoutUserInput = {
+  id?: string
+  visibility?: $Enums.SavedRecommendationVisibility
+  results: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type SavedRecommendationsCreateOrConnectWithoutUserInput = {
+  where: Prisma.SavedRecommendationsWhereUniqueInput
+  create: Prisma.XOR<Prisma.SavedRecommendationsCreateWithoutUserInput, Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput>
+}
+
+export type SavedRecommendationsCreateManyUserInputEnvelope = {
+  data: Prisma.SavedRecommendationsCreateManyUserInput | Prisma.SavedRecommendationsCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type SavedRecommendationsUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SavedRecommendationsWhereUniqueInput
+  update: Prisma.XOR<Prisma.SavedRecommendationsUpdateWithoutUserInput, Prisma.SavedRecommendationsUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.SavedRecommendationsCreateWithoutUserInput, Prisma.SavedRecommendationsUncheckedCreateWithoutUserInput>
+}
+
+export type SavedRecommendationsUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SavedRecommendationsWhereUniqueInput
+  data: Prisma.XOR<Prisma.SavedRecommendationsUpdateWithoutUserInput, Prisma.SavedRecommendationsUncheckedUpdateWithoutUserInput>
+}
+
+export type SavedRecommendationsUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.SavedRecommendationsScalarWhereInput
+  data: Prisma.XOR<Prisma.SavedRecommendationsUpdateManyMutationInput, Prisma.SavedRecommendationsUncheckedUpdateManyWithoutUserInput>
+}
+
+export type SavedRecommendationsScalarWhereInput = {
+  AND?: Prisma.SavedRecommendationsScalarWhereInput | Prisma.SavedRecommendationsScalarWhereInput[]
+  OR?: Prisma.SavedRecommendationsScalarWhereInput[]
+  NOT?: Prisma.SavedRecommendationsScalarWhereInput | Prisma.SavedRecommendationsScalarWhereInput[]
+  id?: Prisma.StringFilter<"SavedRecommendations"> | string
+  user_id?: Prisma.StringNullableFilter<"SavedRecommendations"> | string | null
+  visibility?: Prisma.EnumSavedRecommendationVisibilityFilter<"SavedRecommendations"> | $Enums.SavedRecommendationVisibility
+  results?: Prisma.JsonFilter<"SavedRecommendations">
+  version?: Prisma.IntFilter<"SavedRecommendations"> | number
+  created_at?: Prisma.DateTimeFilter<"SavedRecommendations"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"SavedRecommendations"> | Date | string
+}
+
+export type SavedRecommendationsCreateManyUserInput = {
+  id?: string
+  visibility?: $Enums.SavedRecommendationVisibility
+  results: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type SavedRecommendationsUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.EnumSavedRecommendationVisibilityFieldUpdateOperationsInput | $Enums.SavedRecommendationVisibility
+  results?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SavedRecommendationsUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.EnumSavedRecommendationVisibilityFieldUpdateOperationsInput | $Enums.SavedRecommendationVisibility
+  results?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SavedRecommendationsUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.EnumSavedRecommendationVisibilityFieldUpdateOperationsInput | $Enums.SavedRecommendationVisibility
+  results?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type SavedRecommendationsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -409,6 +556,7 @@ export type SavedRecommendationsSelect<ExtArgs extends runtime.Types.Extensions.
   version?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user?: boolean | Prisma.SavedRecommendations$userArgs<ExtArgs>
 }, ExtArgs["result"]["savedRecommendations"]>
 
 export type SavedRecommendationsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -419,6 +567,7 @@ export type SavedRecommendationsSelectCreateManyAndReturn<ExtArgs extends runtim
   version?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user?: boolean | Prisma.SavedRecommendations$userArgs<ExtArgs>
 }, ExtArgs["result"]["savedRecommendations"]>
 
 export type SavedRecommendationsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -429,6 +578,7 @@ export type SavedRecommendationsSelectUpdateManyAndReturn<ExtArgs extends runtim
   version?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user?: boolean | Prisma.SavedRecommendations$userArgs<ExtArgs>
 }, ExtArgs["result"]["savedRecommendations"]>
 
 export type SavedRecommendationsSelectScalar = {
@@ -442,10 +592,21 @@ export type SavedRecommendationsSelectScalar = {
 }
 
 export type SavedRecommendationsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "visibility" | "results" | "version" | "created_at" | "updated_at", ExtArgs["result"]["savedRecommendations"]>
+export type SavedRecommendationsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.SavedRecommendations$userArgs<ExtArgs>
+}
+export type SavedRecommendationsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.SavedRecommendations$userArgs<ExtArgs>
+}
+export type SavedRecommendationsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.SavedRecommendations$userArgs<ExtArgs>
+}
 
 export type $SavedRecommendationsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SavedRecommendations"
-  objects: {}
+  objects: {
+    user: Prisma.$UsersPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     user_id: string | null
@@ -848,6 +1009,7 @@ readonly fields: SavedRecommendationsFieldRefs;
  */
 export interface Prisma__SavedRecommendationsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.SavedRecommendations$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SavedRecommendations$userArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -901,6 +1063,10 @@ export type SavedRecommendationsFindUniqueArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
+  /**
    * Filter, which SavedRecommendations to fetch.
    */
   where: Prisma.SavedRecommendationsWhereUniqueInput
@@ -919,6 +1085,10 @@ export type SavedRecommendationsFindUniqueOrThrowArgs<ExtArgs extends runtime.Ty
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
+  /**
    * Filter, which SavedRecommendations to fetch.
    */
   where: Prisma.SavedRecommendationsWhereUniqueInput
@@ -936,6 +1106,10 @@ export type SavedRecommendationsFindFirstArgs<ExtArgs extends runtime.Types.Exte
    * Omit specific fields from the SavedRecommendations
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
   /**
    * Filter, which SavedRecommendations to fetch.
    */
@@ -985,6 +1159,10 @@ export type SavedRecommendationsFindFirstOrThrowArgs<ExtArgs extends runtime.Typ
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
+  /**
    * Filter, which SavedRecommendations to fetch.
    */
   where?: Prisma.SavedRecommendationsWhereInput
@@ -1033,6 +1211,10 @@ export type SavedRecommendationsFindManyArgs<ExtArgs extends runtime.Types.Exten
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
+  /**
    * Filter, which SavedRecommendations to fetch.
    */
   where?: Prisma.SavedRecommendationsWhereInput
@@ -1076,6 +1258,10 @@ export type SavedRecommendationsCreateArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
+  /**
    * The data needed to create a SavedRecommendations.
    */
   data: Prisma.XOR<Prisma.SavedRecommendationsCreateInput, Prisma.SavedRecommendationsUncheckedCreateInput>
@@ -1109,6 +1295,10 @@ export type SavedRecommendationsCreateManyAndReturnArgs<ExtArgs extends runtime.
    */
   data: Prisma.SavedRecommendationsCreateManyInput | Prisma.SavedRecommendationsCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1123,6 +1313,10 @@ export type SavedRecommendationsUpdateArgs<ExtArgs extends runtime.Types.Extensi
    * Omit specific fields from the SavedRecommendations
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
   /**
    * The data needed to update a SavedRecommendations.
    */
@@ -1175,6 +1369,10 @@ export type SavedRecommendationsUpdateManyAndReturnArgs<ExtArgs extends runtime.
    * Limit how many SavedRecommendations to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1189,6 +1387,10 @@ export type SavedRecommendationsUpsertArgs<ExtArgs extends runtime.Types.Extensi
    * Omit specific fields from the SavedRecommendations
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
   /**
    * The filter to search for the SavedRecommendations to update in case it exists.
    */
@@ -1216,6 +1418,10 @@ export type SavedRecommendationsDeleteArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
+  /**
    * Filter which SavedRecommendations to delete.
    */
   where: Prisma.SavedRecommendationsWhereUniqueInput
@@ -1236,6 +1442,25 @@ export type SavedRecommendationsDeleteManyArgs<ExtArgs extends runtime.Types.Ext
 }
 
 /**
+ * SavedRecommendations.user
+ */
+export type SavedRecommendations$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Users
+   */
+  select?: Prisma.UsersSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Users
+   */
+  omit?: Prisma.UsersOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsersInclude<ExtArgs> | null
+  where?: Prisma.UsersWhereInput
+}
+
+/**
  * SavedRecommendations without action
  */
 export type SavedRecommendationsDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1247,4 +1472,8 @@ export type SavedRecommendationsDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Omit specific fields from the SavedRecommendations
    */
   omit?: Prisma.SavedRecommendationsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavedRecommendationsInclude<ExtArgs> | null
 }

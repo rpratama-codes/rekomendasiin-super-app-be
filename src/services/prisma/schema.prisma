@@ -31,8 +31,10 @@ model Users {
   picture    String?
   role       UserRoles
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
+  savedRecommendations SavedRecommendations[]
+  oneTimeTokenSecrets  OneTimeTokenSecrets[]
 
   @@map("user")
 }
@@ -116,6 +118,9 @@ model SavedRecommendations {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  user Users? @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
   @@map("saved_recommendations")
 }
 
@@ -130,6 +135,9 @@ model OneTimeTokenSecrets {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  user Users? @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
   @@map("one_time_token_secrets")
 }
 
