@@ -45,7 +45,7 @@ describe('OTP Functionality', () => {
 			otp?.config as ConfigOTP,
 		);
 
-		expect(verify).toBeNull();
+		expect(verify).toBeFalsy();
 	});
 
 	it('OTP verification should be success', () => {
@@ -55,7 +55,7 @@ describe('OTP Functionality', () => {
 			otp?.config as ConfigOTP,
 		);
 
-		assert.isNotNull(verify);
+		expect(verify).toBeTruthy();
 	});
 
 	it('OTP2 verification should be failed', () => {
@@ -65,7 +65,7 @@ describe('OTP Functionality', () => {
 			otp2?.config as ConfigOTP,
 		);
 
-		assert.isNull(verify);
+		expect(verify).toBeFalsy();
 	});
 
 	it('OTP2 verification should be success', () => {
@@ -75,6 +75,6 @@ describe('OTP Functionality', () => {
 			otp2?.config as ConfigOTP,
 		);
 
-		assert.isNotNull(verify);
+		expect(verify).toBeTruthy();
 	});
 });
