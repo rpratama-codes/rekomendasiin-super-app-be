@@ -14,4 +14,15 @@ export class UserService extends ServiceBase {
 			},
 		});
 	}
+
+	public async markUserAsActive(user_id: string): Promise<void> {
+		await this.prisma.users.update({
+			where: {
+				id: user_id,
+			},
+			data: {
+				verified: true,
+			},
+		});
+	}
 }
