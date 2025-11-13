@@ -162,7 +162,7 @@ export interface HappyAppParams
 	 */
 	expressApplication: Application;
 	configs: Record<string, unknown>;
-	routes: HappyAppRoute[];
+	routes?: HappyAppRoute[];
 }
 
 /**
