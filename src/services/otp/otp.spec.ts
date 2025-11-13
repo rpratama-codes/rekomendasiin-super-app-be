@@ -1,4 +1,4 @@
-import { assert, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { type ConfigOTP, OtpService } from './otp.service.js';
 import 'dotenv/config';
 import z from 'zod';
