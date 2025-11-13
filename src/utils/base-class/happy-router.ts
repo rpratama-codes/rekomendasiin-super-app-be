@@ -5,26 +5,42 @@ import type {
 	Router,
 } from 'express';
 
-export type HappyRouterRoutes = {
-	path: string | RegExp;
-	method?:
-		| 'all'
-		| 'get'
-		| 'post'
-		| 'put'
-		| 'delete'
-		| 'patch'
-		| 'options'
-		| 'head';
-	middlewares?: RequestHandler[];
-	handlers: RequestHandler[];
-};
+export type HttpMethod =
+	| 'all'
+	| 'get'
+	| 'post'
+	| 'put'
+	| 'delete'
+	| 'patch'
+	| 'options'
+	| 'head';
+
+export class HappyRouterRoute {
+	public path: string | RegExp;
+	public method?: HttpMethod | undefined;
+	public handlers: RequestHandler[];
+	public middlewares?: RequestHandler[] | undefined;
+
+	constructor(params: HappyRouterRoute) {
+		this.path = params.path;
+		this.method = params.method;
+		this.handlers = params.handlers;
+		this.middlewares = params.middlewares;
+	}
+}
 
 export interface HappyRouterParams {
 	expressRouter: Router;
-	routes?: HappyRouterRoutes[];
+	routes?: HappyRouterRoute[];
+	/**
+	 * routes and discover are the same,
+	 * discover under will put under the the routes route.
+	 * Instead of spreading routes, just put in discover.
+	 */
+	discover?: HappyRouterRoute[][];
 	middlewares?: RequestHandler[];
 	errorHandlers?: ErrorRequestHandler[];
+	callbackLogger?: (message: string) => void;
 	prefix?: string;
 }
 
@@ -34,27 +50,42 @@ export interface HappyRouterParams {
 export class HappyRouter {
 	protected name = 'happyRouter';
 	protected expressRouter: Router;
-	protected routes: HappyRouterRoutes[] | undefined;
-	protected prefix: string | undefined;
-	protected configs: Record<string, unknown> | undefined;
-	protected middlewares: RequestHandler[] | undefined;
-	protected errorHandlers: ErrorRequestHandler[] | undefined;
+	protected routes?: HappyRouterRoute[] | undefined;
+	protected prefix?: string | undefined;
+	protected configs?: Record<string, unknown> | undefined;
+	protected middlewares?: RequestHandler[] | undefined;
+	protected errorHandlers?: ErrorRequestHandler[] | undefined;
+	protected callbackLogger?: ((message: string) => void) | undefined;
+	protected discover?: HappyRouterRoute[][] | undefined;
 
-	constructor({
-		expressRouter,
-		routes,
-		prefix,
-		middlewares,
-		errorHandlers,
-	}: HappyRouterParams) {
-		this.expressRouter = expressRouter;
-		this.routes = routes;
-		this.prefix = prefix;
-		this.middlewares = middlewares;
-		this.errorHandlers = errorHandlers;
+	constructor(params: HappyRouterParams) {
+		this.expressRouter = params.expressRouter;
+		this.routes = params.routes;
+		this.prefix = params.prefix;
+		this.middlewares = params.middlewares;
+		this.errorHandlers = params.errorHandlers;
+		this.callbackLogger = params.callbackLogger;
+		this.discover = params.discover;
 
+		this.observ();
+	}
+
+	public static createRoute(params: HappyAppRoute[]) {
+		return params;
+	}
+
+	protected log(message: string): void {
+		if (this.callbackLogger) {
+			this.callbackLogger(message);
+		} else {
+			console.log(message);
+		}
+	}
+
+	protected observ() {
 		if (this.prefix) {
 			this.expressRouter.use(this.prefix, this.expressRouter);
+			this.log(`Prefix - ${this.prefix}`);
 		}
 
 		if (this.middlewares) {
@@ -64,15 +95,35 @@ export class HappyRouter {
 		}
 
 		if (this.routes) {
-			for (const map of this.routes) {
+			for (const route of this.routes) {
 				const defaultMethod = 'get';
-				const method = map.method ?? defaultMethod;
+				const method = route.method ?? defaultMethod;
 
 				this.expressRouter[method](
-					map.path,
-					...(map.middlewares ?? []),
-					...map.handlers,
+					route.path,
+					...(route.middlewares ?? []),
+					...route.handlers,
 				);
+
+				const logMessage = `Route - ${method.toUpperCase()} - ${this.prefix ?? ''}${route.path}`;
+				this.log(logMessage);
+			}
+		}
+
+		if (this.discover) {
+			const discoveries = this.discover.flat();
+			for (const route of discoveries) {
+				const defaultMethod = 'get';
+				const method = route.method ?? defaultMethod;
+
+				this.expressRouter[method](
+					route.path,
+					...(route.middlewares ?? []),
+					...route.handlers,
+				);
+
+				const logMessage = `Route - ${method.toUpperCase()} - ${this.prefix ?? ''}${route.path}`;
+				this.log(logMessage);
 			}
 		}
 
@@ -97,10 +148,14 @@ export class HappyRouter {
 	}
 }
 
-export interface HappyAppRoute extends HappyRouterRoutes {}
+export interface HappyAppRoute extends HappyRouterRoute {}
 
 export interface HappyAppParams
-	extends Omit<HappyRouterParams, 'expressRouter'> {
+	/**'
+	 * prefix is not support for root instance,
+	 * instead you should express router or new express instance.
+	 */
+	extends Omit<HappyRouterParams, 'expressRouter' | 'prefix'> {
 	/**
 	 * Please use express Application here!
 	 * because method set not available on router.

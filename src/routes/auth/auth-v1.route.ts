@@ -6,6 +6,7 @@ import { MailService } from '../../services/mail/mail.service.js';
 import { OtpService } from '../../services/otp/otp.service.js';
 import { UserService } from '../../services/user/user.service.js';
 import { HappyRouter } from '../../utils/base-class/happy-router.js';
+import { logger } from '../../utils/logger/winston.js';
 
 const otpService = new OtpService();
 const mailService = new MailService();
@@ -17,11 +18,15 @@ const authV1Controller = new AuthV1Controller(
 	otpService,
 	userService,
 );
+const happyLogger = (message: string) => {
+	logger.info(message);
+};
 
 const happyRouter = new HappyRouter({
 	expressRouter: express.Router(),
 	prefix: '/v1/auth',
 	middlewares: [limiter],
+	callbackLogger: happyLogger,
 	routes: [
 		{
 			path: '/sign-up',

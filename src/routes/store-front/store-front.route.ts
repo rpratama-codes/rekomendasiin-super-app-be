@@ -3,14 +3,20 @@ import { StoreFrontController } from '../../controller/store-front/store-front.c
 import { StoreFrontService } from '../../services/store/store-front.service.js';
 import { DecisionSupportSystems } from '../../services/suggesion/dss.service.js';
 import { HappyRouter } from '../../utils/base-class/happy-router.js';
+import { logger } from '../../utils/logger/winston.js';
 
 const dss = new DecisionSupportSystems();
 const storeFrontService = new StoreFrontService({ dss });
 const storeFrontController = new StoreFrontController({ storeFrontService });
 
+const happyLogger = (message: string) => {
+	logger.info(message);
+};
+
 const happyRouter = new HappyRouter({
 	expressRouter: express.Router(),
 	prefix: '/store-front',
+	callbackLogger: happyLogger,
 	routes: [
 		{
 			path: '/list-category',

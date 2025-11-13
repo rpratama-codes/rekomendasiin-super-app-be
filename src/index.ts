@@ -20,15 +20,21 @@ const router = express.Router({
 	strict: true,
 });
 
+const happyLogger = (message: string) => {
+	logger.info(message);
+};
+
 const happyRouter = new HappyRouter({
 	prefix: '/api',
 	expressRouter: router,
 	middlewares: [storeFrontRoute, authRouteV1],
+	callbackLogger: happyLogger,
 });
 
 const happyApp = new HappyApp({
 	expressApplication: app,
 	configs: { 'trust proxy': true },
+	callbackLogger: happyLogger,
 	middlewares: [
 		helmet(),
 		express.json(),
