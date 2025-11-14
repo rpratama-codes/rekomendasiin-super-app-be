@@ -22,14 +22,6 @@ export const signInDto = z.object({
 
 export type SignInDto = z.infer<typeof signInDto>;
 
-export const jwtPayload = z.object({
-	role: z.enum(['user', 'system_user']),
-	sub: z.string(),
-	exp: z.number(),
-});
-
-export type JwtPayload = z.infer<typeof jwtPayload>;
-
 export const verifyOtpDto = z.object({
 	email: z.email(),
 	token: z.string(),

@@ -3,10 +3,11 @@
 
 import argon2 from 'argon2';
 import * as jose from 'jose';
+import type { JwtPayload } from '../../middleware/auth.middleware.js';
 import { ServiceBase } from '../../utils/base-class/service.class.js';
 import type { Users } from '../prisma/generated/client.js';
 import { UserRoles } from '../prisma/generated/enums.js';
-import type { JwtPayload, SignInDto, SignUpDto } from './auth-v1.dto.js';
+import type { SignInDto, SignUpDto } from './auth-v1.dto.js';
 
 export class AuthV1Service extends ServiceBase {
 	public async signUp({ email, password, first_name, last_name }: SignUpDto) {

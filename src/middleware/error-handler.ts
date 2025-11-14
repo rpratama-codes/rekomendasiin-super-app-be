@@ -8,6 +8,7 @@ import type {
 import { ZodError } from 'zod';
 import { ErrorConstructor } from '../utils/base-class/error.class.js';
 import { logger } from '../utils/logger/winston.js';
+import { ErrorAuthMiddleware } from './auth.middleware.js';
 
 export const errorHandlerMiddleware: ErrorRequestHandler = (
 	err: ErrorConstructor | Error | PrismaClientKnownRequestError,
@@ -16,6 +17,13 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
 	_next: NextFunction,
 ) => {
 	logger.error('-', err);
+
+	if (err instanceof ErrorAuthMiddleware) {
+		return res.status(401).json({
+			code: 401,
+			message: err.message,
+		});
+	}
 
 	if (err instanceof SyntaxError) {
 		return res.status(400).json({
