@@ -8,7 +8,7 @@ const rateLimitHandler = () => {
 	});
 };
 
-export const limiter = rateLimit({
+export const apiLimiterMiddleware = rateLimit({
 	windowMs: 1 * 60 * 1000, // 1 minutes
 	limit: 20,
 	standardHeaders: 'draft-8',

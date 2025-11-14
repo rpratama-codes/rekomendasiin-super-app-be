@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from 'express';
 import { AuthV1Controller } from '../../controller/auth/auth-v1.controller.js';
-import { limiter } from '../../middleware/limitter.js';
+import { apiLimiterMiddleware } from '../../middleware/api-limitter.middleware.js';
 import { AuthV1Service } from '../../services/auth/auth-v1.service.js';
 import { MailService } from '../../services/mail/mail.service.js';
 import { OtpService } from '../../services/otp/otp.service.js';
@@ -25,7 +25,7 @@ const happyLogger = (message: string) => {
 const happyRouter = new HappyRouter({
 	expressRouter: express.Router(),
 	prefix: '/v1/auth',
-	middlewares: [limiter],
+	middlewares: [apiLimiterMiddleware],
 	callbackLogger: happyLogger,
 	routes: [
 		{

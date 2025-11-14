@@ -6,8 +6,8 @@ import express, {
 } from 'express';
 import 'dotenv/config';
 import helmet from 'helmet';
-import { errorHandlerMiddleware } from './middleware/error-handler.js';
-import { loggerMiddleware } from './middleware/logger.js';
+import { errorHandlerMiddleware } from './middleware/error-handler.middleware.js';
+import { loggerMiddleware } from './middleware/logger.middleware.js';
 import { authRouteV1 } from './routes/auth/auth-v1.route.js';
 import { storeFrontRoute } from './routes/store-front/store-front.route.js';
 import { HappyApp, HappyRouter } from './utils/base-class/happy-router.js';
