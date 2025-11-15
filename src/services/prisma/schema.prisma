@@ -19,23 +19,25 @@ enum UserRoles {
 }
 
 model Users {
-  id         String    @id @default(uuid(7))
-  first_name String?
-  last_name  String?
-  email      String    @unique @db.Citext
-  username   String    @unique @db.Citext
+  id                String    @id @default(uuid(7))
+  first_name        String?
+  last_name         String?
+  email             String    @unique @db.Citext
+  username          String    @unique @db.Citext
   // just for note, 
   // password can be null because passwordless feature
-  verified   Boolean   @default(false)
-  password   String?
-  picture    String?
-  role       UserRoles
+  verified          Boolean   @default(false)
+  password          String?
+  picture           String?
+  role              UserRoles
+  google_account_id String?
 
   created_at           DateTime               @default(now())
   updated_at           DateTime               @updatedAt
   savedRecommendations SavedRecommendations[]
   oneTimeTokenSecrets  OneTimeTokenSecrets[]
 
+  @@index(google_account_id)
   @@map("user")
 }
 

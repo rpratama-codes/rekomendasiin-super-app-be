@@ -34,6 +34,7 @@ export type UsersMinAggregateOutputType = {
   password: string | null
   picture: string | null
   role: $Enums.UserRoles | null
+  google_account_id: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -48,6 +49,7 @@ export type UsersMaxAggregateOutputType = {
   password: string | null
   picture: string | null
   role: $Enums.UserRoles | null
+  google_account_id: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -62,6 +64,7 @@ export type UsersCountAggregateOutputType = {
   password: number
   picture: number
   role: number
+  google_account_id: number
   created_at: number
   updated_at: number
   _all: number
@@ -78,6 +81,7 @@ export type UsersMinAggregateInputType = {
   password?: true
   picture?: true
   role?: true
+  google_account_id?: true
   created_at?: true
   updated_at?: true
 }
@@ -92,6 +96,7 @@ export type UsersMaxAggregateInputType = {
   password?: true
   picture?: true
   role?: true
+  google_account_id?: true
   created_at?: true
   updated_at?: true
 }
@@ -106,6 +111,7 @@ export type UsersCountAggregateInputType = {
   password?: true
   picture?: true
   role?: true
+  google_account_id?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -193,6 +199,7 @@ export type UsersGroupByOutputType = {
   password: string | null
   picture: string | null
   role: $Enums.UserRoles
+  google_account_id: string | null
   created_at: Date
   updated_at: Date
   _count: UsersCountAggregateOutputType | null
@@ -228,6 +235,7 @@ export type UsersWhereInput = {
   password?: Prisma.StringNullableFilter<"Users"> | string | null
   picture?: Prisma.StringNullableFilter<"Users"> | string | null
   role?: Prisma.EnumUserRolesFilter<"Users"> | $Enums.UserRoles
+  google_account_id?: Prisma.StringNullableFilter<"Users"> | string | null
   created_at?: Prisma.DateTimeFilter<"Users"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Users"> | Date | string
   savedRecommendations?: Prisma.SavedRecommendationsListRelationFilter
@@ -244,6 +252,7 @@ export type UsersOrderByWithRelationInput = {
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   picture?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  google_account_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   savedRecommendations?: Prisma.SavedRecommendationsOrderByRelationAggregateInput
@@ -263,6 +272,7 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringNullableFilter<"Users"> | string | null
   picture?: Prisma.StringNullableFilter<"Users"> | string | null
   role?: Prisma.EnumUserRolesFilter<"Users"> | $Enums.UserRoles
+  google_account_id?: Prisma.StringNullableFilter<"Users"> | string | null
   created_at?: Prisma.DateTimeFilter<"Users"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Users"> | Date | string
   savedRecommendations?: Prisma.SavedRecommendationsListRelationFilter
@@ -279,6 +289,7 @@ export type UsersOrderByWithAggregationInput = {
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   picture?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  google_account_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.UsersCountOrderByAggregateInput
@@ -299,6 +310,7 @@ export type UsersScalarWhereWithAggregatesInput = {
   password?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   picture?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   role?: Prisma.EnumUserRolesWithAggregatesFilter<"Users"> | $Enums.UserRoles
+  google_account_id?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Users"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Users"> | Date | string
 }
@@ -313,6 +325,7 @@ export type UsersCreateInput = {
   password?: string | null
   picture?: string | null
   role: $Enums.UserRoles
+  google_account_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   savedRecommendations?: Prisma.SavedRecommendationsCreateNestedManyWithoutUserInput
@@ -329,6 +342,7 @@ export type UsersUncheckedCreateInput = {
   password?: string | null
   picture?: string | null
   role: $Enums.UserRoles
+  google_account_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   savedRecommendations?: Prisma.SavedRecommendationsUncheckedCreateNestedManyWithoutUserInput
@@ -345,6 +359,7 @@ export type UsersUpdateInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   savedRecommendations?: Prisma.SavedRecommendationsUpdateManyWithoutUserNestedInput
@@ -361,6 +376,7 @@ export type UsersUncheckedUpdateInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   savedRecommendations?: Prisma.SavedRecommendationsUncheckedUpdateManyWithoutUserNestedInput
@@ -377,6 +393,7 @@ export type UsersCreateManyInput = {
   password?: string | null
   picture?: string | null
   role: $Enums.UserRoles
+  google_account_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -391,6 +408,7 @@ export type UsersUpdateManyMutationInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -405,6 +423,7 @@ export type UsersUncheckedUpdateManyInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -419,6 +438,7 @@ export type UsersCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   picture?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  google_account_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -433,6 +453,7 @@ export type UsersMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   picture?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  google_account_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -447,6 +468,7 @@ export type UsersMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   picture?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  google_account_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -518,6 +540,7 @@ export type UsersCreateWithoutSavedRecommendationsInput = {
   password?: string | null
   picture?: string | null
   role: $Enums.UserRoles
+  google_account_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   oneTimeTokenSecrets?: Prisma.OneTimeTokenSecretsCreateNestedManyWithoutUserInput
@@ -533,6 +556,7 @@ export type UsersUncheckedCreateWithoutSavedRecommendationsInput = {
   password?: string | null
   picture?: string | null
   role: $Enums.UserRoles
+  google_account_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   oneTimeTokenSecrets?: Prisma.OneTimeTokenSecretsUncheckedCreateNestedManyWithoutUserInput
@@ -564,6 +588,7 @@ export type UsersUpdateWithoutSavedRecommendationsInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oneTimeTokenSecrets?: Prisma.OneTimeTokenSecretsUpdateManyWithoutUserNestedInput
@@ -579,6 +604,7 @@ export type UsersUncheckedUpdateWithoutSavedRecommendationsInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oneTimeTokenSecrets?: Prisma.OneTimeTokenSecretsUncheckedUpdateManyWithoutUserNestedInput
@@ -594,6 +620,7 @@ export type UsersCreateWithoutOneTimeTokenSecretsInput = {
   password?: string | null
   picture?: string | null
   role: $Enums.UserRoles
+  google_account_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   savedRecommendations?: Prisma.SavedRecommendationsCreateNestedManyWithoutUserInput
@@ -609,6 +636,7 @@ export type UsersUncheckedCreateWithoutOneTimeTokenSecretsInput = {
   password?: string | null
   picture?: string | null
   role: $Enums.UserRoles
+  google_account_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   savedRecommendations?: Prisma.SavedRecommendationsUncheckedCreateNestedManyWithoutUserInput
@@ -640,6 +668,7 @@ export type UsersUpdateWithoutOneTimeTokenSecretsInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   savedRecommendations?: Prisma.SavedRecommendationsUpdateManyWithoutUserNestedInput
@@ -655,6 +684,7 @@ export type UsersUncheckedUpdateWithoutOneTimeTokenSecretsInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   savedRecommendations?: Prisma.SavedRecommendationsUncheckedUpdateManyWithoutUserNestedInput
@@ -710,6 +740,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   password?: boolean
   picture?: boolean
   role?: boolean
+  google_account_id?: boolean
   created_at?: boolean
   updated_at?: boolean
   savedRecommendations?: boolean | Prisma.Users$savedRecommendationsArgs<ExtArgs>
@@ -727,6 +758,7 @@ export type UsersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   password?: boolean
   picture?: boolean
   role?: boolean
+  google_account_id?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["users"]>
@@ -741,6 +773,7 @@ export type UsersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   password?: boolean
   picture?: boolean
   role?: boolean
+  google_account_id?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["users"]>
@@ -755,11 +788,12 @@ export type UsersSelectScalar = {
   password?: boolean
   picture?: boolean
   role?: boolean
+  google_account_id?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "username" | "verified" | "password" | "picture" | "role" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
+export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "username" | "verified" | "password" | "picture" | "role" | "google_account_id" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
 export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   savedRecommendations?: boolean | Prisma.Users$savedRecommendationsArgs<ExtArgs>
   oneTimeTokenSecrets?: boolean | Prisma.Users$oneTimeTokenSecretsArgs<ExtArgs>
@@ -784,6 +818,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     password: string | null
     picture: string | null
     role: $Enums.UserRoles
+    google_account_id: string | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["users"]>
@@ -1220,6 +1255,7 @@ export interface UsersFieldRefs {
   readonly password: Prisma.FieldRef<"Users", 'String'>
   readonly picture: Prisma.FieldRef<"Users", 'String'>
   readonly role: Prisma.FieldRef<"Users", 'UserRoles'>
+  readonly google_account_id: Prisma.FieldRef<"Users", 'String'>
   readonly created_at: Prisma.FieldRef<"Users", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Users", 'DateTime'>
 }
