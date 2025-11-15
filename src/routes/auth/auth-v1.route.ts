@@ -1,4 +1,5 @@
 import express, { type Request, type Response } from 'express';
+import { OAuth2Client } from 'google-auth-library';
 import { AuthV1Controller } from '../../controller/auth/auth-v1.controller.js';
 import { apiLimiterMiddleware } from '../../middleware/api-limitter.middleware.js';
 import { refreshMiddleware } from '../../middleware/auth.middleware.js';
@@ -12,7 +13,11 @@ import { logger } from '../../utils/logger/winston.js';
 const otpService = new OtpService();
 const mailService = new MailService();
 const userService = new UserService();
-const authV1Service = new AuthV1Service();
+const oAuth2Client = new OAuth2Client({
+	client_id: process.env.GOOGLE_CLIENT_ID as string,
+	client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
+});
+const authV1Service = new AuthV1Service(oAuth2Client);
 const authV1Controller = new AuthV1Controller(
 	authV1Service,
 	mailService,
@@ -60,6 +65,14 @@ const happyRouter = new HappyRouter({
 			handlers: [
 				async (req: Request, res: Response) =>
 					await authV1Controller.signIn(req, res),
+			],
+		},
+		{
+			path: '/google/verify',
+			method: 'post',
+			handlers: [
+				async (req: Request, res: Response) =>
+					await authV1Controller.verifyGoogleLogin(req, res),
 			],
 		},
 	],

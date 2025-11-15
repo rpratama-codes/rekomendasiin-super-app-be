@@ -25,4 +25,15 @@ export class UserService extends ServiceBase {
 			},
 		});
 	}
+
+	public async addGoogleAccountId(user_id: string, google_account_id: string) {
+		await this.prisma.users.update({
+			where: {
+				id: user_id,
+			},
+			data: {
+				google_account_id,
+			},
+		});
+	}
 }

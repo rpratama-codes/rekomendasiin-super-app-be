@@ -34,3 +34,9 @@ export const refreshTokenDto = z.object({
 });
 
 export type RefreshTokenDto = z.infer<typeof refreshTokenDto>;
+
+export const verifyGoogleLoginDto = z.object({
+	idToken: z.string(),
+});
+
+export type VerifyGoogleLoginDto = z.infer<typeof verifyGoogleLoginDto>;

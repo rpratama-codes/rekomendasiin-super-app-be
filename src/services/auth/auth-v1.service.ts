@@ -2,6 +2,7 @@
 /** biome-ignore-all lint/correctness/noUnusedPrivateClassMembers: <.> */
 
 import argon2 from 'argon2';
+import type { OAuth2Client } from 'google-auth-library';
 import * as jose from 'jose';
 import ms from 'ms';
 import { ServiceBase } from '../../utils/base-class/service.class.js';
@@ -10,6 +11,36 @@ import { UserRoles } from '../prisma/generated/enums.js';
 import type { SignInDto, SignUpDto } from './auth-v1.dto.js';
 
 export class AuthV1Service extends ServiceBase {
+	constructor(private readonly oAuth2Client: OAuth2Client) {
+		super();
+	}
+
+	public async signUpByGoogleAccount({
+		email,
+		first_name,
+		last_name,
+		google_account_id,
+	}: Omit<SignUpDto, 'password'> & { google_account_id: string }) {
+		const [userName, _domain] = email.toLowerCase().split('@');
+
+		const createUser = await this.prisma.users.create({
+			data: {
+				first_name: first_name as string | null,
+				last_name: last_name as string | null,
+				email,
+				role: UserRoles.user,
+				username: `${userName}+${Date.now()}`,
+				google_account_id,
+				verified: true,
+			},
+			omit: {
+				password: true,
+			},
+		});
+
+		return createUser;
+	}
+
 	public async signUp({ email, password, first_name, last_name }: SignUpDto) {
 		const currentUser = await this.prisma.users.findFirst({ where: { email } });
 
@@ -101,5 +132,15 @@ export class AuthV1Service extends ServiceBase {
 			access_token,
 			refresh_token,
 		};
+	}
+
+	public async verifyGoogleLogin(idToken: string) {
+		const ticket = await this.oAuth2Client.verifyIdToken({
+			idToken,
+			audience: process.env.GOOGLE_CLIENT_ID as string,
+		});
+
+		const payload = ticket.getPayload();
+		return payload;
 	}
 }

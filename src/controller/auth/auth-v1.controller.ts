@@ -3,6 +3,7 @@ import type { Request, Response } from 'express';
 import {
 	signInDto,
 	signUpDto,
+	verifyGoogleLoginDto,
 	verifyOtpDto,
 } from '../../services/auth/auth-v1.dto.js';
 import type { AuthV1Service } from '../../services/auth/auth-v1.service.js';
@@ -127,6 +128,48 @@ export class AuthV1Controller extends ControllerBase {
 		return this.sendApiResponse(res, {
 			status: 200,
 			data: {
+				access_token,
+				refresh_token,
+			},
+		});
+	}
+
+	public async verifyGoogleLogin(req: Request, res: Response) {
+		const dto = await verifyGoogleLoginDto.parseAsync(req.body);
+		const profile = await this.authV1Service.verifyGoogleLogin(dto.idToken);
+
+		if (!profile?.email) {
+			throw this.errorSignal(
+				403,
+				'Account without email address is not allowed to login!.',
+			);
+		}
+
+		let user = await this.userService.getUser({ email: profile.email });
+
+		if (!user) {
+			user = await this.authV1Service.signUpByGoogleAccount({
+				email: profile.email,
+				first_name: profile.given_name ?? null,
+				last_name: profile.family_name ?? null,
+				google_account_id: profile.sub,
+			});
+		}
+
+		if (!user.google_account_id) {
+			await this.userService.addGoogleAccountId(user.id, profile.sub);
+		}
+
+		const { role, id } = user;
+		const [access_token, refresh_token] = await Promise.all([
+			this.authV1Service.signJWT({ id, role }, 'access'),
+			this.authV1Service.signJWT({ id, role }, 'refresh'),
+		]);
+
+		return this.sendApiResponse(res, {
+			status: 200,
+			data: {
+				user,
 				access_token,
 				refresh_token,
 			},

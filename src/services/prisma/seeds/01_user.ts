@@ -22,7 +22,7 @@ export async function seedUser(): Promise<void> {
 				verified: true,
 				created_at,
 				updated_at,
-				google_account_id: null
+				google_account_id: null,
 			},
 			{
 				id: '019a385b-af6a-7f3b-9807-1e624354124f',
@@ -36,7 +36,7 @@ export async function seedUser(): Promise<void> {
 				verified: true,
 				created_at,
 				updated_at,
-				google_account_id: null
+				google_account_id: null,
 			},
 		];
 
