@@ -110,11 +110,11 @@ export const authMiddleware: RequestHandler = async (
 };
 
 /**
- * 
+ *
  * @param req express.Request
  * @param res express.Response
  * @param next express.NextFunction
- * 
+ *
  * Only for refresh token!.
  */
 export const refreshMiddleware: RequestHandler = async (
@@ -130,6 +130,5 @@ export const refreshMiddleware: RequestHandler = async (
 
 	const auth = await httpAuthCheck(httpAuth, 'refresh');
 	res.locals.user = auth.user;
-	res.locals.token = auth.token;
 	next();
 };

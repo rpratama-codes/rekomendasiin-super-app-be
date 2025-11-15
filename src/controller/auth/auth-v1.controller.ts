@@ -1,7 +1,6 @@
 import { render } from '@react-email/components';
 import type { Request, Response } from 'express';
 import {
-	refreshTokenDto,
 	signInDto,
 	signUpDto,
 	verifyOtpDto,
@@ -115,19 +114,14 @@ export class AuthV1Controller extends ControllerBase {
 	}
 
 	public async refreshToken(_req: Request, res: Response) {
-		const dto = await refreshTokenDto.parseAsync({ token: res.locals.token });
+		if (!res.locals.user) {
+			throw this.errorSignal(500, 'No user provided!.');
+		}
 
-		const oldRefreshToken = await this.authV1Service.refresh(dto.token);
-
+		const { role, sub } = res.locals.user;
 		const [access_token, refresh_token] = await Promise.all([
-			this.authV1Service.signJWT(
-				{ id: oldRefreshToken.payload.sub, role: oldRefreshToken.payload.role },
-				'access',
-			),
-			this.authV1Service.signJWT(
-				{ id: oldRefreshToken.payload.sub, role: oldRefreshToken.payload.role },
-				'refresh',
-			),
+			this.authV1Service.signJWT({ id: sub, role }, 'access'),
+			this.authV1Service.signJWT({ id: sub, role }, 'refresh'),
 		]);
 
 		return this.sendApiResponse(res, {

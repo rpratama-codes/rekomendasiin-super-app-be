@@ -4,7 +4,6 @@
 import argon2 from 'argon2';
 import * as jose from 'jose';
 import ms from 'ms';
-import type { JwtPayload } from '../../middleware/auth.middleware.js';
 import { ServiceBase } from '../../utils/base-class/service.class.js';
 import type { Users } from '../prisma/generated/client.js';
 import { UserRoles } from '../prisma/generated/enums.js';
@@ -87,7 +86,6 @@ export class AuthV1Service extends ServiceBase {
 		});
 
 		const user = this.checkUser(getUser);
-
 		const [verify, access_token, refresh_token] = await Promise.all([
 			argon2.verify(user.password, payload.password),
 			this.signJWT({ id: user.id, role: user.role }, 'access'),
@@ -103,19 +101,5 @@ export class AuthV1Service extends ServiceBase {
 			access_token,
 			refresh_token,
 		};
-	}
-
-	public async refresh(refreshToken: string) {
-		const secret = new TextEncoder().encode(process.env.APP_SECRET_REFRESH);
-
-		let oldRefreshToken: jose.JWTVerifyResult<JwtPayload>;
-
-		try {
-			oldRefreshToken = await jose.jwtVerify<JwtPayload>(refreshToken, secret);
-		} catch (_error: unknown) {
-			throw this.errorSignal(401, 'Please login again!.');
-		}
-
-		return oldRefreshToken;
 	}
 }
