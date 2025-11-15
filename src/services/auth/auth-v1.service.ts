@@ -3,6 +3,7 @@
 
 import argon2 from 'argon2';
 import * as jose from 'jose';
+import ms from 'ms';
 import type { JwtPayload } from '../../middleware/auth.middleware.js';
 import { ServiceBase } from '../../utils/base-class/service.class.js';
 import type { Users } from '../prisma/generated/client.js';
@@ -46,9 +47,16 @@ export class AuthV1Service extends ServiceBase {
 				: process.env.APP_SECRET_REFRESH,
 		);
 
+		/**
+		 * Don't directly set `setExpirationTime` with 7d or else!
+		 * because jose using second format but node is using milisecond format,
+		 * that will causing missmatch format!.
+		 */
+		const expTime = type === 'access' ? ms('7d') : ms('30d');
+
 		const jwt = await new jose.SignJWT({ role: user.role })
 			.setSubject(user.id)
-			.setExpirationTime(type === 'access' ? '7d' : '30d')
+			.setExpirationTime(Date.now() + expTime)
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(secret);
 

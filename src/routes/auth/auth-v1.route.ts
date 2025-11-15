@@ -1,6 +1,7 @@
 import express, { type Request, type Response } from 'express';
 import { AuthV1Controller } from '../../controller/auth/auth-v1.controller.js';
 import { apiLimiterMiddleware } from '../../middleware/api-limitter.middleware.js';
+import { refreshMiddleware } from '../../middleware/auth.middleware.js';
 import { AuthV1Service } from '../../services/auth/auth-v1.service.js';
 import { MailService } from '../../services/mail/mail.service.js';
 import { OtpService } from '../../services/otp/otp.service.js';
@@ -46,7 +47,8 @@ const happyRouter = new HappyRouter({
 		},
 		{
 			path: '/refresh',
-			method: 'post',
+			method: 'get',
+			middlewares: [refreshMiddleware],
 			handlers: [
 				async (req: Request, res: Response) =>
 					await authV1Controller.refreshToken(req, res),

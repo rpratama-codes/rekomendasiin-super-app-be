@@ -114,8 +114,8 @@ export class AuthV1Controller extends ControllerBase {
 		});
 	}
 
-	public async refreshToken(req: Request, res: Response) {
-		const dto = await refreshTokenDto.parseAsync(req.body);
+	public async refreshToken(_req: Request, res: Response) {
+		const dto = await refreshTokenDto.parseAsync({ token: res.locals.token });
 
 		const oldRefreshToken = await this.authV1Service.refresh(dto.token);
 

@@ -1,6 +1,7 @@
 import { TextEncoder } from 'node:util';
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import * as jose from 'jose';
+import { JWSSignatureVerificationFailed } from 'jose/errors';
 import z from 'zod';
 
 /**
@@ -33,16 +34,41 @@ const credentialTypeCheck = (...credentials: unknown[]) => {
 	}
 };
 
-const httpAuthCheck = async (token: string): Promise<JwtPayload> => {
+const httpAuthCheck = async (
+	token: string,
+	type: 'access' | 'refresh' = 'access',
+): Promise<{ user: JwtPayload; token: string }> => {
 	const checkType = token.split(' ');
 
-	if (!checkType || checkType[0] !== 'Bearer') {
-		throw new Error('Auth type is not supported!.');
+	if (checkType.length < 2) {
+		/**
+		 * To provide error for api client like bruno or postman if not provide a token.
+		 */
+		throw new ErrorAuthMiddleware('No empty token allowed!.');
 	}
 
-	const key = new TextEncoder().encode(process.env.APP_SECRET_ACCESS);
+	if (!checkType || checkType[0] !== 'Bearer') {
+		throw new ErrorAuthMiddleware('Auth type is not supported!.');
+	}
+
+	const bearerToken = checkType[1] as string;
+	const secret =
+		type === 'access'
+			? process.env.APP_SECRET_ACCESS
+			: process.env.APP_SECRET_REFRESH;
+	const key = new TextEncoder().encode(secret);
 	const currentTime = Date.now();
-	const check = await jose.jwtVerify<JwtPayload>(checkType[1] as string, key);
+	let check: jose.JWTVerifyResult<JwtPayload>;
+
+	try {
+		check = await jose.jwtVerify<JwtPayload>(bearerToken, key);
+	} catch (error: unknown) {
+		if (error instanceof JWSSignatureVerificationFailed) {
+			throw new ErrorAuthMiddleware('Wrong type token!');
+		}
+
+		throw error;
+	}
 
 	if (currentTime > check.payload.exp) {
 		throw new ErrorAuthMiddleware(
@@ -50,7 +76,7 @@ const httpAuthCheck = async (token: string): Promise<JwtPayload> => {
 		);
 	}
 
-	return check.payload;
+	return { user: check.payload, token: bearerToken };
 };
 
 /**
@@ -72,14 +98,38 @@ export const authMiddleware: RequestHandler = async (
 	credentialTypeCheck(apiKey, queryApiKey, httpAuth);
 
 	if (apiKey || queryApiKey) {
-		throw new Error('Feature is not implemented!');
+		throw new ErrorAuthMiddleware('Feature is not implemented!');
 	}
 
 	if (httpAuth) {
 		const auth = await httpAuthCheck(httpAuth);
-
-		res.locals.user = auth;
+		res.locals.user = auth.user;
 	}
 
+	next();
+};
+
+/**
+ * 
+ * @param req express.Request
+ * @param res express.Response
+ * @param next express.NextFunction
+ * 
+ * Only for refresh token!.
+ */
+export const refreshMiddleware: RequestHandler = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const httpAuth = req.headers.authorization;
+
+	if (!httpAuth) {
+		throw new ErrorAuthMiddleware('Unauthorize!.');
+	}
+
+	const auth = await httpAuthCheck(httpAuth, 'refresh');
+	res.locals.user = auth.user;
+	res.locals.token = auth.token;
 	next();
 };
