@@ -6,10 +6,10 @@ I will do with Behavior-driven development (BDD/TDD) with Waterfall Method. This
 
 ![Architecture](./docs/rekomendasiin.drawio.png)
 
-## Progress :  
+## Progress  
 
 - [ ] Auth  
-  - [ ] Google Auth (OAuth2)
+  - [x] Google Auth (OAuth2)
   - [ ] Firebase Auth (Phone Number)
   - [x] Bearer Auth
   - [ ] Magic Link (Concept)
