@@ -32,7 +32,8 @@
 		"commit": "cz",
 		"prisma:generate": "prisma generate",
 		"prisma:migrate:dev": "prisma migrate dev",
-		"prisma:migrate:deploy": "prisma migrate deploy"
+		"prisma:migrate:deploy": "prisma migrate deploy",
+		"prisma:db:seed": "prisma db seed"
 	},
 	"dependencies": {
 		"@langchain/core": "^1.0.2",

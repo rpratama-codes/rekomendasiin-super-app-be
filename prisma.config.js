@@ -6,7 +6,7 @@ export default defineConfig({
 	schema: path.join("src/services/prisma", "schema.prisma"),
 	migrations: {
 		path: path.join("src/services/prisma", "migrations"),
-		seed: "pnpm tsx src/services/prisma/seeds/00_seed_all.ts",
+		seed: "tsx src/services/prisma/seeds/00_seed_all.ts",
 	},
 	views: {
 		path: path.join("src/services/prisma", "views"),
