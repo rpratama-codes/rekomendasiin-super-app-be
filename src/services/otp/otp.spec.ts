@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { type ConfigOTP, OtpService } from './otp.service.js';
-import 'dotenv/config';
+import '@dotenvx/dotenvx/config';
 import z from 'zod';
 
 const otpSchema = z.object({

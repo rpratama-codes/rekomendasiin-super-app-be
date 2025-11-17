@@ -1,6 +1,6 @@
 import path from "node:path";
 import { defineConfig, env } from "prisma/config";
-import "dotenv/config";
+import "@dotenvx/dotenvx/config";
 
 export default defineConfig({
 	schema: path.join("src/services/prisma", "schema.prisma"),

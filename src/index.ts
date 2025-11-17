@@ -4,7 +4,7 @@ import express, {
 	type Request,
 	type Response,
 } from 'express';
-import 'dotenv/config';
+import '@dotenvx/dotenvx/config';
 import helmet from 'helmet';
 import { errorHandlerMiddleware } from './middleware/error-handler.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';

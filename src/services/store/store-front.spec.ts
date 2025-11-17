@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { DecisionSupportSystems } from '../suggesion/dss.service.js';
 import { StoreFrontService } from './store-front.service.js';
-import 'dotenv/config';
+import '@dotenvx/dotenvx/config';
 
 describe('Store front test', () => {
 	/**
