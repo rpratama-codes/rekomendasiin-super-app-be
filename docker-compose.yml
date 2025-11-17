@@ -51,7 +51,8 @@ services:
     # I need network host because issue of smtp4dev can't hit from another container.
     network_mode: host
     env_file:
-      - .env.docker
+      - path: .env
+        required: true
     environment:
       - NODE_ENV=development
       - APP_PORT=4000

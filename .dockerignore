@@ -5,5 +5,7 @@ node_modules
 .husky
 .vscode
 .react-email
+.env
 .env*
+!.env.example
 ca.pem
