@@ -87,11 +87,11 @@ export class AuthV1Service extends ServiceBase {
 		 * because jose using second format but node is using milisecond format,
 		 * that will causing missmatch format!.
 		 */
-		const expTime = type === 'access' ? ms('7d') : ms('30d');
+		const expTime = type === 'access' ? ms('60s') : ms('30d');
 
 		const jwt = await new jose.SignJWT({ role: user.role })
 			.setSubject(user.id)
-			.setExpirationTime(Date.now() + expTime)
+			.setExpirationTime(Math.floor(Date.now() + expTime / 1000))
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(secret);
 

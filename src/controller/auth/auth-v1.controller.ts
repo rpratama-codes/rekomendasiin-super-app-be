@@ -120,14 +120,16 @@ export class AuthV1Controller extends ControllerBase {
 		}
 
 		const { role, sub } = res.locals.user;
-		const [access_token, refresh_token] = await Promise.all([
+		const [access_token, refresh_token, user] = await Promise.all([
 			this.authV1Service.signJWT({ id: sub, role }, 'access'),
 			this.authV1Service.signJWT({ id: sub, role }, 'refresh'),
+			this.userService.getUser({ id: sub }),
 		]);
 
 		return this.sendApiResponse(res, {
 			status: 200,
 			data: {
+				user,
 				access_token,
 				refresh_token,
 			},
