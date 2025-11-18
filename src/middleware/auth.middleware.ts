@@ -57,7 +57,10 @@ const httpAuthCheck = async (
 			? process.env.APP_SECRET_ACCESS
 			: process.env.APP_SECRET_REFRESH;
 	const key = new TextEncoder().encode(secret);
-	const currentTime = Date.now();
+	/**
+	 * Remember that JWT is using second format not milisecond format!
+	 */
+	const currentTime = Math.floor(Date.now() / 1000);
 	let check: jose.JWTVerifyResult<JwtPayload>;
 
 	try {

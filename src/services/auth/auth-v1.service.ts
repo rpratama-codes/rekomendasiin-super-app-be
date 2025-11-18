@@ -83,15 +83,14 @@ export class AuthV1Service extends ServiceBase {
 		);
 
 		/**
-		 * Don't directly set `setExpirationTime` with 7d or else!
-		 * because jose using second format but node is using milisecond format,
-		 * that will causing missmatch format!.
+		 * Remember that JWT is using second format and not milisecond format!
+		 * And it's safer using Date Object to assign expired time.
 		 */
-		const expTime = type === 'access' ? ms('60s') : ms('30d');
-
+		const expTime = type === 'access' ? ms('15m') : ms('7d');
+		const expDate = new Date(Date.now() + expTime);
 		const jwt = await new jose.SignJWT({ role: user.role })
 			.setSubject(user.id)
-			.setExpirationTime(Math.floor(Date.now() + expTime / 1000))
+			.setExpirationTime(expDate)
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(secret);
 
