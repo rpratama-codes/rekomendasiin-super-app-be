@@ -153,6 +153,7 @@ export class AuthV1Controller extends ControllerBase {
 				first_name: profile.given_name ?? null,
 				last_name: profile.family_name ?? null,
 				google_account_id: profile.sub,
+				image: profile.picture ? profile?.picture : null,
 			});
 		}
 

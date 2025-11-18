@@ -20,7 +20,11 @@ export class AuthV1Service extends ServiceBase {
 		first_name,
 		last_name,
 		google_account_id,
-	}: Omit<SignUpDto, 'password'> & { google_account_id: string }) {
+		image,
+	}: Omit<SignUpDto, 'password'> & {
+		google_account_id: string;
+		image: string | null;
+	}) {
 		const [userName, _domain] = email.toLowerCase().split('@');
 
 		const createUser = await this.prisma.users.create({
@@ -32,6 +36,7 @@ export class AuthV1Service extends ServiceBase {
 				username: `${userName}+${Date.now()}`,
 				google_account_id,
 				verified: true,
+				image,
 			},
 			omit: {
 				password: true,
