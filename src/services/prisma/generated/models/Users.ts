@@ -32,7 +32,7 @@ export type UsersMinAggregateOutputType = {
   username: string | null
   verified: boolean | null
   password: string | null
-  picture: string | null
+  image: string | null
   role: $Enums.UserRoles | null
   google_account_id: string | null
   created_at: Date | null
@@ -47,7 +47,7 @@ export type UsersMaxAggregateOutputType = {
   username: string | null
   verified: boolean | null
   password: string | null
-  picture: string | null
+  image: string | null
   role: $Enums.UserRoles | null
   google_account_id: string | null
   created_at: Date | null
@@ -62,7 +62,7 @@ export type UsersCountAggregateOutputType = {
   username: number
   verified: number
   password: number
-  picture: number
+  image: number
   role: number
   google_account_id: number
   created_at: number
@@ -79,7 +79,7 @@ export type UsersMinAggregateInputType = {
   username?: true
   verified?: true
   password?: true
-  picture?: true
+  image?: true
   role?: true
   google_account_id?: true
   created_at?: true
@@ -94,7 +94,7 @@ export type UsersMaxAggregateInputType = {
   username?: true
   verified?: true
   password?: true
-  picture?: true
+  image?: true
   role?: true
   google_account_id?: true
   created_at?: true
@@ -109,7 +109,7 @@ export type UsersCountAggregateInputType = {
   username?: true
   verified?: true
   password?: true
-  picture?: true
+  image?: true
   role?: true
   google_account_id?: true
   created_at?: true
@@ -197,7 +197,7 @@ export type UsersGroupByOutputType = {
   username: string
   verified: boolean
   password: string | null
-  picture: string | null
+  image: string | null
   role: $Enums.UserRoles
   google_account_id: string | null
   created_at: Date
@@ -233,7 +233,7 @@ export type UsersWhereInput = {
   username?: Prisma.StringFilter<"Users"> | string
   verified?: Prisma.BoolFilter<"Users"> | boolean
   password?: Prisma.StringNullableFilter<"Users"> | string | null
-  picture?: Prisma.StringNullableFilter<"Users"> | string | null
+  image?: Prisma.StringNullableFilter<"Users"> | string | null
   role?: Prisma.EnumUserRolesFilter<"Users"> | $Enums.UserRoles
   google_account_id?: Prisma.StringNullableFilter<"Users"> | string | null
   created_at?: Prisma.DateTimeFilter<"Users"> | Date | string
@@ -250,7 +250,7 @@ export type UsersOrderByWithRelationInput = {
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
-  picture?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   google_account_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -270,7 +270,7 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   last_name?: Prisma.StringNullableFilter<"Users"> | string | null
   verified?: Prisma.BoolFilter<"Users"> | boolean
   password?: Prisma.StringNullableFilter<"Users"> | string | null
-  picture?: Prisma.StringNullableFilter<"Users"> | string | null
+  image?: Prisma.StringNullableFilter<"Users"> | string | null
   role?: Prisma.EnumUserRolesFilter<"Users"> | $Enums.UserRoles
   google_account_id?: Prisma.StringNullableFilter<"Users"> | string | null
   created_at?: Prisma.DateTimeFilter<"Users"> | Date | string
@@ -287,7 +287,7 @@ export type UsersOrderByWithAggregationInput = {
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
-  picture?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   google_account_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -308,7 +308,7 @@ export type UsersScalarWhereWithAggregatesInput = {
   username?: Prisma.StringWithAggregatesFilter<"Users"> | string
   verified?: Prisma.BoolWithAggregatesFilter<"Users"> | boolean
   password?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
-  picture?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
+  image?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   role?: Prisma.EnumUserRolesWithAggregatesFilter<"Users"> | $Enums.UserRoles
   google_account_id?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Users"> | Date | string
@@ -323,7 +323,7 @@ export type UsersCreateInput = {
   username: string
   verified?: boolean
   password?: string | null
-  picture?: string | null
+  image?: string | null
   role: $Enums.UserRoles
   google_account_id?: string | null
   created_at?: Date | string
@@ -340,7 +340,7 @@ export type UsersUncheckedCreateInput = {
   username: string
   verified?: boolean
   password?: string | null
-  picture?: string | null
+  image?: string | null
   role: $Enums.UserRoles
   google_account_id?: string | null
   created_at?: Date | string
@@ -357,7 +357,7 @@ export type UsersUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,7 +374,7 @@ export type UsersUncheckedUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -391,7 +391,7 @@ export type UsersCreateManyInput = {
   username: string
   verified?: boolean
   password?: string | null
-  picture?: string | null
+  image?: string | null
   role: $Enums.UserRoles
   google_account_id?: string | null
   created_at?: Date | string
@@ -406,7 +406,7 @@ export type UsersUpdateManyMutationInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -421,7 +421,7 @@ export type UsersUncheckedUpdateManyInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -436,7 +436,7 @@ export type UsersCountOrderByAggregateInput = {
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  picture?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   google_account_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -451,7 +451,7 @@ export type UsersMaxOrderByAggregateInput = {
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  picture?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   google_account_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -466,7 +466,7 @@ export type UsersMinOrderByAggregateInput = {
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  picture?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   google_account_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -538,7 +538,7 @@ export type UsersCreateWithoutSavedRecommendationsInput = {
   username: string
   verified?: boolean
   password?: string | null
-  picture?: string | null
+  image?: string | null
   role: $Enums.UserRoles
   google_account_id?: string | null
   created_at?: Date | string
@@ -554,7 +554,7 @@ export type UsersUncheckedCreateWithoutSavedRecommendationsInput = {
   username: string
   verified?: boolean
   password?: string | null
-  picture?: string | null
+  image?: string | null
   role: $Enums.UserRoles
   google_account_id?: string | null
   created_at?: Date | string
@@ -586,7 +586,7 @@ export type UsersUpdateWithoutSavedRecommendationsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -602,7 +602,7 @@ export type UsersUncheckedUpdateWithoutSavedRecommendationsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -618,7 +618,7 @@ export type UsersCreateWithoutOneTimeTokenSecretsInput = {
   username: string
   verified?: boolean
   password?: string | null
-  picture?: string | null
+  image?: string | null
   role: $Enums.UserRoles
   google_account_id?: string | null
   created_at?: Date | string
@@ -634,7 +634,7 @@ export type UsersUncheckedCreateWithoutOneTimeTokenSecretsInput = {
   username: string
   verified?: boolean
   password?: string | null
-  picture?: string | null
+  image?: string | null
   role: $Enums.UserRoles
   google_account_id?: string | null
   created_at?: Date | string
@@ -666,7 +666,7 @@ export type UsersUpdateWithoutOneTimeTokenSecretsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -682,7 +682,7 @@ export type UsersUncheckedUpdateWithoutOneTimeTokenSecretsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   google_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -738,7 +738,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   username?: boolean
   verified?: boolean
   password?: boolean
-  picture?: boolean
+  image?: boolean
   role?: boolean
   google_account_id?: boolean
   created_at?: boolean
@@ -756,7 +756,7 @@ export type UsersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   username?: boolean
   verified?: boolean
   password?: boolean
-  picture?: boolean
+  image?: boolean
   role?: boolean
   google_account_id?: boolean
   created_at?: boolean
@@ -771,7 +771,7 @@ export type UsersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   username?: boolean
   verified?: boolean
   password?: boolean
-  picture?: boolean
+  image?: boolean
   role?: boolean
   google_account_id?: boolean
   created_at?: boolean
@@ -786,14 +786,14 @@ export type UsersSelectScalar = {
   username?: boolean
   verified?: boolean
   password?: boolean
-  picture?: boolean
+  image?: boolean
   role?: boolean
   google_account_id?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "username" | "verified" | "password" | "picture" | "role" | "google_account_id" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
+export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "username" | "verified" | "password" | "image" | "role" | "google_account_id" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
 export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   savedRecommendations?: boolean | Prisma.Users$savedRecommendationsArgs<ExtArgs>
   oneTimeTokenSecrets?: boolean | Prisma.Users$oneTimeTokenSecretsArgs<ExtArgs>
@@ -816,7 +816,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     username: string
     verified: boolean
     password: string | null
-    picture: string | null
+    image: string | null
     role: $Enums.UserRoles
     google_account_id: string | null
     created_at: Date
@@ -1253,7 +1253,7 @@ export interface UsersFieldRefs {
   readonly username: Prisma.FieldRef<"Users", 'String'>
   readonly verified: Prisma.FieldRef<"Users", 'Boolean'>
   readonly password: Prisma.FieldRef<"Users", 'String'>
-  readonly picture: Prisma.FieldRef<"Users", 'String'>
+  readonly image: Prisma.FieldRef<"Users", 'String'>
   readonly role: Prisma.FieldRef<"Users", 'UserRoles'>
   readonly google_account_id: Prisma.FieldRef<"Users", 'String'>
   readonly created_at: Prisma.FieldRef<"Users", 'DateTime'>

@@ -28,7 +28,7 @@ model Users {
   // password can be null because passwordless feature
   verified          Boolean   @default(false)
   password          String?
-  picture           String?
+  image             String?
   role              UserRoles
   google_account_id String?
 
