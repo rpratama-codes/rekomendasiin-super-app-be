@@ -6,7 +6,7 @@ export type ErrorType = {
 	cause?: unknown;
 };
 
-export class ErrorConstructor extends Error {
+export class KnownError extends Error {
 	public code: HttpExceptionStatusCode;
 
 	constructor({ code, message, cause }: ErrorType) {

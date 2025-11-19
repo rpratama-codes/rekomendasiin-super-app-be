@@ -4,7 +4,7 @@ import {
 	type HttpExceptionStatusCode,
 	httpExceptions,
 } from '../misc/http-exceptions.js';
-import { ErrorConstructor } from './error.class.js';
+import { KnownError } from './error.class.js';
 
 // export interface BaseClassParams {}
 
@@ -26,9 +26,9 @@ export class BaseClass {
 		const message = httpExceptions.find((exception) => exception.code === code);
 
 		if (!message) {
-			return new ErrorConstructor({
+			return new KnownError({
 				code: 500,
-				message: 'Internal Server Error',
+				message: 'No error message provided!.',
 			});
 		}
 
@@ -39,7 +39,7 @@ export class BaseClass {
 	 *
 	 * @param code HttpExceptionStatusCode
 	 * @param message string
-	 * @returns ErrorConstructor
+	 * @returns KnownError
 	 *
 	 * Error Can Be Happen Every Where!.
 	 * The boundaries is service not allow to know http, but it's not an http.
@@ -51,7 +51,7 @@ export class BaseClass {
 	protected errorSignal(code: HttpExceptionStatusCode, message?: string) {
 		const errorMessage = this.generateHttpMessage(code);
 
-		return new ErrorConstructor({
+		return new KnownError({
 			code: errorMessage.code as HttpExceptionStatusCode,
 			message: message ?? errorMessage.message,
 		});

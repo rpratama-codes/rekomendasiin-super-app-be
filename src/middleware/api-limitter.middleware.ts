@@ -1,8 +1,8 @@
 import { rateLimit } from 'express-rate-limit';
-import { ErrorConstructor } from '../utils/base-class/error.class.js';
+import { KnownError } from '../utils/base-class/error.class.js';
 
 const rateLimitHandler = () => {
-	throw new ErrorConstructor({
+	throw new KnownError({
 		code: 429,
 		message: 'Too many requests, please try again later.',
 	});
