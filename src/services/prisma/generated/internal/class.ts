@@ -16,61 +16,19 @@ import type * as Prisma from "./prismaNamespace.js"
 
 
 const config: runtime.GetPrismaClientConfig = {
-  "generator": {
-    "name": "client",
-    "provider": {
-      "fromEnvVar": null,
-      "value": "prisma-client"
-    },
-    "output": {
-      "value": "/home/neko/repos/rekomendasiin-super-app-be/src/services/prisma/generated",
-      "fromEnvVar": null
-    },
-    "config": {
-      "importFileExtension": "js",
-      "moduleFormat": "esm",
-      "engineType": "client",
-      "generatedFileExtension": "ts"
-    },
-    "binaryTargets": [
-      {
-        "fromEnvVar": null,
-        "value": "rhel-openssl-3.0.x",
-        "native": true
-      }
-    ],
-    "previewFeatures": [],
-    "sourceFilePath": "/home/neko/repos/rekomendasiin-super-app-be/src/services/prisma/schema.prisma",
-    "isCustomOutput": true
-  },
-  "relativePath": "..",
-  "clientVersion": "6.19.0",
-  "engineVersion": "2ba551f319ab1df4bc874a89965d8b3641056773",
-  "datasourceNames": [
-    "db"
-  ],
+  "previewFeatures": [],
+  "clientVersion": "7.0.0",
+  "engineVersion": "0c19ccc313cf9911a90d99d2ac2eb0280c76c513",
   "activeProvider": "postgresql",
-  "inlineDatasources": {
-    "db": {
-      "url": {
-        "fromEnvVar": "DATABASE_URL",
-        "value": null
-      }
-    }
-  },
-  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n  // Prisma New Generator\n  provider               = \"prisma-client\"\n  output                 = \"generated\"\n  engineType             = \"client\"\n  moduleFormat           = \"esm\"\n  importFileExtension    = \"js\"\n  generatedFileExtension = \"ts\"\n}\n\nenum UserRoles {\n  system_user\n  user\n}\n\nmodel Users {\n  id                String    @id @default(uuid(7))\n  first_name        String?\n  last_name         String?\n  email             String    @unique @db.Citext\n  username          String    @unique @db.Citext\n  // just for note, \n  // password can be null because passwordless feature\n  verified          Boolean   @default(false)\n  password          String?\n  image             String?\n  role              UserRoles\n  google_account_id String?\n\n  created_at           DateTime               @default(now())\n  updated_at           DateTime               @updatedAt\n  savedRecommendations SavedRecommendations[]\n  oneTimeTokenSecrets  OneTimeTokenSecrets[]\n\n  @@index(google_account_id)\n  @@map(\"user\")\n}\n\nmodel Categories {\n  id            String      @id @default(uuid(7))\n  category_name String?\n  item          Items[]\n  Criteria      Criterias[]\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  @@map(\"categories\")\n}\n\nmodel Items {\n  id          String  @id @default(uuid(7))\n  category_id String?\n  item_name   String?\n  soc         Float?\n  ram         Float?\n  rom         Float?\n  camera      Float?\n  screen      Float?\n  nfc         Float?\n  network     Float?\n  battery     Float?\n  price       Float?\n  weight      Float?\n  picture     String?\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"items\")\n}\n\nmodel Criterias {\n  id            String  @id @default(uuid(7))\n  category_id   String?\n  criteria_name String\n  soc           Float   @default(0)\n  ram           Float   @default(0)\n  rom           Float   @default(0)\n  camera        Float   @default(0)\n  screen        Float   @default(0)\n  nfc           Float   @default(0)\n  network       Float   @default(0)\n  battery       Float   @default(0)\n  price         Float   @default(0)\n  weight        Float   @default(0)\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"criterias\")\n}\n\n// \n// Write for future.\n// \nenum SavedRecommendationVisibility {\n  private\n  public\n  limited\n}\n\nmodel SavedRecommendations {\n  id         String                        @id @default(uuid(7))\n  user_id    String?\n  visibility SavedRecommendationVisibility @default(public)\n  results    Json                          @db.JsonB\n  // versioning for result\n  version    Int                           @default(1)\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user Users? @relation(fields: [user_id], references: [id])\n\n  @@index([user_id])\n  @@map(\"saved_recommendations\")\n}\n\nmodel OneTimeTokenSecrets {\n  id         String   @id @default(uuid(7))\n  user_id    String\n  secret     String\n  config     Json     @db.JsonB\n  time_used  Int      @default(0)\n  expired_at DateTime\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user Users? @relation(fields: [user_id], references: [id])\n\n  @@index([user_id])\n  @@map(\"one_time_token_secrets\")\n}\n\n// Save for Next Sprint\n\n// model BenchmarkSource {\n//   id          String  @id @default(uuid(7))\n//   name        String\n//   description String?\n\n//   ItemSpecs ItemSpecs[]\n\n//   @@map(\"benchmark_source\")\n// }\n\n// model ItemSpecs {\n//   id           String  @id @default(uuid(7))\n//   benchmark_id String\n//   item_id      String\n//   name         String\n//   value        Float\n//   description  String?\n\n//   item      Item            @relation(fields: [item_id], references: [id])\n//   benchmark BenchmarkSource @relation(fields: [benchmark_id], references: [id])\n\n//   @@map(\"item_specs\")\n// }\n",
-  "inlineSchemaHash": "83d7c687d10ca292a15d4d8dbf87a5216cfb222ed4c8dc0732caad0c2e554255",
-  "copyEngine": true,
+  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  // Prisma New Generator\n  provider               = \"prisma-client\"\n  output                 = \"generated\"\n  engineType             = \"client\"\n  moduleFormat           = \"esm\"\n  importFileExtension    = \"js\"\n  generatedFileExtension = \"ts\"\n}\n\nenum UserRoles {\n  system_user\n  user\n}\n\nmodel Users {\n  id                String    @id @default(uuid(7))\n  first_name        String?\n  last_name         String?\n  email             String    @unique @db.Citext\n  username          String    @unique @db.Citext\n  // just for note, \n  // password can be null because passwordless feature\n  verified          Boolean   @default(false)\n  password          String?\n  image             String?\n  role              UserRoles\n  google_account_id String?\n\n  created_at           DateTime               @default(now())\n  updated_at           DateTime               @updatedAt\n  savedRecommendations SavedRecommendations[]\n  oneTimeTokenSecrets  OneTimeTokenSecrets[]\n\n  @@index(google_account_id)\n  @@map(\"user\")\n}\n\nmodel Categories {\n  id            String      @id @default(uuid(7))\n  category_name String?\n  item          Items[]\n  Criteria      Criterias[]\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  @@map(\"categories\")\n}\n\nmodel Items {\n  id          String  @id @default(uuid(7))\n  category_id String?\n  item_name   String?\n  soc         Float?\n  ram         Float?\n  rom         Float?\n  camera      Float?\n  screen      Float?\n  nfc         Float?\n  network     Float?\n  battery     Float?\n  price       Float?\n  weight      Float?\n  picture     String?\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"items\")\n}\n\nmodel Criterias {\n  id            String  @id @default(uuid(7))\n  category_id   String?\n  criteria_name String\n  soc           Float   @default(0)\n  ram           Float   @default(0)\n  rom           Float   @default(0)\n  camera        Float   @default(0)\n  screen        Float   @default(0)\n  nfc           Float   @default(0)\n  network       Float   @default(0)\n  battery       Float   @default(0)\n  price         Float   @default(0)\n  weight        Float   @default(0)\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  category Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull)\n\n  @@map(\"criterias\")\n}\n\n// \n// Write for future.\n// \nenum SavedRecommendationVisibility {\n  private\n  public\n  limited\n}\n\nmodel SavedRecommendations {\n  id         String                        @id @default(uuid(7))\n  user_id    String?\n  visibility SavedRecommendationVisibility @default(public)\n  results    Json                          @db.JsonB\n  // versioning for result\n  version    Int                           @default(1)\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user Users? @relation(fields: [user_id], references: [id])\n\n  @@index([user_id])\n  @@map(\"saved_recommendations\")\n}\n\nmodel OneTimeTokenSecrets {\n  id         String   @id @default(uuid(7))\n  user_id    String\n  secret     String\n  config     Json     @db.JsonB\n  time_used  Int      @default(0)\n  expired_at DateTime\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user Users? @relation(fields: [user_id], references: [id])\n\n  @@index([user_id])\n  @@map(\"one_time_token_secrets\")\n}\n\n// Save for Next Sprint\n\n// model BenchmarkSource {\n//   id          String  @id @default(uuid(7))\n//   name        String\n//   description String?\n\n//   ItemSpecs ItemSpecs[]\n\n//   @@map(\"benchmark_source\")\n// }\n\n// model ItemSpecs {\n//   id           String  @id @default(uuid(7))\n//   benchmark_id String\n//   item_id      String\n//   name         String\n//   value        Float\n//   description  String?\n\n//   item      Item            @relation(fields: [item_id], references: [id])\n//   benchmark BenchmarkSource @relation(fields: [benchmark_id], references: [id])\n\n//   @@map(\"item_specs\")\n// }\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
     "types": {}
-  },
-  "dirname": ""
+  }
 }
 
 config.runtimeDataModel = JSON.parse("{\"models\":{\"Users\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"first_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"last_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRoles\"},{\"name\":\"google_account_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"savedRecommendations\",\"kind\":\"object\",\"type\":\"SavedRecommendations\",\"relationName\":\"SavedRecommendationsToUsers\"},{\"name\":\"oneTimeTokenSecrets\",\"kind\":\"object\",\"type\":\"OneTimeTokenSecrets\",\"relationName\":\"OneTimeTokenSecretsToUsers\"}],\"dbName\":\"user\"},\"Categories\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item\",\"kind\":\"object\",\"type\":\"Items\",\"relationName\":\"CategoriesToItems\"},{\"name\":\"Criteria\",\"kind\":\"object\",\"type\":\"Criterias\",\"relationName\":\"CategoriesToCriterias\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"categories\"},\"Items\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"soc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ram\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"rom\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"camera\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"screen\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"nfc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"network\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"battery\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"weight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"picture\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Categories\",\"relationName\":\"CategoriesToItems\"}],\"dbName\":\"items\"},\"Criterias\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"criteria_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"soc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ram\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"rom\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"camera\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"screen\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"nfc\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"network\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"battery\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"weight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Categories\",\"relationName\":\"CategoriesToCriterias\"}],\"dbName\":\"criterias\"},\"SavedRecommendations\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"visibility\",\"kind\":\"enum\",\"type\":\"SavedRecommendationVisibility\"},{\"name\":\"results\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"Users\",\"relationName\":\"SavedRecommendationsToUsers\"}],\"dbName\":\"saved_recommendations\"},\"OneTimeTokenSecrets\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"secret\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"config\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"time_used\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"expired_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"Users\",\"relationName\":\"OneTimeTokenSecretsToUsers\"}],\"dbName\":\"one_time_token_secrets\"}},\"enums\":{},\"types\":{}}")
-config.engineWasm = undefined
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -86,7 +44,6 @@ config.compilerWasm = {
     return await decodeBase64AsWasm(wasm)
   }
 }
-
 
 
 
@@ -113,7 +70,7 @@ export interface PrismaClientConstructor {
     LogOpts extends LogOptions<Options> = LogOptions<Options>,
     OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends { omit: infer U } ? U : Prisma.PrismaClientOptions['omit'],
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-  >(options?: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
+  >(options: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
 }
 
 /**
@@ -132,7 +89,7 @@ export interface PrismaClientConstructor {
 
 export interface PrismaClient<
   in LogOpts extends Prisma.LogLevel = never,
-  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = Prisma.PrismaClientOptions['omit'],
+  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined,
   in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -213,7 +170,6 @@ export interface PrismaClient<
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => runtime.Types.Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<R>
 
-
   $extends: runtime.Types.Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<OmitOpts>, ExtArgs, runtime.Types.Utils.Call<Prisma.TypeMapCb<OmitOpts>, {
     extArgs: ExtArgs
   }>>
@@ -279,7 +235,6 @@ export interface PrismaClient<
   get oneTimeTokenSecrets(): Prisma.OneTimeTokenSecretsDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
-export function getPrismaClientClass(dirname: string): PrismaClientConstructor {
-  config.dirname = dirname
+export function getPrismaClientClass(): PrismaClientConstructor {
   return runtime.getPrismaClient(config) as unknown as PrismaClientConstructor
 }
