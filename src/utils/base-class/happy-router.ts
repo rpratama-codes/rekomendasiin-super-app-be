@@ -161,6 +161,7 @@ export interface HappyAppParams
 	 * because method set not available on router.
 	 */
 	expressApplication: Application;
+	appName?: string;
 	configs: Record<string, unknown>;
 	routes?: HappyAppRoute[];
 }
@@ -172,7 +173,13 @@ export class HappyApp extends HappyRouter {
 	protected readonly expressApplication: Application;
 
 	constructor(params: HappyAppParams) {
-		super({ ...params, expressRouter: params.expressApplication });
+		const { expressApplication, appName, ...restParams } = params;
+
+		if (appName) {
+			process.title = appName.toLowerCase().split(' ').join('-');
+		}
+
+		super({ expressRouter: expressApplication, ...restParams });
 		this.expressApplication = params.expressApplication;
 
 		if (this.configs) {
