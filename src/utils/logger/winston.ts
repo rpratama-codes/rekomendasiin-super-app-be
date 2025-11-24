@@ -10,3 +10,7 @@ export const logger = winston.createLogger({
 	format: format.combine(format.timestamp(), format.json()),
 	transports: [new winston.transports.Console()],
 });
+
+export const happyLogger = (message: string) => {
+	logger.info(message);
+};

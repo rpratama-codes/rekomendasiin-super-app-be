@@ -3,14 +3,11 @@ import { UsersController } from '../../controller/user/user.controller.js';
 import { authMiddleware } from '../../middleware/auth.middleware.js';
 import { UserService } from '../../services/user/user.service.js';
 import { HappyRouter } from '../../utils/base-class/happy-router.js';
-import { logger } from '../../utils/logger/winston.js';
+import { happyLogger } from '../../utils/logger/winston.js';
 
 const router = express.Router();
 const userService = new UserService();
 const userController = new UsersController(userService);
-const happyLogger = (message: string) => {
-	logger.info(message);
-};
 
 const happyRouter = new HappyRouter({
 	expressRouter: router,

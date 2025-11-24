@@ -12,7 +12,7 @@ import { authRouteV1 } from './routes/auth/auth-v1.route.js';
 import { storeFrontRoute } from './routes/store-front/store-front.route.js';
 import { userRoute } from './routes/user/user.route.js';
 import { HappyApp, HappyRouter } from './utils/base-class/happy-router.js';
-import { logger } from './utils/logger/winston.js';
+import { happyLogger, logger } from './utils/logger/winston.js';
 
 const app = express();
 const router = express.Router({
@@ -20,10 +20,6 @@ const router = express.Router({
 	caseSensitive: true,
 	strict: true,
 });
-
-const happyLogger = (message: string) => {
-	logger.info(message);
-};
 
 const happyRouter = new HappyRouter({
 	prefix: '/api',
