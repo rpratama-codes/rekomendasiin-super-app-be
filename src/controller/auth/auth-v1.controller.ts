@@ -27,9 +27,16 @@ export class AuthV1Controller extends ControllerBase {
 		const dto = await signUpDto.parseAsync(req.body);
 		const create = await this.authV1Service.signUp(dto);
 		const otp = await this.otpService.generateTOTP();
+		let verificationLink = `${process.env.APP_FE_URL}/auth/sign-up`;
+		verificationLink += `?pageState=verify`;
+		verificationLink += `&emailToVerify=${encodeURIComponent(create.email)}`;
+		verificationLink += `&token=${otp.token}`;
 
 		const emailHtml = await render(
-			RekomendasiinVerifyEmail({ verificationCode: otp.token }),
+			RekomendasiinVerifyEmail({
+				verificationCode: otp.token,
+				verificationLink,
+			}),
 		);
 
 		await this.mailService.send({

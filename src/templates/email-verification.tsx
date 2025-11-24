@@ -9,7 +9,7 @@ import {
 	Hr,
 	Html,
 	Img,
-	// Link,
+	Link,
 	Preview,
 	Section,
 	Text,
@@ -17,10 +17,12 @@ import {
 
 interface RekomendasiinVerifyEmailProps {
 	verificationCode?: string;
+	verificationLink?: string;
 }
 
 export default function RekomendasiinVerifyEmail({
 	verificationCode,
+	verificationLink,
 }: RekomendasiinVerifyEmailProps) {
 	return (
 		<Html>
@@ -50,6 +52,10 @@ export default function RekomendasiinVerifyEmail({
 								<Text style={validityText}>
 									(This code is valid for 15 minutes)
 								</Text>
+							</Section>
+							<Section style={subText}>
+								Lazy to type? verify using link :{' '}
+								<a href={verificationLink}>{verificationLink}</a>
 							</Section>
 						</Section>
 						<Hr />
@@ -162,5 +168,7 @@ const verificationSection = {
 };
 
 const mainText = { ...text, marginBottom: '14px' };
+
+const subText = { ...text, marginTop: '14px' };
 
 const cautionText = { ...text, margin: '0px' };
