@@ -161,7 +161,7 @@ export interface HappyAppParams
 	 * because method set not available on router.
 	 */
 	expressApplication: Application;
-	appName?: string;
+	appName?: string | undefined;
 	configs: Record<string, unknown>;
 	routes?: HappyAppRoute[];
 }

@@ -33,7 +33,7 @@ const happyRouter = new HappyRouter({
 });
 
 const happyApp = new HappyApp({
-	appName: 'Rekomendasiin Backend',
+	appName: process.env.APP_NAME,
 	expressApplication: app,
 	configs: { 'trust proxy': true },
 	callbackLogger: happyLogger,
@@ -58,5 +58,5 @@ const happyApp = new HappyApp({
 happyApp.sail(Number(process.env.APP_PORT), () => {
 	const hostname = os.hostname();
 	logger.info(`App listening on http://${hostname}:${process.env.APP_PORT}`);
-	logger.info(`App Information, pid: ${process.pid}, title: ${process.title} `);
+	logger.info(`App Information, pid: ${process.pid}, title: ${process.title}`);
 });
