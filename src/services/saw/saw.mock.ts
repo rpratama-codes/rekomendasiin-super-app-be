@@ -50,7 +50,7 @@ export const testItems = [
 		nfc: 0,
 		network: 4,
 		battery: 4500,
-		price: 4000000,
+		price: 4200000,
 		weight: 500,
 		picture: 'realme-7-pro-11.jpg',
 		created_at,
