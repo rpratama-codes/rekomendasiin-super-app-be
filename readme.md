@@ -8,13 +8,32 @@ I will do with Behavior-driven development (BDD/TDD) with Waterfall Method. This
 
 ## Progress  
 
-- [ ] Auth  
+- [x] Auth  
   - [x] Google Auth (OAuth2)
-  - [ ] Firebase Auth (Phone Number)
+  - [ ] ~~Firebase Auth (Phone Number)~~
   - [x] Bearer Auth
-  - [ ] Magic Link (Concept)
+  - [x] Magic Link (Concept, verification Only)
   - [x] OTP (verification Only)
 - [x] Prisma ORM (Concept) - new generator.
+- [x] SMTP
+- [x] Bundler (Rollup)
+- [x] Logger
+- [x] Containerize app
+- [x] Email Template
+- [x] Express Router Wrapper
+- [x] DevEx
+  - [x] React Email (Email Tooling)
+  - [x] Docker (Containerization)
+  - [x] Bruno API Client
+  - [x] Resend (SMTP Server)
+  - [x] Prisma (Database ORM)
+  - [x] Vite Build (Bundler)
+  - [x] Vitest (Unit Test)
+  - [x] Biome (Linter)
+  - [x] Husky (commit hook)
+
+## Planned
+
 - [ ] Event (Async Service)
 - [ ] Payment Module (Payment Gateway Integration)
 - [ ] Product (App Feature) - In Progress 🏗️
@@ -28,22 +47,6 @@ I will do with Behavior-driven development (BDD/TDD) with Waterfall Method. This
 - [ ] GRPC
 - [ ] REST APIs 🏗️
 - [ ] Websocket
-- [x] SMTP
-- [x] Bundler (Rollup)
-- [x] Logger
-- [x] Containerize app
-- [x] Email Template
-- [x] Express Router Wrapper
-- [ ] DevEx
-  - [x] React Email (Email Tooling)
-  - [x] Docker (Containerization)
-  - [x] Bruno API Client
-  - [x] Resend (SMTP Server)
-  - [x] Prisma (Database ORM)
-  - [x] Vite Build (Bundler)
-  - [x] Vitest (Unit Test)
-  - [x] Biome (Linter)
-  - [x] Husky (commit hook)
 
 ## Build  
 
