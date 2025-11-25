@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { DecisionSupportSystems } from '../suggesion/dss.service.js';
 import { StoreFrontService } from './store-front.service.js';
 import '@dotenvx/dotenvx/config';
+import { SimpleAdditiveWeighting } from '../saw/saw.service.js';
 
 describe('Store front test', () => {
 	/**
@@ -11,7 +11,7 @@ describe('Store front test', () => {
 	 */
 
 	const storeFront = new StoreFrontService({
-		dss: new DecisionSupportSystems(),
+		saw: new SimpleAdditiveWeighting(),
 	});
 
 	it('should thorw an error', async () => {

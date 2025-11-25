@@ -4,14 +4,17 @@ import type {
 	Criterias,
 	Items,
 } from '../prisma/generated/client.js';
-import type { DecisionSupportSystems } from '../suggesion/dss.service.js';
+import type {
+	ItemWithScore,
+	SimpleAdditiveWeighting,
+} from '../saw/saw.service.js';
 
 export class StoreFrontService extends ServiceBase {
-	private dss: DecisionSupportSystems;
+	private saw: SimpleAdditiveWeighting;
 
-	constructor({ dss }: { dss: DecisionSupportSystems }) {
+	constructor({ saw }: { saw: SimpleAdditiveWeighting }) {
 		super();
-		this.dss = dss;
+		this.saw = saw;
 	}
 
 	public async listCategory(): Promise<Categories[]> {
@@ -44,24 +47,28 @@ export class StoreFrontService extends ServiceBase {
 		criteria_id: string;
 	}): Promise<{
 		spec: Items[];
-		result: Record<string, string | number | null>[];
+		result: ItemWithScore[];
 		criteria: Criterias;
 		comparable_criteria: string[];
 	}> {
-		const items = await this.prisma.items.findMany({
-			where: {
-				price: {
-					gte: basePrice.min,
-					lte: basePrice.max,
+		const [items, criteria] = await Promise.all([
+			this.prisma.items.findMany({
+				where: {
+					price: {
+						gte: basePrice.min,
+						lte: basePrice.max,
+					},
 				},
-			},
-		});
-
-		const criteria = await this.prisma.criterias.findFirst({
-			where: {
-				id: criteria_id,
-			},
-		});
+				orderBy: {
+					price: 'desc',
+				},
+			}),
+			this.prisma.criterias.findFirst({
+				where: {
+					id: criteria_id,
+				},
+			}),
+		]);
 
 		if (!criteria) {
 			throw this.errorSignal(
@@ -70,17 +77,23 @@ export class StoreFrontService extends ServiceBase {
 			);
 		}
 
-		const criteriaNames = this.dss.criteriaPicker(criteria);
+		const criteriaNames = this.saw.criteriaPicker(criteria);
 
-		const simpleAdditiveWeighting = this.dss.simpleAdditiveWeighting({
-			criteriaNames,
-			criteriaValues: criteria,
-			items,
+		const { costAndBenefit, filteredItems } =
+			this.saw.determinatingCostAndBenefit({
+				criteriaNames,
+				items,
+			});
+
+		const normalizationOrWeighting = this.saw.normalizationOrWeighting({
+			costAndBenefit,
+			filteredItems,
+			criteria,
 		});
 
-		const finalSaw = this.dss.sumTotalScore({
+		const finalSaw = this.saw.sumTotalScore({
 			criteriaNames,
-			items: simpleAdditiveWeighting,
+			items: normalizationOrWeighting,
 		});
 
 		return {

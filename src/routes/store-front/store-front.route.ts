@@ -1,12 +1,12 @@
 import express, { type Request, type Response } from 'express';
 import { StoreFrontController } from '../../controller/store-front/store-front.controller.js';
-import { StoreFrontService } from '../../services/store/store-front.service.js';
-import { DecisionSupportSystems } from '../../services/suggesion/dss.service.js';
+import { SimpleAdditiveWeighting } from '../../services/saw/saw.service.js';
+import { StoreFrontService } from '../../services/store-front/store-front.service.js';
 import { HappyRouter } from '../../utils/base-class/happy-router.js';
 import { happyLogger } from '../../utils/logger/winston.js';
 
-const dss = new DecisionSupportSystems();
-const storeFrontService = new StoreFrontService({ dss });
+const saw = new SimpleAdditiveWeighting();
+const storeFrontService = new StoreFrontService({ saw });
 const storeFrontController = new StoreFrontController({ storeFrontService });
 
 const happyRouter = new HappyRouter({

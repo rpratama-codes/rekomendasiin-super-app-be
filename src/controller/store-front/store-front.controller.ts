@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { storeFrontDto } from '../../services/store/store-front.dto.js';
-import type { StoreFrontService } from '../../services/store/store-front.service.js';
+import { storeFrontDto } from '../../services/store-front/store-front.dto.js';
+import type { StoreFrontService } from '../../services/store-front/store-front.service.js';
 import { ControllerBase } from '../../utils/base-class/controller.class.js';
 
 export class StoreFrontController extends ControllerBase {
