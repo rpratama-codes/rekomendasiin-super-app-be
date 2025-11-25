@@ -146,7 +146,7 @@ export class SimpleAdditiveWeighting {
 	 * - **Benefit:** (Value / Max) * Weight
 	 *
 	 * @param {Object} params - The input parameters.
-	 * @param {CriteriaO} params.criteriaValues - object containing the weights for each criteria.
+	 * @param {CriteriaWithOmittedKey} params.criteriaValues - object containing the weights for each criteria.
 	 * @param {'normalization' | 'weighting'} [params.output='weighting'] - Determines if weights are applied (default) or if pure normalization (weight=1) is returned.
 	 * @param {CostAndBenefit[]} params.costAndBenefit - The Min/Max thresholds derived from `determinatingCostAndBenefit`.
 	 * @param {Items[]} params.filteredItems - The clean list of items to process.

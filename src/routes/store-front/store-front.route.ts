@@ -5,9 +5,12 @@ import { StoreFrontService } from '../../services/store-front/store-front.servic
 import { HappyRouter } from '../../utils/base-class/happy-router.js';
 import { happyLogger } from '../../utils/logger/winston.js';
 
-const saw = new SimpleAdditiveWeighting();
-const storeFrontService = new StoreFrontService({ saw });
-const storeFrontController = new StoreFrontController({ storeFrontService });
+const sawService = new SimpleAdditiveWeighting();
+const storeFrontService = new StoreFrontService();
+const storeFrontController = new StoreFrontController(
+	storeFrontService,
+	sawService,
+);
 
 const happyRouter = new HappyRouter({
 	expressRouter: express.Router(),

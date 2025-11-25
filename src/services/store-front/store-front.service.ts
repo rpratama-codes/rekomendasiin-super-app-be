@@ -4,19 +4,8 @@ import type {
 	Criterias,
 	Items,
 } from '../prisma/generated/client.js';
-import type {
-	ItemWithScore,
-	SimpleAdditiveWeighting,
-} from '../saw/saw.service.js';
 
 export class StoreFrontService extends ServiceBase {
-	private saw: SimpleAdditiveWeighting;
-
-	constructor({ saw }: { saw: SimpleAdditiveWeighting }) {
-		super();
-		this.saw = saw;
-	}
-
 	public async listCategory(): Promise<Categories[]> {
 		const category = await this.prisma.categories.findMany();
 
@@ -36,7 +25,7 @@ export class StoreFrontService extends ServiceBase {
 		return criteria;
 	}
 
-	public async listRecomendation({
+	public async CriteriaAndItemsForRecomendation({
 		basePrice,
 		criteria_id,
 	}: {
@@ -46,10 +35,8 @@ export class StoreFrontService extends ServiceBase {
 		};
 		criteria_id: string;
 	}): Promise<{
-		spec: Items[];
-		result: ItemWithScore[];
-		criteria: Criterias;
-		comparable_criteria: string[];
+		items: Items[];
+		criteria: Criterias | null;
 	}> {
 		const [items, criteria] = await Promise.all([
 			this.prisma.items.findMany({
@@ -70,37 +57,9 @@ export class StoreFrontService extends ServiceBase {
 			}),
 		]);
 
-		if (!criteria) {
-			throw this.errorSignal(
-				400,
-				'Criteria Not Found, Please give correct criteria id.',
-			);
-		}
-
-		const criteriaNames = this.saw.criteriaPicker(criteria);
-
-		const { costAndBenefit, filteredItems } =
-			this.saw.determinatingCostAndBenefit({
-				criteriaNames,
-				items,
-			});
-
-		const normalizationOrWeighting = this.saw.normalizationOrWeighting({
-			costAndBenefit,
-			filteredItems,
-			criteria,
-		});
-
-		const finalSaw = this.saw.sumTotalScore({
-			criteriaNames,
-			items: normalizationOrWeighting,
-		});
-
 		return {
-			result: finalSaw,
-			spec: items,
+			items,
 			criteria,
-			comparable_criteria: Array.from(criteriaNames),
 		};
 	}
 }
