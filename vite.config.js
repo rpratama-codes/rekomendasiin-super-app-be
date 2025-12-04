@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
-import { viteStaticCopy } from "vite-plugin-static-copy";
+import { defineConfig } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
 	ssr: {
@@ -7,14 +7,14 @@ export default defineConfig({
 		 * Still find out to include prisma and argon2 into bundle.
 		 */
 		noExternal: true,
-		external: ["pg", "argon2"],
+		external: ['pg', 'argon2'],
 	},
 	build: {
 		// I think i shoud use feature below in the future.
 		minify: true,
 		// sourcemap: true,
-		outDir: "./dist",
-		ssr: "./src/index.ts",
+		outDir: './dist',
+		ssr: './src/index.ts',
 	},
 	plugins: [
 		viteStaticCopy({
@@ -22,8 +22,8 @@ export default defineConfig({
 			silent: true,
 			targets: [
 				{
-					src: "package.json",
-					dest: "./",
+					src: 'package.json',
+					dest: './',
 					transform: {
 						handler: (file, name) => {
 							/**
@@ -35,20 +35,20 @@ export default defineConfig({
 					},
 				},
 				{
-					src: "pnpm-lock.yaml",
-					dest: "./",
+					src: 'pnpm-lock.yaml',
+					dest: './',
 				},
 				{
-					src: "src/services/prisma/schema.prisma",
-					dest: "./",
+					src: 'src/services/prisma/schema.prisma',
+					dest: './',
 				},
 				{
-					src: "ca.pem",
-					dest: "",
+					src: 'ca.pem',
+					dest: '',
 				},
 				{
-					src: ".env",
-					dest: "./",
+					src: '.env',
+					dest: './',
 				},
 			],
 		}),
