@@ -9,7 +9,7 @@ import z from 'zod';
  * Use this to type-check `res.locals.user` or validate incoming payloads.
  */
 export const jwtPayload = z.object({
-	role: z.enum(['user', 'system_user']),
+	role: z.enum(['user', 'admin', 'system_user']),
 	sub: z.string(),
 	exp: z.number(),
 });
@@ -123,6 +123,14 @@ export const authMiddleware: RequestHandler = async (
 
 	if (httpAuth) {
 		const auth = await httpAuthCheck(httpAuth);
+		const requiredRole = res.locals.requiredRole;
+
+		if (requiredRole && !requiredRole.includes(auth.user.role)) {
+			throw new ErrorAuthMiddleware(
+				"you don't have sufficient permissions to access this resource.",
+			);
+		}
+
 		res.locals.user = auth.user;
 	}
 
@@ -150,5 +158,16 @@ export const refreshMiddleware: RequestHandler = async (
 
 	const auth = await httpAuthCheck(httpAuth, 'refresh');
 	res.locals.user = auth.user;
+	next();
+};
+
+export const adminRoute = (
+	_req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const previousRole = res.locals.requiredRole ?? [];
+
+	res.locals.requiredRole = [...previousRole, 'admin'];
 	next();
 };
