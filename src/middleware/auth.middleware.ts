@@ -5,11 +5,18 @@ import { JWSSignatureVerificationFailed } from 'jose/errors';
 import z from 'zod';
 
 /**
+ * Defines the available system roles for authorization.
+ */
+export type SystemRoles = 'user' | 'admin' | 'system_user';
+
+export const systemRoles: SystemRoles[] = ['user', 'admin', 'system_user'];
+
+/**
  * Zod schema validation for the JWT payload.
  * Use this to type-check `res.locals.user` or validate incoming payloads.
  */
 export const jwtPayload = z.object({
-	role: z.enum(['user', 'admin', 'system_user']),
+	role: z.enum(systemRoles),
 	sub: z.string(),
 	exp: z.number(),
 });
@@ -127,7 +134,7 @@ export const authMiddleware: RequestHandler = async (
 
 		if (requiredRole && !requiredRole.includes(auth.user.role)) {
 			throw new ErrorAuthMiddleware(
-				"you don't have sufficient permissions to access this resource.",
+				"You don't have sufficient permissions to access this resource.",
 			);
 		}
 
@@ -161,13 +168,25 @@ export const refreshMiddleware: RequestHandler = async (
 	next();
 };
 
-export const adminRoute = (
-	_req: Request,
-	res: Response,
-	next: NextFunction,
-) => {
-	const previousRole = res.locals.requiredRole ?? [];
+/**
+ * Creates an Express middleware function that sets the required roles for the subsequent
+ * `authMiddleware` to check against.
+ * * The required roles are stored in `res.locals.requiredRole` and are merged with any
+ * previously set roles.
+ * * @param roles - A spread list of `SystemRoles` that are permitted to access the route.
+ * @returns An Express middleware function (`RequestHandler`).
+ */
+export const roleSetter = (...roles: SystemRoles[]) => {
+	const expressMiddleware = (
+		_req: Request,
+		res: Response,
+		next: NextFunction,
+	) => {
+		const previousRole: SystemRoles[] = res.locals.requiredRole ?? [];
 
-	res.locals.requiredRole = [...previousRole, 'admin'];
-	next();
+		res.locals.requiredRole = [...previousRole, ...roles];
+		next();
+	};
+
+	return expressMiddleware;
 };
