@@ -20,6 +20,7 @@ export class HappyRouterRoute {
 	public method?: HttpMethod | undefined;
 	public handlers: RequestHandler[];
 	public middlewares?: RequestHandler[] | undefined;
+	public disable?: boolean = false;
 
 	constructor(params: HappyRouterRoute) {
 		this.path = params.path;
@@ -45,7 +46,46 @@ export interface HappyRouterParams {
 }
 
 /**
- * This class is Express Router warper, return back express.Router.
+ * Express Router Wrapper class.
+ * This class encapsulates and returns an instance of an Express router (`express.Router()`).
+ *
+ * ⚠️ **IMPORTANT: Avoid Reusing the Same `express.Router()` Instance**
+ *
+ * Reusing the same `express.Router()` instance across multiple `HappyRouter` instances will
+ * lead to a middleware or mounting loop, resulting in a **`Maximum call stack size exceeded`** error.
+ *
+ * **DO NOT** (Incorrect Reuse):
+ *
+ * ```typescript
+ * const sharedRouter = express.Router(); // Same instance 'sharedRouter' is used twice.
+ *
+ * const routerA = new HappyRouter({
+ * // ...
+ * expressRouter : sharedRouter
+ * });
+ *
+ * const routerB = new HappyRouter({
+ * // ...
+ * expressRouter : sharedRouter // ❌ Error potential here
+ * });
+ * ```
+ *
+ * **INSTEAD** (Correct Usage - Use a New Instance for Each):
+ *
+ * ```typescript
+ * const routerInstanceA = express.Router();
+ * const routerInstanceB = express.Router();
+ *
+ * const routerA = new HappyRouter({
+ * // ...
+ * expressRouter : routerInstanceA // ✅ Unique instance
+ * });
+ *
+ * const routerB = new HappyRouter({
+ * // ...
+ * expressRouter : routerInstanceB // ✅ Unique instance
+ * });
+ * ```
  */
 export class HappyRouter {
 	protected name = 'happyRouter';
@@ -96,6 +136,10 @@ export class HappyRouter {
 
 		if (this.routes) {
 			for (const route of this.routes) {
+				if (route.disable) {
+					continue;
+				}
+
 				const defaultMethod = 'get';
 				const method = route.method ?? defaultMethod;
 
