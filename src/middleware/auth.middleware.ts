@@ -7,9 +7,9 @@ import z from 'zod';
 /**
  * Defines the available system roles for authorization.
  */
-export type SystemRoles = 'user' | 'admin' | 'system_user';
+export type SystemRoles = 'user' | 'system_user';
 
-export const systemRoles: SystemRoles[] = ['user', 'admin', 'system_user'];
+export const systemRoles: SystemRoles[] = ['user', 'system_user'];
 
 /**
  * Zod schema validation for the JWT payload.

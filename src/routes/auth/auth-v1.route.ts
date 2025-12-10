@@ -1,9 +1,9 @@
 import express, { type Request, type Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
-import { AuthV1Controller } from '../../controller/auth/auth-v1.controller.js';
+import { AuthController } from '../../controller/auth/auth.controller.js';
 import { apiLimiterMiddleware } from '../../middleware/api-limitter.middleware.js';
 import { refreshMiddleware } from '../../middleware/auth.middleware.js';
-import { AuthV1Service } from '../../services/auth/auth-v1.service.js';
+import { AuthService } from '../../services/auth/auth.service.js';
 import { MailService } from '../../services/mail/mail.service.js';
 import { OtpService } from '../../services/otp/otp.service.js';
 import { UserService } from '../../services/user/user.service.js';
@@ -17,9 +17,9 @@ const oAuth2Client = new OAuth2Client({
 	client_id: process.env.GOOGLE_CLIENT_ID as string,
 	client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
 });
-const authV1Service = new AuthV1Service(oAuth2Client);
-const authV1Controller = new AuthV1Controller(
-	authV1Service,
+const authService = new AuthService(oAuth2Client);
+const authController = new AuthController(
+	authService,
 	mailService,
 	otpService,
 	userService,
@@ -36,7 +36,7 @@ const happyRouter = new HappyRouter({
 			method: 'post',
 			handlers: [
 				async (req: Request, res: Response) =>
-					await authV1Controller.signUp(req, res),
+					await authController.signUp(req, res),
 			],
 		},
 		{
@@ -44,7 +44,7 @@ const happyRouter = new HappyRouter({
 			method: 'post',
 			handlers: [
 				async (req: Request, res: Response) =>
-					await authV1Controller.verifyOTP(req, res),
+					await authController.verifyOTP(req, res),
 			],
 		},
 		{
@@ -53,7 +53,7 @@ const happyRouter = new HappyRouter({
 			middlewares: [refreshMiddleware],
 			handlers: [
 				async (req: Request, res: Response) =>
-					await authV1Controller.refreshToken(req, res),
+					await authController.refreshToken(req, res),
 			],
 		},
 		{
@@ -61,7 +61,7 @@ const happyRouter = new HappyRouter({
 			method: 'post',
 			handlers: [
 				async (req: Request, res: Response) =>
-					await authV1Controller.signIn(req, res),
+					await authController.signIn(req, res),
 			],
 		},
 		{
@@ -69,7 +69,7 @@ const happyRouter = new HappyRouter({
 			method: 'post',
 			handlers: [
 				async (req: Request, res: Response) =>
-					await authV1Controller.verifyGoogleLogin(req, res),
+					await authController.verifyGoogleLogin(req, res),
 			],
 		},
 	],

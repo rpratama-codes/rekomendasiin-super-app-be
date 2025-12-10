@@ -5,17 +5,17 @@ import {
 	signUpDto,
 	verifyGoogleLoginDto,
 	verifyOtpDto,
-} from '../../services/auth/auth-v1.dto.js';
-import type { AuthV1Service } from '../../services/auth/auth-v1.service.js';
+} from '../../services/auth/auth.dto.js';
+import type { AuthService } from '../../services/auth/auth.service.js';
 import type { MailService } from '../../services/mail/mail.service.js';
 import type { ConfigOTP, OtpService } from '../../services/otp/otp.service.js';
 import type { UserService } from '../../services/user/user.service.js';
 import RekomendasiinVerifyEmail from '../../templates/email-verification.js';
 import { ControllerBase } from '../../utils/base-class/controller.class.js';
 
-export class AuthV1Controller extends ControllerBase {
+export class AuthController extends ControllerBase {
 	constructor(
-		private readonly authV1Service: AuthV1Service,
+		private readonly authV1Service: AuthService,
 		private readonly mailService: MailService,
 		private readonly otpService: OtpService,
 		private readonly userService: UserService,
